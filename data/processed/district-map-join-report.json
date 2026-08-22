@@ -1,0 +1,2781 @@
+{
+  "sources": {
+    "geometry": "Valmyndigheten, 21 county GIS JSON files for election 2022, SWEREF99 TM",
+    "districtResults": "Valmyndigheten, final district votes and total turnout, parliamentary election 2022",
+    "socioeconomic": "SCB district analysis ArcGIS attributes, 2022"
+  },
+  "counts": {
+    "valCountyFiles": 21,
+    "geometryFeatures": 6264,
+    "uniqueGeometryIds": 6264,
+    "scbAttributeRows": 6264,
+    "uniqueScbIds": 6264,
+    "districtResultRows": 6264,
+    "uniqueDistrictResultIds": 6264,
+    "clientFeatures": 6264
+  },
+  "join": {
+    "key": "8-digit district code: Valmyndigheten Lkfv = Excel Valdistriktskod = SCB Valdistrik",
+    "geometryMissingScb": [],
+    "scbMissingGeometry": [],
+    "geometryMissingResult": [],
+    "resultMissingGeometry": [],
+    "exactNameMismatchCount": 450,
+    "exactNameMismatches": [
+      {
+        "id": "07802989",
+        "geometryName": "Kronoberg",
+        "resultName": "Kronoberg",
+        "scbName": "Nya Hovshaga"
+      },
+      {
+        "id": "12812508",
+        "geometryName": "N Fäladen, Kämnärsrätten NV",
+        "resultName": "N Fäladen, Kämnärsrätten NV",
+        "scbName": "N Fäladen  Kämnärsrätten NV"
+      },
+      {
+        "id": "12812509",
+        "geometryName": "N Fäladen, Rådhusrätten",
+        "resultName": "N Fäladen, Rådhusrätten",
+        "scbName": "N Fäladen  Rådhusrätten"
+      },
+      {
+        "id": "12812605",
+        "geometryName": "Östra Torn, Orkesterparken",
+        "resultName": "Östra Torn, Orkesterparken",
+        "scbName": "Östra Torn  Orkesterparken"
+      },
+      {
+        "id": "12812504",
+        "geometryName": "N Fäladen, Borgareparken",
+        "resultName": "N Fäladen, Borgareparken",
+        "scbName": "N Fäladen  Borgareparken"
+      },
+      {
+        "id": "12811301",
+        "geometryName": "Sandby, Västervång-Hardeberga",
+        "resultName": "Sandby, Västervång-Hardeberga",
+        "scbName": "Sandby  Västervång-Hardeberga"
+      },
+      {
+        "id": "12810504",
+        "geometryName": "Gunnesbo, Fornängen",
+        "resultName": "Gunnesbo, Fornängen",
+        "scbName": "Gunnesbo  Fornängen"
+      },
+      {
+        "id": "12810302",
+        "geometryName": "Linero, Vikingaparken",
+        "resultName": "Linero, Vikingaparken",
+        "scbName": "Linero  Vikingaparken"
+      },
+      {
+        "id": "12812501",
+        "geometryName": "N Fäladen, Kämnärsrätten SÖ",
+        "resultName": "N Fäladen, Kämnärsrätten SÖ",
+        "scbName": "N Fäladen  Kämnärsrätten SÖ"
+      },
+      {
+        "id": "12810303",
+        "geometryName": "Linero, Tre högars park",
+        "resultName": "Linero, Tre högars park",
+        "scbName": "Linero  Tre högars park"
+      },
+      {
+        "id": "12811302",
+        "geometryName": "Sandby, Kyrkovång",
+        "resultName": "Sandby, Kyrkovång",
+        "scbName": "Sandby  Kyrkovång"
+      },
+      {
+        "id": "12811303",
+        "geometryName": "Sandby, Fågelsång-Assarhusa",
+        "resultName": "Sandby, Fågelsång-Assarhusa",
+        "scbName": "Sandby  Fågelsång-Assarhusa"
+      },
+      {
+        "id": "12811304",
+        "geometryName": "Sandby, Östervång-Revinge",
+        "resultName": "Sandby, Östervång-Revinge",
+        "scbName": "Sandby  Östervång-Revinge"
+      },
+      {
+        "id": "12811601",
+        "geometryName": "Dalby, Centrum-Nyvång",
+        "resultName": "Dalby, Centrum-Nyvång",
+        "scbName": "Dalby  Centrum-Nyvång"
+      },
+      {
+        "id": "12811602",
+        "geometryName": "Dalby, Norrevång",
+        "resultName": "Dalby, Norrevång",
+        "scbName": "Dalby  Norrevång"
+      },
+      {
+        "id": "12811603",
+        "geometryName": "Dalby, Stationen-Påskagänget",
+        "resultName": "Dalby, Stationen-Påskagänget",
+        "scbName": "Dalby  Stationen-Påskagänget"
+      },
+      {
+        "id": "12811604",
+        "geometryName": "Dalby, Pinnmöllan-Rökepipan",
+        "resultName": "Dalby, Pinnmöllan-Rökepipan",
+        "scbName": "Dalby  Pinnmöllan-Rökepipan"
+      },
+      {
+        "id": "12812001",
+        "geometryName": "Genarp, Slätterna",
+        "resultName": "Genarp, Slätterna",
+        "scbName": "Genarp  Slätterna"
+      },
+      {
+        "id": "12812002",
+        "geometryName": "Genarp, Ekesvång",
+        "resultName": "Genarp, Ekesvång",
+        "scbName": "Genarp  Ekesvång"
+      },
+      {
+        "id": "12812101",
+        "geometryName": "Veberöd, Björkhaga-Trulsbo",
+        "resultName": "Veberöd, Björkhaga-Trulsbo",
+        "scbName": "Veberöd  Björkhaga-Trulsbo"
+      },
+      {
+        "id": "12810304",
+        "geometryName": "Linero, Gårdarike",
+        "resultName": "Linero, Gårdarike",
+        "scbName": "Linero  Gårdarike"
+      },
+      {
+        "id": "12812102",
+        "geometryName": "Veberöd, Gamla byn",
+        "resultName": "Veberöd, Gamla byn",
+        "scbName": "Veberöd  Gamla byn"
+      },
+      {
+        "id": "12812103",
+        "geometryName": "Veberöd, Idala",
+        "resultName": "Veberöd, Idala",
+        "scbName": "Veberöd  Idala"
+      },
+      {
+        "id": "12812601",
+        "geometryName": "Östra Torn, Spexaren",
+        "resultName": "Östra Torn, Spexaren",
+        "scbName": "Östra Torn  Spexaren"
+      },
+      {
+        "id": "12810111",
+        "geometryName": "Centrum, Färgaren",
+        "resultName": "Centrum, Färgaren",
+        "scbName": "Centrum  Färgaren"
+      },
+      {
+        "id": "12812603",
+        "geometryName": "Östra Torn, Gåsatoften",
+        "resultName": "Östra Torn, Gåsatoften",
+        "scbName": "Östra Torn  Gåsatoften"
+      },
+      {
+        "id": "12812604",
+        "geometryName": "Östra Torn, Vänortsparken",
+        "resultName": "Östra Torn, Vänortsparken",
+        "scbName": "Östra Torn  Vänortsparken"
+      },
+      {
+        "id": "12810102",
+        "geometryName": "Centrum, Clemens rote",
+        "resultName": "Centrum, Clemens rote",
+        "scbName": "Centrum  Clemens rote"
+      },
+      {
+        "id": "12810108",
+        "geometryName": "Centrum,  Drottens rote-Svanelyckan",
+        "resultName": "Centrum,  Drottens rote-Svanelyckan",
+        "scbName": "Centrum   Drottens rote-Svanelyckan"
+      },
+      {
+        "id": "12810101",
+        "geometryName": "Centrum, Krafts rote",
+        "resultName": "Centrum, Krafts rote",
+        "scbName": "Centrum  Krafts rote"
+      },
+      {
+        "id": "12810103",
+        "geometryName": "Centrum, Vårfru rote",
+        "resultName": "Centrum, Vårfru rote",
+        "scbName": "Centrum  Vårfru rote"
+      },
+      {
+        "id": "12800404",
+        "geometryName": "Limhamn, Ön",
+        "resultName": "Limhamn, Ön",
+        "scbName": "Limhamn  Ön"
+      },
+      {
+        "id": "12630801",
+        "geometryName": "Klågerup, Hyby, Holmeja",
+        "resultName": "Klågerup, Hyby, Holmeja",
+        "scbName": "Klågerup  Hyby  Holmeja"
+      },
+      {
+        "id": "14720103",
+        "geometryName": "Häggetorp, Katrineberg m.fl.",
+        "resultName": "Häggetorp, Katrineberg m.fl.",
+        "scbName": "Häggetorp  Katrineberg m.fl."
+      },
+      {
+        "id": "14720106",
+        "geometryName": "Hörnebo, Kvarnhagen m.fl.",
+        "resultName": "Hörnebo, Kvarnhagen m.fl.",
+        "scbName": "Hörnebo  Kvarnhagen m.fl."
+      },
+      {
+        "id": "14720205",
+        "geometryName": "Fagersanna, Ransberg m.fl.",
+        "resultName": "Fagersanna, Ransberg m.fl.",
+        "scbName": "Fagersanna  Ransberg m.fl."
+      },
+      {
+        "id": "14970706",
+        "geometryName": "Korsberga, Blikstorp",
+        "resultName": "Korsberga, Blikstorp",
+        "scbName": "Korsberga  Blikstorp"
+      },
+      {
+        "id": "14970101",
+        "geometryName": "Hjo södra, Grevbäck",
+        "resultName": "Hjo södra, Grevbäck",
+        "scbName": "Hjo södra  Grevbäck"
+      },
+      {
+        "id": "14970102",
+        "geometryName": "Hjo västra, Mofalla, Långeruder m fl",
+        "resultName": "Hjo västra, Mofalla, Långeruder m fl",
+        "scbName": "Hjo västra  Mofalla  Långeruder m fl"
+      },
+      {
+        "id": "14970103",
+        "geometryName": "Hjo mellersta, Hammarsjorden",
+        "resultName": "Hjo mellersta, Hammarsjorden",
+        "scbName": "Hjo mellersta  Hammarsjorden"
+      },
+      {
+        "id": "14970104",
+        "geometryName": "Hjo norra, Smedstorp, Sanna",
+        "resultName": "Hjo norra, Smedstorp, Sanna",
+        "scbName": "Hjo norra  Smedstorp  Sanna"
+      },
+      {
+        "id": "14970505",
+        "geometryName": "Norra och Södra Fågelås, Gate",
+        "resultName": "Norra och Södra Fågelås, Gate",
+        "scbName": "Norra och Södra Fågelås  Gate"
+      },
+      {
+        "id": "14800508",
+        "geometryName": "Västra Centrum, Vegastaden",
+        "resultName": "Västra Centrum, Vegastaden",
+        "scbName": "Västra Centrum  Vegastaden"
+      },
+      {
+        "id": "14800505",
+        "geometryName": "Västra Centrum, Masthugget Nedre",
+        "resultName": "Västra Centrum, Masthugget Nedre",
+        "scbName": "Västra Centrum  Masthugget Nedre"
+      },
+      {
+        "id": "14800514",
+        "geometryName": "Västra Centrum, Nordhem",
+        "resultName": "Västra Centrum, Nordhem",
+        "scbName": "Västra Centrum  Nordhem"
+      },
+      {
+        "id": "14800619",
+        "geometryName": "Sydvästra Göteborg, Frölunda Torg V",
+        "resultName": "Sydvästra Göteborg, Frölunda Torg V",
+        "scbName": "Sydvästra Göteborg  Frölunda Torg V"
+      },
+      {
+        "id": "14800641",
+        "geometryName": "Sydvästra Göteborg, Skintebo Östra",
+        "resultName": "Sydvästra Göteborg, Skintebo Östra",
+        "scbName": "Sydvästra Göteborg  Skintebo Östra"
+      },
+      {
+        "id": "14800643",
+        "geometryName": "Sydvästra Göteborg, Brottkärr Östra",
+        "resultName": "Sydvästra Göteborg, Brottkärr Östra",
+        "scbName": "Sydvästra Göteborg  Brottkärr Östra"
+      },
+      {
+        "id": "14800824",
+        "geometryName": "Västra Hisingen, Trånget",
+        "resultName": "Västra Hisingen, Trånget",
+        "scbName": "Västra Hisingen  Trånget"
+      },
+      {
+        "id": "14801008",
+        "geometryName": "Norra Hisingen, Skogome",
+        "resultName": "Norra Hisingen, Skogome",
+        "scbName": "Norra Hisingen  Skogome"
+      },
+      {
+        "id": "14801020",
+        "geometryName": "Norra Hisingen, Backa Norra",
+        "resultName": "Norra Hisingen, Backa Norra",
+        "scbName": "Norra Hisingen  Backa Norra"
+      },
+      {
+        "id": "14800109",
+        "geometryName": "Nordöstra Göteborg, Hammarkullen C",
+        "resultName": "Nordöstra Göteborg, Hammarkullen C",
+        "scbName": "Nordöstra Göteborg  Hammarkullen C"
+      },
+      {
+        "id": "14800721",
+        "geometryName": "Västra Göteborg, Rubingatan m fl",
+        "resultName": "Västra Göteborg, Rubingatan m fl",
+        "scbName": "Västra Göteborg  Rubingatan m fl"
+      },
+      {
+        "id": "14800704",
+        "geometryName": "Västra Göteborg, Hagen Norra",
+        "resultName": "Västra Göteborg, Hagen Norra",
+        "scbName": "Västra Göteborg  Hagen Norra"
+      },
+      {
+        "id": "14800702",
+        "geometryName": "Västra Göteborg, Långedrag Östra",
+        "resultName": "Västra Göteborg, Långedrag Östra",
+        "scbName": "Västra Göteborg  Långedrag Östra"
+      },
+      {
+        "id": "14800602",
+        "geometryName": "Sydvästra Göteborg, Högsbohöjd Södra",
+        "resultName": "Sydvästra Göteborg, Högsbohöjd Södra",
+        "scbName": "Sydvästra Göteborg  Högsbohöjd Södra"
+      },
+      {
+        "id": "14800630",
+        "geometryName": "Sydvästra Göteborg, Kobbegården",
+        "resultName": "Sydvästra Göteborg, Kobbegården",
+        "scbName": "Sydvästra Göteborg  Kobbegården"
+      },
+      {
+        "id": "14800827",
+        "geometryName": "Västra Hisingen, Gossbydal",
+        "resultName": "Västra Hisingen, Gossbydal",
+        "scbName": "Västra Hisingen  Gossbydal"
+      },
+      {
+        "id": "14800103",
+        "geometryName": "Nordöstra Göteborg, Björsared",
+        "resultName": "Nordöstra Göteborg, Björsared",
+        "scbName": "Nordöstra Göteborg  Björsared"
+      },
+      {
+        "id": "14800220",
+        "geometryName": "Östra Göteborg, Gamlestaden Norra",
+        "resultName": "Östra Göteborg, Gamlestaden Norra",
+        "scbName": "Östra Göteborg  Gamlestaden Norra"
+      },
+      {
+        "id": "14800218",
+        "geometryName": "Östra Göteborg, Bellevue Park",
+        "resultName": "Östra Göteborg, Bellevue Park",
+        "scbName": "Östra Göteborg  Bellevue Park"
+      },
+      {
+        "id": "14800609",
+        "geometryName": "Sydvästra Göteborg, Kapplandsgatan",
+        "resultName": "Sydvästra Göteborg, Kapplandsgatan",
+        "scbName": "Sydvästra Göteborg  Kapplandsgatan"
+      },
+      {
+        "id": "14800531",
+        "geometryName": "Västra Centrum, Silverkällan",
+        "resultName": "Västra Centrum, Silverkällan",
+        "scbName": "Västra Centrum  Silverkällan"
+      },
+      {
+        "id": "14800445",
+        "geometryName": "Centrum, Kapellplatsen",
+        "resultName": "Centrum, Kapellplatsen",
+        "scbName": "Centrum  Kapellplatsen"
+      },
+      {
+        "id": "14800826",
+        "geometryName": "Västra Hisingen, Torslanda Röd",
+        "resultName": "Västra Hisingen, Torslanda Röd",
+        "scbName": "Västra Hisingen  Torslanda Röd"
+      },
+      {
+        "id": "14800229",
+        "geometryName": "Östra Göteborg, Förstamajgatan m fl",
+        "resultName": "Östra Göteborg, Förstamajgatan m fl",
+        "scbName": "Östra Göteborg  Förstamajgatan m fl"
+      },
+      {
+        "id": "14800319",
+        "geometryName": "Östra Centrum, Kallebäck Norra",
+        "resultName": "Östra Centrum, Kallebäck Norra",
+        "scbName": "Östra Centrum  Kallebäck Norra"
+      },
+      {
+        "id": "14800334",
+        "geometryName": "Östra Centrum, Sankt Pauli",
+        "resultName": "Östra Centrum, Sankt Pauli",
+        "scbName": "Östra Centrum  Sankt Pauli"
+      },
+      {
+        "id": "14800415",
+        "geometryName": "Centrum, Götaplatsen",
+        "resultName": "Centrum, Götaplatsen",
+        "scbName": "Centrum  Götaplatsen"
+      },
+      {
+        "id": "14800417",
+        "geometryName": "Centrum, Eklanda Östra",
+        "resultName": "Centrum, Eklanda Östra",
+        "scbName": "Centrum  Eklanda Östra"
+      },
+      {
+        "id": "14800833",
+        "geometryName": "Västra Hisingen, Älvegården",
+        "resultName": "Västra Hisingen, Älvegården",
+        "scbName": "Västra Hisingen  Älvegården"
+      },
+      {
+        "id": "14800810",
+        "geometryName": "Västra Hisingen, Blåsvädersgat. m fl",
+        "resultName": "Västra Hisingen, Blåsvädersgat. m fl",
+        "scbName": "Västra Hisingen  Blåsvädersgat. m fl"
+      },
+      {
+        "id": "14800323",
+        "geometryName": "Östra Centrum, Stora Torp",
+        "resultName": "Östra Centrum, Stora Torp",
+        "scbName": "Östra Centrum  Stora Torp"
+      },
+      {
+        "id": "14800432",
+        "geometryName": "Centrum, Guldheden Östra",
+        "resultName": "Centrum, Guldheden Östra",
+        "scbName": "Centrum  Guldheden Östra"
+      },
+      {
+        "id": "14800447",
+        "geometryName": "Centrum, Fogelbergsparken",
+        "resultName": "Centrum, Fogelbergsparken",
+        "scbName": "Centrum  Fogelbergsparken"
+      },
+      {
+        "id": "14800425",
+        "geometryName": "Centrum, Getebergsäng",
+        "resultName": "Centrum, Getebergsäng",
+        "scbName": "Centrum  Getebergsäng"
+      },
+      {
+        "id": "14800328",
+        "geometryName": "Östra Centrum, Kärralund Södra",
+        "resultName": "Östra Centrum, Kärralund Södra",
+        "scbName": "Östra Centrum  Kärralund Södra"
+      },
+      {
+        "id": "14800813",
+        "geometryName": "Västra Hisingen, Biskopsgården Norra",
+        "resultName": "Västra Hisingen, Biskopsgården Norra",
+        "scbName": "Västra Hisingen  Biskopsgården Norra"
+      },
+      {
+        "id": "14800803",
+        "geometryName": "Västra Hisingen, Väderbodarna m fl",
+        "resultName": "Västra Hisingen, Väderbodarna m fl",
+        "scbName": "Västra Hisingen  Väderbodarna m fl"
+      },
+      {
+        "id": "14800817",
+        "geometryName": "Västra Hisingen, Länsmansgården V",
+        "resultName": "Västra Hisingen, Länsmansgården V",
+        "scbName": "Västra Hisingen  Länsmansgården V"
+      },
+      {
+        "id": "14800420",
+        "geometryName": "Centrum, Johanneberg Östra",
+        "resultName": "Centrum, Johanneberg Östra",
+        "scbName": "Centrum  Johanneberg Östra"
+      },
+      {
+        "id": "14800421",
+        "geometryName": "Centrum, Eklanda Södra",
+        "resultName": "Centrum, Eklanda Södra",
+        "scbName": "Centrum  Eklanda Södra"
+      },
+      {
+        "id": "14800426",
+        "geometryName": "Centrum, Krokslätt Norra",
+        "resultName": "Centrum, Krokslätt Norra",
+        "scbName": "Centrum  Krokslätt Norra"
+      },
+      {
+        "id": "14800412",
+        "geometryName": "Centrum, Sten Sturegatan m fl",
+        "resultName": "Centrum, Sten Sturegatan m fl",
+        "scbName": "Centrum  Sten Sturegatan m fl"
+      },
+      {
+        "id": "14800302",
+        "geometryName": "Östra Centrum, Vidkärr",
+        "resultName": "Östra Centrum, Vidkärr",
+        "scbName": "Östra Centrum  Vidkärr"
+      },
+      {
+        "id": "14800313",
+        "geometryName": "Östra Centrum, Solrosparken",
+        "resultName": "Östra Centrum, Solrosparken",
+        "scbName": "Östra Centrum  Solrosparken"
+      },
+      {
+        "id": "14800937",
+        "geometryName": "Centrala Hisingen, Sörhallsberget N",
+        "resultName": "Centrala Hisingen, Sörhallsberget N",
+        "scbName": "Centrala Hisingen  Sörhallsberget N"
+      },
+      {
+        "id": "14800941",
+        "geometryName": "Centrala Hisingen, Lindholmen Norra",
+        "resultName": "Centrala Hisingen, Lindholmen Norra",
+        "scbName": "Centrala Hisingen  Lindholmen Norra"
+      },
+      {
+        "id": "14800408",
+        "geometryName": "Centrum, Svingeln",
+        "resultName": "Centrum, Svingeln",
+        "scbName": "Centrum  Svingeln"
+      },
+      {
+        "id": "14800401",
+        "geometryName": "Centrum, Otterhällan",
+        "resultName": "Centrum, Otterhällan",
+        "scbName": "Centrum  Otterhällan"
+      },
+      {
+        "id": "14800345",
+        "geometryName": "Östra Centrum, Strömmensberg Västra",
+        "resultName": "Östra Centrum, Strömmensberg Västra",
+        "scbName": "Östra Centrum  Strömmensberg Västra"
+      },
+      {
+        "id": "14800214",
+        "geometryName": "Östra Göteborg, Utby",
+        "resultName": "Östra Göteborg, Utby",
+        "scbName": "Östra Göteborg  Utby"
+      },
+      {
+        "id": "14800926",
+        "geometryName": "Centrala Hisingen, Kyrkbyn Norra",
+        "resultName": "Centrala Hisingen, Kyrkbyn Norra",
+        "scbName": "Centrala Hisingen  Kyrkbyn Norra"
+      },
+      {
+        "id": "14800924",
+        "geometryName": "Centrala Hisingen, Rambergsvallen",
+        "resultName": "Centrala Hisingen, Rambergsvallen",
+        "scbName": "Centrala Hisingen  Rambergsvallen"
+      },
+      {
+        "id": "14800523",
+        "geometryName": "Västra Centrum, Annedal Östra",
+        "resultName": "Västra Centrum, Annedal Östra",
+        "scbName": "Västra Centrum  Annedal Östra"
+      },
+      {
+        "id": "14800520",
+        "geometryName": "Västra Centrum, Haga Östra",
+        "resultName": "Västra Centrum, Haga Östra",
+        "scbName": "Västra Centrum  Haga Östra"
+      },
+      {
+        "id": "14800517",
+        "geometryName": "Västra Centrum, Plantagegatan m fl",
+        "resultName": "Västra Centrum, Plantagegatan m fl",
+        "scbName": "Västra Centrum  Plantagegatan m fl"
+      },
+      {
+        "id": "14800217",
+        "geometryName": "Östra Göteborg, Kvibergsnäs",
+        "resultName": "Östra Göteborg, Kvibergsnäs",
+        "scbName": "Östra Göteborg  Kvibergsnäs"
+      },
+      {
+        "id": "14800226",
+        "geometryName": "Östra Göteborg, Gregorianska G. m fl",
+        "resultName": "Östra Göteborg, Gregorianska G. m fl",
+        "scbName": "Östra Göteborg  Gregorianska G. m fl"
+      },
+      {
+        "id": "14800920",
+        "geometryName": "Centrala Hisingen, Kvillestaden",
+        "resultName": "Centrala Hisingen, Kvillestaden",
+        "scbName": "Centrala Hisingen  Kvillestaden"
+      },
+      {
+        "id": "14800911",
+        "geometryName": "Centrala Hisingen, Fyrklövern",
+        "resultName": "Centrala Hisingen, Fyrklövern",
+        "scbName": "Centrala Hisingen  Fyrklövern"
+      },
+      {
+        "id": "14800910",
+        "geometryName": "Centrala Hisingen, Bjurslätt Södra",
+        "resultName": "Centrala Hisingen, Bjurslätt Södra",
+        "scbName": "Centrala Hisingen  Bjurslätt Södra"
+      },
+      {
+        "id": "14800507",
+        "geometryName": "Västra Centrum, Sjömansgatan m fl",
+        "resultName": "Västra Centrum, Sjömansgatan m fl",
+        "scbName": "Västra Centrum  Sjömansgatan m fl"
+      },
+      {
+        "id": "14800545",
+        "geometryName": "Västra Centrum, Söderlingska Ängen",
+        "resultName": "Västra Centrum, Söderlingska Ängen",
+        "scbName": "Västra Centrum  Söderlingska Ängen"
+      },
+      {
+        "id": "14800540",
+        "geometryName": "Västra Centrum, Gråberget Östra",
+        "resultName": "Västra Centrum, Gråberget Östra",
+        "scbName": "Västra Centrum  Gråberget Östra"
+      },
+      {
+        "id": "14800234",
+        "geometryName": "Östra Göteborg, Söndagsgatan m fl",
+        "resultName": "Östra Göteborg, Söndagsgatan m fl",
+        "scbName": "Östra Göteborg  Söndagsgatan m fl"
+      },
+      {
+        "id": "14801030",
+        "geometryName": "Norra Hisingen, Glöstorp",
+        "resultName": "Norra Hisingen, Glöstorp",
+        "scbName": "Norra Hisingen  Glöstorp"
+      },
+      {
+        "id": "14801024",
+        "geometryName": "Norra Hisingen, Folkvisegatan m fl",
+        "resultName": "Norra Hisingen, Folkvisegatan m fl",
+        "scbName": "Norra Hisingen  Folkvisegatan m fl"
+      },
+      {
+        "id": "14801018",
+        "geometryName": "Norra Hisingen, Blendas Gata m fl",
+        "resultName": "Norra Hisingen, Blendas Gata m fl",
+        "scbName": "Norra Hisingen  Blendas Gata m fl"
+      },
+      {
+        "id": "14800537",
+        "geometryName": "Västra Centrum, Chapmans Torg",
+        "resultName": "Västra Centrum, Chapmans Torg",
+        "scbName": "Västra Centrum  Chapmans Torg"
+      },
+      {
+        "id": "14800529",
+        "geometryName": "Västra Centrum, Kungsladugård Västra",
+        "resultName": "Västra Centrum, Kungsladugård Västra",
+        "scbName": "Västra Centrum  Kungsladugård Västra"
+      },
+      {
+        "id": "14800127",
+        "geometryName": "Nordöstra Göteborg, Mejramgatan m fl",
+        "resultName": "Nordöstra Göteborg, Mejramgatan m fl",
+        "scbName": "Nordöstra Göteborg  Mejramgatan m fl"
+      },
+      {
+        "id": "14800126",
+        "geometryName": "Nordöstra Göteborg, Senapsgatan m fl",
+        "resultName": "Nordöstra Göteborg, Senapsgatan m fl",
+        "scbName": "Nordöstra Göteborg  Senapsgatan m fl"
+      },
+      {
+        "id": "14801003",
+        "geometryName": "Norra Hisingen, Gerrebacka-Ingebäck",
+        "resultName": "Norra Hisingen, Gerrebacka-Ingebäck",
+        "scbName": "Norra Hisingen  Gerrebacka-Ingebäck"
+      },
+      {
+        "id": "14800901",
+        "geometryName": "Centrala Hisingen, Kärrdalen",
+        "resultName": "Centrala Hisingen, Kärrdalen",
+        "scbName": "Centrala Hisingen  Kärrdalen"
+      },
+      {
+        "id": "14800834",
+        "geometryName": "Västra Hisingen, Lilleby",
+        "resultName": "Västra Hisingen, Lilleby",
+        "scbName": "Västra Hisingen  Lilleby"
+      },
+      {
+        "id": "14800832",
+        "geometryName": "Västra Hisingen, Änghagen",
+        "resultName": "Västra Hisingen, Änghagen",
+        "scbName": "Västra Hisingen  Änghagen"
+      },
+      {
+        "id": "14800820",
+        "geometryName": "Västra Hisingen, Amhult-Arendal",
+        "resultName": "Västra Hisingen, Amhult-Arendal",
+        "scbName": "Västra Hisingen  Amhult-Arendal"
+      },
+      {
+        "id": "14800327",
+        "geometryName": "Östra Centrum, Prästgårdsängen m fl",
+        "resultName": "Östra Centrum, Prästgårdsängen m fl",
+        "scbName": "Östra Centrum  Prästgårdsängen m fl"
+      },
+      {
+        "id": "14800329",
+        "geometryName": "Östra Centrum, Kärralund Norra",
+        "resultName": "Östra Centrum, Kärralund Norra",
+        "scbName": "Östra Centrum  Kärralund Norra"
+      },
+      {
+        "id": "14800535",
+        "geometryName": "Västra Centrum, Gröna Vallen",
+        "resultName": "Västra Centrum, Gröna Vallen",
+        "scbName": "Västra Centrum  Gröna Vallen"
+      },
+      {
+        "id": "14800710",
+        "geometryName": "Västra Göteborg, Påvelund",
+        "resultName": "Västra Göteborg, Påvelund",
+        "scbName": "Västra Göteborg  Påvelund"
+      },
+      {
+        "id": "14800707",
+        "geometryName": "Västra Göteborg, Ekebäck",
+        "resultName": "Västra Göteborg, Ekebäck",
+        "scbName": "Västra Göteborg  Ekebäck"
+      },
+      {
+        "id": "14800717",
+        "geometryName": "Västra Göteborg, Tynnered Norra",
+        "resultName": "Västra Göteborg, Tynnered Norra",
+        "scbName": "Västra Göteborg  Tynnered Norra"
+      },
+      {
+        "id": "14800716",
+        "geometryName": "Västra Göteborg, Tynnered Södra",
+        "resultName": "Västra Göteborg, Tynnered Södra",
+        "scbName": "Västra Göteborg  Tynnered Södra"
+      },
+      {
+        "id": "14800732",
+        "geometryName": "Västra Göteborg, Välen",
+        "resultName": "Västra Göteborg, Välen",
+        "scbName": "Västra Göteborg  Välen"
+      },
+      {
+        "id": "14800133",
+        "geometryName": "Nordöstra Göteborg, Rannebergen C",
+        "resultName": "Nordöstra Göteborg, Rannebergen C",
+        "scbName": "Nordöstra Göteborg  Rannebergen C"
+      },
+      {
+        "id": "14800123",
+        "geometryName": "Nordöstra Göteborg, Gårdstensdalen",
+        "resultName": "Nordöstra Göteborg, Gårdstensdalen",
+        "scbName": "Nordöstra Göteborg  Gårdstensdalen"
+      },
+      {
+        "id": "14800615",
+        "geometryName": "Sydvästra Göteborg, Altplatsen",
+        "resultName": "Sydvästra Göteborg, Altplatsen",
+        "scbName": "Sydvästra Göteborg  Altplatsen"
+      },
+      {
+        "id": "14800131",
+        "geometryName": "Nordöstra Göteborg, Titteridamm",
+        "resultName": "Nordöstra Göteborg, Titteridamm",
+        "scbName": "Nordöstra Göteborg  Titteridamm"
+      },
+      {
+        "id": "14800104",
+        "geometryName": "Nordöstra Göteborg, Gunnilse",
+        "resultName": "Nordöstra Göteborg, Gunnilse",
+        "scbName": "Nordöstra Göteborg  Gunnilse"
+      },
+      {
+        "id": "14800605",
+        "geometryName": "Sydvästra Göteborg, Högsbotorp S",
+        "resultName": "Sydvästra Göteborg, Högsbotorp S",
+        "scbName": "Sydvästra Göteborg  Högsbotorp S"
+      },
+      {
+        "id": "14800611",
+        "geometryName": "Sydvästra Göteborg, Flatås Södra",
+        "resultName": "Sydvästra Göteborg, Flatås Södra",
+        "scbName": "Sydvästra Göteborg  Flatås Södra"
+      },
+      {
+        "id": "14800206",
+        "geometryName": "Östra Göteborg, Siriusgatan Östra",
+        "resultName": "Östra Göteborg, Siriusgatan Östra",
+        "scbName": "Östra Göteborg  Siriusgatan Östra"
+      },
+      {
+        "id": "14800808",
+        "geometryName": "Västra Hisingen, Treröset",
+        "resultName": "Västra Hisingen, Treröset",
+        "scbName": "Västra Hisingen  Treröset"
+      },
+      {
+        "id": "14800809",
+        "geometryName": "Västra Hisingen, Vårväderstorget",
+        "resultName": "Västra Hisingen, Vårväderstorget",
+        "scbName": "Västra Hisingen  Vårväderstorget"
+      },
+      {
+        "id": "14800811",
+        "geometryName": "Västra Hisingen, Biskopsgården Södra",
+        "resultName": "Västra Hisingen, Biskopsgården Södra",
+        "scbName": "Västra Hisingen  Biskopsgården Södra"
+      },
+      {
+        "id": "14800626",
+        "geometryName": "Sydvästra Göteborg, Järnbrott Södra",
+        "resultName": "Sydvästra Göteborg, Järnbrott Södra",
+        "scbName": "Sydvästra Göteborg  Järnbrott Södra"
+      },
+      {
+        "id": "14800632",
+        "geometryName": "Sydvästra Göteborg, Sisjön Västra",
+        "resultName": "Sydvästra Göteborg, Sisjön Västra",
+        "scbName": "Sydvästra Göteborg  Sisjön Västra"
+      },
+      {
+        "id": "14800642",
+        "geometryName": "Sydvästra Göteborg, Uggleberget",
+        "resultName": "Sydvästra Göteborg, Uggleberget",
+        "scbName": "Sydvästra Göteborg  Uggleberget"
+      },
+      {
+        "id": "14800934",
+        "geometryName": "Centrala Hisingen, Eriksberg Västra",
+        "resultName": "Centrala Hisingen, Eriksberg Västra",
+        "scbName": "Centrala Hisingen  Eriksberg Västra"
+      },
+      {
+        "id": "14800203",
+        "geometryName": "Östra Göteborg, Tellusgatan m fl",
+        "resultName": "Östra Göteborg, Tellusgatan m fl",
+        "scbName": "Östra Göteborg  Tellusgatan m fl"
+      },
+      {
+        "id": "14800211",
+        "geometryName": "Östra Göteborg, Zenitgatan m fl",
+        "resultName": "Östra Göteborg, Zenitgatan m fl",
+        "scbName": "Östra Göteborg  Zenitgatan m fl"
+      },
+      {
+        "id": "14800309",
+        "geometryName": "Östra Centrum, Björkekärr Östra",
+        "resultName": "Östra Centrum, Björkekärr Östra",
+        "scbName": "Östra Centrum  Björkekärr Östra"
+      },
+      {
+        "id": "14800812",
+        "geometryName": "Västra Hisingen, Väderlekstorget",
+        "resultName": "Västra Hisingen, Väderlekstorget",
+        "scbName": "Västra Hisingen  Väderlekstorget"
+      },
+      {
+        "id": "14800805",
+        "geometryName": "Västra Hisingen, Svartedalen Södra",
+        "resultName": "Västra Hisingen, Svartedalen Södra",
+        "scbName": "Västra Hisingen  Svartedalen Södra"
+      },
+      {
+        "id": "14800806",
+        "geometryName": "Västra Hisingen, Kärrmossen",
+        "resultName": "Västra Hisingen, Kärrmossen",
+        "scbName": "Västra Hisingen  Kärrmossen"
+      },
+      {
+        "id": "14800807",
+        "geometryName": "Västra Hisingen, Jättesten",
+        "resultName": "Västra Hisingen, Jättesten",
+        "scbName": "Västra Hisingen  Jättesten"
+      },
+      {
+        "id": "14800915",
+        "geometryName": "Centrala Hisingen, Vågmästareplatsen",
+        "resultName": "Centrala Hisingen, Vågmästareplatsen",
+        "scbName": "Centrala Hisingen  Vågmästareplatsen"
+      },
+      {
+        "id": "14800638",
+        "geometryName": "Sydvästra Göteborg, Billdal Norra",
+        "resultName": "Sydvästra Göteborg, Billdal Norra",
+        "scbName": "Sydvästra Göteborg  Billdal Norra"
+      },
+      {
+        "id": "14800232",
+        "geometryName": "Östra Göteborg, Adventsparken Östra",
+        "resultName": "Östra Göteborg, Adventsparken Östra",
+        "scbName": "Östra Göteborg  Adventsparken Östra"
+      },
+      {
+        "id": "14800337",
+        "geometryName": "Östra Centrum, Gubbero",
+        "resultName": "Östra Centrum, Gubbero",
+        "scbName": "Östra Centrum  Gubbero"
+      },
+      {
+        "id": "14800404",
+        "geometryName": "Centrum, Stampen Västra",
+        "resultName": "Centrum, Stampen Västra",
+        "scbName": "Centrum  Stampen Västra"
+      },
+      {
+        "id": "14800914",
+        "geometryName": "Centrala Hisingen, Kvillebäcken Ö",
+        "resultName": "Centrala Hisingen, Kvillebäcken Ö",
+        "scbName": "Centrala Hisingen  Kvillebäcken Ö"
+      },
+      {
+        "id": "14800904",
+        "geometryName": "Centrala Hisingen, Bjurslätt Norra",
+        "resultName": "Centrala Hisingen, Bjurslätt Norra",
+        "scbName": "Centrala Hisingen  Bjurslätt Norra"
+      },
+      {
+        "id": "14800427",
+        "geometryName": "Centrum, Krokslätt Södra",
+        "resultName": "Centrum, Krokslätt Södra",
+        "scbName": "Centrum  Krokslätt Södra"
+      },
+      {
+        "id": "14800728",
+        "geometryName": "Västra Göteborg, Önnered Norra",
+        "resultName": "Västra Göteborg, Önnered Norra",
+        "scbName": "Västra Göteborg  Önnered Norra"
+      },
+      {
+        "id": "14800723",
+        "geometryName": "Västra Göteborg, Topasgatan",
+        "resultName": "Västra Göteborg, Topasgatan",
+        "scbName": "Västra Göteborg  Topasgatan"
+      },
+      {
+        "id": "14800434",
+        "geometryName": "Centrum, Guldheden Södra",
+        "resultName": "Centrum, Guldheden Södra",
+        "scbName": "Centrum  Guldheden Södra"
+      },
+      {
+        "id": "14800521",
+        "geometryName": "Västra Centrum, Nilssonsberg Västra",
+        "resultName": "Västra Centrum, Nilssonsberg Västra",
+        "scbName": "Västra Centrum  Nilssonsberg Västra"
+      },
+      {
+        "id": "14800939",
+        "geometryName": "Centrala Hisingen, Sannegården Ö",
+        "resultName": "Centrala Hisingen, Sannegården Ö",
+        "scbName": "Centrala Hisingen  Sannegården Ö"
+      },
+      {
+        "id": "14800804",
+        "geometryName": "Västra Hisingen, Önskevädersg. m fl",
+        "resultName": "Västra Hisingen, Önskevädersg. m fl",
+        "scbName": "Västra Hisingen  Önskevädersg. m fl"
+      },
+      {
+        "id": "14800836",
+        "geometryName": "Västra Hisingen, Björlanda",
+        "resultName": "Västra Hisingen, Björlanda",
+        "scbName": "Västra Hisingen  Björlanda"
+      },
+      {
+        "id": "14800837",
+        "geometryName": "Västra Hisingen, Nolvik",
+        "resultName": "Västra Hisingen, Nolvik",
+        "scbName": "Västra Hisingen  Nolvik"
+      },
+      {
+        "id": "14800829",
+        "geometryName": "Västra Hisingen, Torslanda Torg",
+        "resultName": "Västra Hisingen, Torslanda Torg",
+        "scbName": "Västra Hisingen  Torslanda Torg"
+      },
+      {
+        "id": "14800441",
+        "geometryName": "Centrum, Johanneberg Västra",
+        "resultName": "Centrum, Johanneberg Västra",
+        "scbName": "Centrum  Johanneberg Västra"
+      },
+      {
+        "id": "14800444",
+        "geometryName": "Centrum, Vasastaden Södra",
+        "resultName": "Centrum, Vasastaden Södra",
+        "scbName": "Centrum  Vasastaden Södra"
+      },
+      {
+        "id": "14800440",
+        "geometryName": "Centrum, Landalagången m fl",
+        "resultName": "Centrum, Landalagången m fl",
+        "scbName": "Centrum  Landalagången m fl"
+      },
+      {
+        "id": "14800446",
+        "geometryName": "Centrum, Landalabergen m fl",
+        "resultName": "Centrum, Landalabergen m fl",
+        "scbName": "Centrum  Landalabergen m fl"
+      },
+      {
+        "id": "14800438",
+        "geometryName": "Centrum, Guldheden Norra",
+        "resultName": "Centrum, Guldheden Norra",
+        "scbName": "Centrum  Guldheden Norra"
+      },
+      {
+        "id": "14800629",
+        "geometryName": "Sydvästra Göteborg, Pilegården",
+        "resultName": "Sydvästra Göteborg, Pilegården",
+        "scbName": "Sydvästra Göteborg  Pilegården"
+      },
+      {
+        "id": "14800628",
+        "geometryName": "Sydvästra Göteborg, Sisjön Norra",
+        "resultName": "Sydvästra Göteborg, Sisjön Norra",
+        "scbName": "Sydvästra Göteborg  Sisjön Norra"
+      },
+      {
+        "id": "14800633",
+        "geometryName": "Sydvästra Göteborg, Sisjön Södra",
+        "resultName": "Sydvästra Göteborg, Sisjön Södra",
+        "scbName": "Sydvästra Göteborg  Sisjön Södra"
+      },
+      {
+        "id": "14800646",
+        "geometryName": "Sydvästra Göteborg, Hovås Norra",
+        "resultName": "Sydvästra Göteborg, Hovås Norra",
+        "scbName": "Sydvästra Göteborg  Hovås Norra"
+      },
+      {
+        "id": "14800631",
+        "geometryName": "Sydvästra Göteborg, Askim",
+        "resultName": "Sydvästra Göteborg, Askim",
+        "scbName": "Sydvästra Göteborg  Askim"
+      },
+      {
+        "id": "14800645",
+        "geometryName": "Sydvästra Göteborg, Hovås Södra",
+        "resultName": "Sydvästra Göteborg, Hovås Södra",
+        "scbName": "Sydvästra Göteborg  Hovås Södra"
+      },
+      {
+        "id": "14800634",
+        "geometryName": "Sydvästra Göteborg, Trollåsen",
+        "resultName": "Sydvästra Göteborg, Trollåsen",
+        "scbName": "Sydvästra Göteborg  Trollåsen"
+      },
+      {
+        "id": "14800644",
+        "geometryName": "Sydvästra Göteborg, Brottkärr Västra",
+        "resultName": "Sydvästra Göteborg, Brottkärr Västra",
+        "scbName": "Sydvästra Göteborg  Brottkärr Västra"
+      },
+      {
+        "id": "14800635",
+        "geometryName": "Sydvästra Göteborg, Lyckhem",
+        "resultName": "Sydvästra Göteborg, Lyckhem",
+        "scbName": "Sydvästra Göteborg  Lyckhem"
+      },
+      {
+        "id": "14800636",
+        "geometryName": "Sydvästra Göteborg, Lindås",
+        "resultName": "Sydvästra Göteborg, Lindås",
+        "scbName": "Sydvästra Göteborg  Lindås"
+      },
+      {
+        "id": "14800403",
+        "geometryName": "Centrum, Nordstan",
+        "resultName": "Centrum, Nordstan",
+        "scbName": "Centrum  Nordstan"
+      },
+      {
+        "id": "14800402",
+        "geometryName": "Centrum, Inom Vallgraven",
+        "resultName": "Centrum, Inom Vallgraven",
+        "scbName": "Centrum  Inom Vallgraven"
+      },
+      {
+        "id": "14800407",
+        "geometryName": "Centrum, Friggagatan m fl",
+        "resultName": "Centrum, Friggagatan m fl",
+        "scbName": "Centrum  Friggagatan m fl"
+      },
+      {
+        "id": "14800405",
+        "geometryName": "Centrum, Odinsgatan m fl",
+        "resultName": "Centrum, Odinsgatan m fl",
+        "scbName": "Centrum  Odinsgatan m fl"
+      },
+      {
+        "id": "14800406",
+        "geometryName": "Centrum, Stampen Östra",
+        "resultName": "Centrum, Stampen Östra",
+        "scbName": "Centrum  Stampen Östra"
+      },
+      {
+        "id": "14800913",
+        "geometryName": "Centrala Hisingen, Kvillebäcken S",
+        "resultName": "Centrala Hisingen, Kvillebäcken S",
+        "scbName": "Centrala Hisingen  Kvillebäcken S"
+      },
+      {
+        "id": "14800909",
+        "geometryName": "Centrala Hisingen, Wieselgrenspl.",
+        "resultName": "Centrala Hisingen, Wieselgrenspl.",
+        "scbName": "Centrala Hisingen  Wieselgrenspl."
+      },
+      {
+        "id": "14800932",
+        "geometryName": "Centrala Hisingen, Pölsebo-Bratterås",
+        "resultName": "Centrala Hisingen, Pölsebo-Bratterås",
+        "scbName": "Centrala Hisingen  Pölsebo-Bratterås"
+      },
+      {
+        "id": "14800936",
+        "geometryName": "Centrala Hisingen, Sörhallsberget S",
+        "resultName": "Centrala Hisingen, Sörhallsberget S",
+        "scbName": "Centrala Hisingen  Sörhallsberget S"
+      },
+      {
+        "id": "14800938",
+        "geometryName": "Centrala Hisingen, Sannegården V",
+        "resultName": "Centrala Hisingen, Sannegården V",
+        "scbName": "Centrala Hisingen  Sannegården V"
+      },
+      {
+        "id": "14800640",
+        "geometryName": "Sydvästra Göteborg, Skintebo Västra",
+        "resultName": "Sydvästra Göteborg, Skintebo Västra",
+        "scbName": "Sydvästra Göteborg  Skintebo Västra"
+      },
+      {
+        "id": "14800639",
+        "geometryName": "Sydvästra Göteborg, Nygård",
+        "resultName": "Sydvästra Göteborg, Nygård",
+        "scbName": "Sydvästra Göteborg  Nygård"
+      },
+      {
+        "id": "14800637",
+        "geometryName": "Sydvästra Göteborg, Billdal Södra",
+        "resultName": "Sydvästra Göteborg, Billdal Södra",
+        "scbName": "Sydvästra Göteborg  Billdal Södra"
+      },
+      {
+        "id": "14800125",
+        "geometryName": "Nordöstra Göteborg, Lövgärdet C",
+        "resultName": "Nordöstra Göteborg, Lövgärdet C",
+        "scbName": "Nordöstra Göteborg  Lövgärdet C"
+      },
+      {
+        "id": "14800128",
+        "geometryName": "Nordöstra Göteborg, Lövgärdet Övre",
+        "resultName": "Nordöstra Göteborg, Lövgärdet Övre",
+        "scbName": "Nordöstra Göteborg  Lövgärdet Övre"
+      },
+      {
+        "id": "14800129",
+        "geometryName": "Nordöstra Göteborg, Lövgärdet Nedre",
+        "resultName": "Nordöstra Göteborg, Lövgärdet Nedre",
+        "scbName": "Nordöstra Göteborg  Lövgärdet Nedre"
+      },
+      {
+        "id": "14800134",
+        "geometryName": "Nordöstra Göteborg, Rannebergen N",
+        "resultName": "Nordöstra Göteborg, Rannebergen N",
+        "scbName": "Nordöstra Göteborg  Rannebergen N"
+      },
+      {
+        "id": "14800132",
+        "geometryName": "Nordöstra Göteborg, Rannebergen S",
+        "resultName": "Nordöstra Göteborg, Rannebergen S",
+        "scbName": "Nordöstra Göteborg  Rannebergen S"
+      },
+      {
+        "id": "14800409",
+        "geometryName": "Centrum, Gårda Norra",
+        "resultName": "Centrum, Gårda Norra",
+        "scbName": "Centrum  Gårda Norra"
+      },
+      {
+        "id": "14800411",
+        "geometryName": "Centrum, Bohusgatan m fl",
+        "resultName": "Centrum, Bohusgatan m fl",
+        "scbName": "Centrum  Bohusgatan m fl"
+      },
+      {
+        "id": "14800410",
+        "geometryName": "Centrum, Gårda Södra",
+        "resultName": "Centrum, Gårda Södra",
+        "scbName": "Centrum  Gårda Södra"
+      },
+      {
+        "id": "14800916",
+        "geometryName": "Centrala Hisingen, Backaplan",
+        "resultName": "Centrala Hisingen, Backaplan",
+        "scbName": "Centrala Hisingen  Backaplan"
+      },
+      {
+        "id": "14800905",
+        "geometryName": "Centrala Hisingen, Hildedal",
+        "resultName": "Centrala Hisingen, Hildedal",
+        "scbName": "Centrala Hisingen  Hildedal"
+      },
+      {
+        "id": "14800935",
+        "geometryName": "Centrala Hisingen, Eriksberg Östra",
+        "resultName": "Centrala Hisingen, Eriksberg Östra",
+        "scbName": "Centrala Hisingen  Eriksberg Östra"
+      },
+      {
+        "id": "14800124",
+        "geometryName": "Nordöstra Göteborg, Gårdsten Norra",
+        "resultName": "Nordöstra Göteborg, Gårdsten Norra",
+        "scbName": "Nordöstra Göteborg  Gårdsten Norra"
+      },
+      {
+        "id": "14800414",
+        "geometryName": "Centrum, Hedås",
+        "resultName": "Centrum, Hedås",
+        "scbName": "Centrum  Hedås"
+      },
+      {
+        "id": "14800413",
+        "geometryName": "Centrum, Heden",
+        "resultName": "Centrum, Heden",
+        "scbName": "Centrum  Heden"
+      },
+      {
+        "id": "14800341",
+        "geometryName": "Östra Centrum, Redberget",
+        "resultName": "Östra Centrum, Redberget",
+        "scbName": "Östra Centrum  Redberget"
+      },
+      {
+        "id": "14800339",
+        "geometryName": "Östra Centrum, Redbergsplatsen",
+        "resultName": "Östra Centrum, Redbergsplatsen",
+        "scbName": "Östra Centrum  Redbergsplatsen"
+      },
+      {
+        "id": "14800338",
+        "geometryName": "Östra Centrum, Gubberoparken",
+        "resultName": "Östra Centrum, Gubberoparken",
+        "scbName": "Östra Centrum  Gubberoparken"
+      },
+      {
+        "id": "14800340",
+        "geometryName": "Östra Centrum, Olskroken",
+        "resultName": "Östra Centrum, Olskroken",
+        "scbName": "Östra Centrum  Olskroken"
+      },
+      {
+        "id": "14800903",
+        "geometryName": "Centrala Hisingen, Slätta Damm",
+        "resultName": "Centrala Hisingen, Slätta Damm",
+        "scbName": "Centrala Hisingen  Slätta Damm"
+      },
+      {
+        "id": "14800902",
+        "geometryName": "Centrala Hisingen, Tolered Norra",
+        "resultName": "Centrala Hisingen, Tolered Norra",
+        "scbName": "Centrala Hisingen  Tolered Norra"
+      },
+      {
+        "id": "14800906",
+        "geometryName": "Centrala Hisingen, Tolered Södra",
+        "resultName": "Centrala Hisingen, Tolered Södra",
+        "scbName": "Centrala Hisingen  Tolered Södra"
+      },
+      {
+        "id": "14801027",
+        "geometryName": "Norra Hisingen, Tuve Södra",
+        "resultName": "Norra Hisingen, Tuve Södra",
+        "scbName": "Norra Hisingen  Tuve Södra"
+      },
+      {
+        "id": "14801028",
+        "geometryName": "Norra Hisingen, Gunnestorp",
+        "resultName": "Norra Hisingen, Gunnestorp",
+        "scbName": "Norra Hisingen  Gunnestorp"
+      },
+      {
+        "id": "14800933",
+        "geometryName": "Centrala Hisingen, Färjenäs",
+        "resultName": "Centrala Hisingen, Färjenäs",
+        "scbName": "Centrala Hisingen  Färjenäs"
+      },
+      {
+        "id": "14800130",
+        "geometryName": "Nordöstra Göteborg, Trädgårdsgärdet",
+        "resultName": "Nordöstra Göteborg, Trädgårdsgärdet",
+        "scbName": "Nordöstra Göteborg  Trädgårdsgärdet"
+      },
+      {
+        "id": "14800106",
+        "geometryName": "Nordöstra Göteborg, Angereds Centrum",
+        "resultName": "Nordöstra Göteborg, Angereds Centrum",
+        "scbName": "Nordöstra Göteborg  Angereds Centrum"
+      },
+      {
+        "id": "14800107",
+        "geometryName": "Nordöstra Göteborg, Storås",
+        "resultName": "Nordöstra Göteborg, Storås",
+        "scbName": "Nordöstra Göteborg  Storås"
+      },
+      {
+        "id": "14800343",
+        "geometryName": "Östra Centrum, Redbergslid",
+        "resultName": "Östra Centrum, Redbergslid",
+        "scbName": "Östra Centrum  Redbergslid"
+      },
+      {
+        "id": "14800342",
+        "geometryName": "Östra Centrum, Bagaregården",
+        "resultName": "Östra Centrum, Bagaregården",
+        "scbName": "Östra Centrum  Bagaregården"
+      },
+      {
+        "id": "14800346",
+        "geometryName": "Östra Centrum, Strömmensberg Östra",
+        "resultName": "Östra Centrum, Strömmensberg Östra",
+        "scbName": "Östra Centrum  Strömmensberg Östra"
+      },
+      {
+        "id": "14800344",
+        "geometryName": "Östra Centrum, Ånäs",
+        "resultName": "Östra Centrum, Ånäs",
+        "scbName": "Östra Centrum  Ånäs"
+      },
+      {
+        "id": "14800318",
+        "geometryName": "Östra Centrum, Kallebäck Västra",
+        "resultName": "Östra Centrum, Kallebäck Västra",
+        "scbName": "Östra Centrum  Kallebäck Västra"
+      },
+      {
+        "id": "14801029",
+        "geometryName": "Norra Hisingen, Arvesgärde m fl",
+        "resultName": "Norra Hisingen, Arvesgärde m fl",
+        "scbName": "Norra Hisingen  Arvesgärde m fl"
+      },
+      {
+        "id": "14801004",
+        "geometryName": "Norra Hisingen, Kärra Norra",
+        "resultName": "Norra Hisingen, Kärra Norra",
+        "scbName": "Norra Hisingen  Kärra Norra"
+      },
+      {
+        "id": "14801005",
+        "geometryName": "Norra Hisingen, Kärra Östra",
+        "resultName": "Norra Hisingen, Kärra Östra",
+        "scbName": "Norra Hisingen  Kärra Östra"
+      },
+      {
+        "id": "14801007",
+        "geometryName": "Norra Hisingen, Kärra Västra",
+        "resultName": "Norra Hisingen, Kärra Västra",
+        "scbName": "Norra Hisingen  Kärra Västra"
+      },
+      {
+        "id": "14800940",
+        "geometryName": "Centrala Hisingen, Lindholmen Södra",
+        "resultName": "Centrala Hisingen, Lindholmen Södra",
+        "scbName": "Centrala Hisingen  Lindholmen Södra"
+      },
+      {
+        "id": "14800917",
+        "geometryName": "Centrala Hisingen, Lundbyvassen",
+        "resultName": "Centrala Hisingen, Lundbyvassen",
+        "scbName": "Centrala Hisingen  Lundbyvassen"
+      },
+      {
+        "id": "14800711",
+        "geometryName": "Västra Göteborg, Björnekulla",
+        "resultName": "Västra Göteborg, Björnekulla",
+        "scbName": "Västra Göteborg  Björnekulla"
+      },
+      {
+        "id": "14800713",
+        "geometryName": "Västra Göteborg, Källängen",
+        "resultName": "Västra Göteborg, Källängen",
+        "scbName": "Västra Göteborg  Källängen"
+      },
+      {
+        "id": "14800712",
+        "geometryName": "Västra Göteborg, Osberget",
+        "resultName": "Västra Göteborg, Osberget",
+        "scbName": "Västra Göteborg  Osberget"
+      },
+      {
+        "id": "14800714",
+        "geometryName": "Västra Göteborg, Fiskebäck",
+        "resultName": "Västra Göteborg, Fiskebäck",
+        "scbName": "Västra Göteborg  Fiskebäck"
+      },
+      {
+        "id": "14800701",
+        "geometryName": "Västra Göteborg, Långedrag Västra",
+        "resultName": "Västra Göteborg, Långedrag Västra",
+        "scbName": "Västra Göteborg  Långedrag Västra"
+      },
+      {
+        "id": "14800703",
+        "geometryName": "Västra Göteborg, Tångudden",
+        "resultName": "Västra Göteborg, Tångudden",
+        "scbName": "Västra Göteborg  Tångudden"
+      },
+      {
+        "id": "14800705",
+        "geometryName": "Västra Göteborg, Nya Varvet",
+        "resultName": "Västra Göteborg, Nya Varvet",
+        "scbName": "Västra Göteborg  Nya Varvet"
+      },
+      {
+        "id": "14800802",
+        "geometryName": "Västra Hisingen, Svartedalen Norra",
+        "resultName": "Västra Hisingen, Svartedalen Norra",
+        "scbName": "Västra Hisingen  Svartedalen Norra"
+      },
+      {
+        "id": "14800821",
+        "geometryName": "Västra Hisingen, Andalen",
+        "resultName": "Västra Hisingen, Andalen",
+        "scbName": "Västra Hisingen  Andalen"
+      },
+      {
+        "id": "14800822",
+        "geometryName": "Västra Hisingen, Hjuvik",
+        "resultName": "Västra Hisingen, Hjuvik",
+        "scbName": "Västra Hisingen  Hjuvik"
+      },
+      {
+        "id": "14800823",
+        "geometryName": "Västra Hisingen, Hällsvik",
+        "resultName": "Västra Hisingen, Hällsvik",
+        "scbName": "Västra Hisingen  Hällsvik"
+      },
+      {
+        "id": "14800828",
+        "geometryName": "Västra Hisingen, Nolered",
+        "resultName": "Västra Hisingen, Nolered",
+        "scbName": "Västra Hisingen  Nolered"
+      },
+      {
+        "id": "14800825",
+        "geometryName": "Västra Hisingen, Tumlehed",
+        "resultName": "Västra Hisingen, Tumlehed",
+        "scbName": "Västra Hisingen  Tumlehed"
+      },
+      {
+        "id": "14800317",
+        "geometryName": "Östra Centrum, Kallebäck Östra",
+        "resultName": "Östra Centrum, Kallebäck Östra",
+        "scbName": "Östra Centrum  Kallebäck Östra"
+      },
+      {
+        "id": "14800322",
+        "geometryName": "Östra Centrum, Skår Norra",
+        "resultName": "Östra Centrum, Skår Norra",
+        "scbName": "Östra Centrum  Skår Norra"
+      },
+      {
+        "id": "14800321",
+        "geometryName": "Östra Centrum, Jakobsdal",
+        "resultName": "Östra Centrum, Jakobsdal",
+        "scbName": "Östra Centrum  Jakobsdal"
+      },
+      {
+        "id": "14800320",
+        "geometryName": "Östra Centrum, Skår Södra",
+        "resultName": "Östra Centrum, Skår Södra",
+        "scbName": "Östra Centrum  Skår Södra"
+      },
+      {
+        "id": "14800325",
+        "geometryName": "Östra Centrum, Bö",
+        "resultName": "Östra Centrum, Bö",
+        "scbName": "Östra Centrum  Bö"
+      },
+      {
+        "id": "14800326",
+        "geometryName": "Östra Centrum, Örgryte",
+        "resultName": "Östra Centrum, Örgryte",
+        "scbName": "Östra Centrum  Örgryte"
+      },
+      {
+        "id": "14800324",
+        "geometryName": "Östra Centrum, Lilla Torp",
+        "resultName": "Östra Centrum, Lilla Torp",
+        "scbName": "Östra Centrum  Lilla Torp"
+      },
+      {
+        "id": "14801006",
+        "geometryName": "Norra Hisingen, Kärra Södra",
+        "resultName": "Norra Hisingen, Kärra Södra",
+        "scbName": "Norra Hisingen  Kärra Södra"
+      },
+      {
+        "id": "14801002",
+        "geometryName": "Norra Hisingen, Mysterna-Svankälla",
+        "resultName": "Norra Hisingen, Mysterna-Svankälla",
+        "scbName": "Norra Hisingen  Mysterna-Svankälla"
+      },
+      {
+        "id": "14801001",
+        "geometryName": "Norra Hisingen, Rödbo",
+        "resultName": "Norra Hisingen, Rödbo",
+        "scbName": "Norra Hisingen  Rödbo"
+      },
+      {
+        "id": "14801025",
+        "geometryName": "Norra Hisingen, Brunnsbo Norra",
+        "resultName": "Norra Hisingen, Brunnsbo Norra",
+        "scbName": "Norra Hisingen  Brunnsbo Norra"
+      },
+      {
+        "id": "14801023",
+        "geometryName": "Norra Hisingen, Brunnsbo Södra",
+        "resultName": "Norra Hisingen, Brunnsbo Södra",
+        "scbName": "Norra Hisingen  Brunnsbo Södra"
+      },
+      {
+        "id": "14800708",
+        "geometryName": "Västra Göteborg, Hagen Södra",
+        "resultName": "Västra Göteborg, Hagen Södra",
+        "scbName": "Västra Göteborg  Hagen Södra"
+      },
+      {
+        "id": "14800709",
+        "geometryName": "Västra Göteborg, Grimmered",
+        "resultName": "Västra Göteborg, Grimmered",
+        "scbName": "Västra Göteborg  Grimmered"
+      },
+      {
+        "id": "14800706",
+        "geometryName": "Västra Göteborg, Kungsten",
+        "resultName": "Västra Göteborg, Kungsten",
+        "scbName": "Västra Göteborg  Kungsten"
+      },
+      {
+        "id": "14800735",
+        "geometryName": "Västra Göteborg, Donsö-Vrångö",
+        "resultName": "Västra Göteborg, Donsö-Vrångö",
+        "scbName": "Västra Göteborg  Donsö-Vrångö"
+      },
+      {
+        "id": "14800737",
+        "geometryName": "Västra Göteborg, Brännö-Asperö",
+        "resultName": "Västra Göteborg, Brännö-Asperö",
+        "scbName": "Västra Göteborg  Brännö-Asperö"
+      },
+      {
+        "id": "14800736",
+        "geometryName": "Västra Göteborg, Styrsö-Köpstadsö",
+        "resultName": "Västra Göteborg, Styrsö-Köpstadsö",
+        "scbName": "Västra Göteborg  Styrsö-Köpstadsö"
+      },
+      {
+        "id": "14800715",
+        "geometryName": "Västra Göteborg, Bratthammar",
+        "resultName": "Västra Göteborg, Bratthammar",
+        "scbName": "Västra Göteborg  Bratthammar"
+      },
+      {
+        "id": "14800718",
+        "geometryName": "Västra Göteborg, Guldringen m fl",
+        "resultName": "Västra Göteborg, Guldringen m fl",
+        "scbName": "Västra Göteborg  Guldringen m fl"
+      },
+      {
+        "id": "14800110",
+        "geometryName": "Nordöstra Göteborg, Hammarkullen Ö",
+        "resultName": "Nordöstra Göteborg, Hammarkullen Ö",
+        "scbName": "Nordöstra Göteborg  Hammarkullen Ö"
+      },
+      {
+        "id": "14800105",
+        "geometryName": "Nordöstra Göteborg, Linnarhult",
+        "resultName": "Nordöstra Göteborg, Linnarhult",
+        "scbName": "Nordöstra Göteborg  Linnarhult"
+      },
+      {
+        "id": "14800102",
+        "geometryName": "Nordöstra Göteborg, Olofstorp",
+        "resultName": "Nordöstra Göteborg, Olofstorp",
+        "scbName": "Nordöstra Göteborg  Olofstorp"
+      },
+      {
+        "id": "14800101",
+        "geometryName": "Nordöstra Göteborg, Bergum",
+        "resultName": "Nordöstra Göteborg, Bergum",
+        "scbName": "Nordöstra Göteborg  Bergum"
+      },
+      {
+        "id": "14800333",
+        "geometryName": "Östra Centrum, Nobelplatsen",
+        "resultName": "Östra Centrum, Nobelplatsen",
+        "scbName": "Östra Centrum  Nobelplatsen"
+      },
+      {
+        "id": "14800331",
+        "geometryName": "Östra Centrum, Lunden Nya",
+        "resultName": "Östra Centrum, Lunden Nya",
+        "scbName": "Östra Centrum  Lunden Nya"
+      },
+      {
+        "id": "14800336",
+        "geometryName": "Östra Centrum, Överås",
+        "resultName": "Östra Centrum, Överås",
+        "scbName": "Östra Centrum  Överås"
+      },
+      {
+        "id": "14801026",
+        "geometryName": "Norra Hisingen, Aröd",
+        "resultName": "Norra Hisingen, Aröd",
+        "scbName": "Norra Hisingen  Aröd"
+      },
+      {
+        "id": "14801019",
+        "geometryName": "Norra Hisingen, Backa Södra",
+        "resultName": "Norra Hisingen, Backa Södra",
+        "scbName": "Norra Hisingen  Backa Södra"
+      },
+      {
+        "id": "14801009",
+        "geometryName": "Norra Hisingen, Åketorp",
+        "resultName": "Norra Hisingen, Åketorp",
+        "scbName": "Norra Hisingen  Åketorp"
+      },
+      {
+        "id": "14801010",
+        "geometryName": "Norra Hisingen, Bäckebol Norra",
+        "resultName": "Norra Hisingen, Bäckebol Norra",
+        "scbName": "Norra Hisingen  Bäckebol Norra"
+      },
+      {
+        "id": "14800927",
+        "geometryName": "Centrala Hisingen, Lundby Norra",
+        "resultName": "Centrala Hisingen, Lundby Norra",
+        "scbName": "Centrala Hisingen  Lundby Norra"
+      },
+      {
+        "id": "14800929",
+        "geometryName": "Centrala Hisingen, Lundby Södra",
+        "resultName": "Centrala Hisingen, Lundby Södra",
+        "scbName": "Centrala Hisingen  Lundby Södra"
+      },
+      {
+        "id": "14800930",
+        "geometryName": "Centrala Hisingen, Bräcke Norra",
+        "resultName": "Centrala Hisingen, Bräcke Norra",
+        "scbName": "Centrala Hisingen  Bräcke Norra"
+      },
+      {
+        "id": "14800719",
+        "geometryName": "Västra Göteborg, Tynnered Östra",
+        "resultName": "Västra Göteborg, Tynnered Östra",
+        "scbName": "Västra Göteborg  Tynnered Östra"
+      },
+      {
+        "id": "14800612",
+        "geometryName": "Sydvästra Göteborg, Kaverös Norra",
+        "resultName": "Sydvästra Göteborg, Kaverös Norra",
+        "scbName": "Sydvästra Göteborg  Kaverös Norra"
+      },
+      {
+        "id": "14800613",
+        "geometryName": "Sydvästra Göteborg, Kavås",
+        "resultName": "Sydvästra Göteborg, Kavås",
+        "scbName": "Sydvästra Göteborg  Kavås"
+      },
+      {
+        "id": "14800814",
+        "geometryName": "Västra Hisingen, Svarte Mosse",
+        "resultName": "Västra Hisingen, Svarte Mosse",
+        "scbName": "Västra Hisingen  Svarte Mosse"
+      },
+      {
+        "id": "14800819",
+        "geometryName": "Västra Hisingen, Länsmansgården N",
+        "resultName": "Västra Hisingen, Länsmansgården N",
+        "scbName": "Västra Hisingen  Länsmansgården N"
+      },
+      {
+        "id": "14800818",
+        "geometryName": "Västra Hisingen, Länsmansgården C",
+        "resultName": "Västra Hisingen, Länsmansgården C",
+        "scbName": "Västra Hisingen  Länsmansgården C"
+      },
+      {
+        "id": "14800335",
+        "geometryName": "Östra Centrum, Lunden Gamla",
+        "resultName": "Östra Centrum, Lunden Gamla",
+        "scbName": "Östra Centrum  Lunden Gamla"
+      },
+      {
+        "id": "14800332",
+        "geometryName": "Östra Centrum, Danska Vägen m fl",
+        "resultName": "Östra Centrum, Danska Vägen m fl",
+        "scbName": "Östra Centrum  Danska Vägen m fl"
+      },
+      {
+        "id": "14800330",
+        "geometryName": "Östra Centrum, Härlanda",
+        "resultName": "Östra Centrum, Härlanda",
+        "scbName": "Östra Centrum  Härlanda"
+      },
+      {
+        "id": "14800303",
+        "geometryName": "Östra Centrum, Munkebäck Norra",
+        "resultName": "Östra Centrum, Munkebäck Norra",
+        "scbName": "Östra Centrum  Munkebäck Norra"
+      },
+      {
+        "id": "14800304",
+        "geometryName": "Östra Centrum, Munkebäck Södra",
+        "resultName": "Östra Centrum, Munkebäck Södra",
+        "scbName": "Östra Centrum  Munkebäck Södra"
+      },
+      {
+        "id": "14800305",
+        "geometryName": "Östra Centrum, Kålltorp Norra",
+        "resultName": "Östra Centrum, Kålltorp Norra",
+        "scbName": "Östra Centrum  Kålltorp Norra"
+      },
+      {
+        "id": "14800928",
+        "geometryName": "Centrala Hisingen, Kyrkbyn Södra",
+        "resultName": "Centrala Hisingen, Kyrkbyn Södra",
+        "scbName": "Centrala Hisingen  Kyrkbyn Södra"
+      },
+      {
+        "id": "14800931",
+        "geometryName": "Centrala Hisingen, Bräcke Södra",
+        "resultName": "Centrala Hisingen, Bräcke Södra",
+        "scbName": "Centrala Hisingen  Bräcke Södra"
+      },
+      {
+        "id": "14800921",
+        "geometryName": "Centrala Hisingen, Brämaregården N",
+        "resultName": "Centrala Hisingen, Brämaregården N",
+        "scbName": "Centrala Hisingen  Brämaregården N"
+      },
+      {
+        "id": "14800614",
+        "geometryName": "Sydvästra Göteborg, Kaverös Södra",
+        "resultName": "Sydvästra Göteborg, Kaverös Södra",
+        "scbName": "Sydvästra Göteborg  Kaverös Södra"
+      },
+      {
+        "id": "14800610",
+        "geometryName": "Sydvästra Göteborg, Flatås Västra",
+        "resultName": "Sydvästra Göteborg, Flatås Västra",
+        "scbName": "Sydvästra Göteborg  Flatås Västra"
+      },
+      {
+        "id": "14800601",
+        "geometryName": "Sydvästra Göteborg, Högsbohöjd Norra",
+        "resultName": "Sydvästra Göteborg, Högsbohöjd Norra",
+        "scbName": "Sydvästra Göteborg  Högsbohöjd Norra"
+      },
+      {
+        "id": "14800831",
+        "geometryName": "Västra Hisingen, Domarringen m fl",
+        "resultName": "Västra Hisingen, Domarringen m fl",
+        "scbName": "Västra Hisingen  Domarringen m fl"
+      },
+      {
+        "id": "14800835",
+        "geometryName": "Västra Hisingen, Kvisljungeby",
+        "resultName": "Västra Hisingen, Kvisljungeby",
+        "scbName": "Västra Hisingen  Kvisljungeby"
+      },
+      {
+        "id": "14800312",
+        "geometryName": "Östra Centrum, Kålltorp Östra",
+        "resultName": "Östra Centrum, Kålltorp Östra",
+        "scbName": "Östra Centrum  Kålltorp Östra"
+      },
+      {
+        "id": "14800314",
+        "geometryName": "Östra Centrum, Kålltorp Västra",
+        "resultName": "Östra Centrum, Kålltorp Västra",
+        "scbName": "Östra Centrum  Kålltorp Västra"
+      },
+      {
+        "id": "14800315",
+        "geometryName": "Östra Centrum, Kålltorp Södra",
+        "resultName": "Östra Centrum, Kålltorp Södra",
+        "scbName": "Östra Centrum  Kålltorp Södra"
+      },
+      {
+        "id": "14800306",
+        "geometryName": "Östra Centrum, Torpa",
+        "resultName": "Östra Centrum, Torpa",
+        "scbName": "Östra Centrum  Torpa"
+      },
+      {
+        "id": "14800301",
+        "geometryName": "Östra Centrum, Fräntorp",
+        "resultName": "Östra Centrum, Fräntorp",
+        "scbName": "Östra Centrum  Fräntorp"
+      },
+      {
+        "id": "14800918",
+        "geometryName": "Centrala Hisingen, Porslinsfabriken",
+        "resultName": "Centrala Hisingen, Porslinsfabriken",
+        "scbName": "Centrala Hisingen  Porslinsfabriken"
+      },
+      {
+        "id": "14800919",
+        "geometryName": "Centrala Hisingen, Brämaregården S",
+        "resultName": "Centrala Hisingen, Brämaregården S",
+        "scbName": "Centrala Hisingen  Brämaregården S"
+      },
+      {
+        "id": "14800603",
+        "geometryName": "Sydvästra Göteborg, Högsbohöjd Östra",
+        "resultName": "Sydvästra Göteborg, Högsbohöjd Östra",
+        "scbName": "Sydvästra Göteborg  Högsbohöjd Östra"
+      },
+      {
+        "id": "14800108",
+        "geometryName": "Nordöstra Göteborg, Eriksbo Östra",
+        "resultName": "Nordöstra Göteborg, Eriksbo Östra",
+        "scbName": "Nordöstra Göteborg  Eriksbo Östra"
+      },
+      {
+        "id": "14800815",
+        "geometryName": "Västra Hisingen, Friskväderstorget",
+        "resultName": "Västra Hisingen, Friskväderstorget",
+        "scbName": "Västra Hisingen  Friskväderstorget"
+      },
+      {
+        "id": "14800308",
+        "geometryName": "Östra Centrum, Smörslätten",
+        "resultName": "Östra Centrum, Smörslätten",
+        "scbName": "Östra Centrum  Smörslätten"
+      },
+      {
+        "id": "14800310",
+        "geometryName": "Östra Centrum, Robertshöjd m fl",
+        "resultName": "Östra Centrum, Robertshöjd m fl",
+        "scbName": "Östra Centrum  Robertshöjd m fl"
+      },
+      {
+        "id": "14800316",
+        "geometryName": "Östra Centrum, Björkekärr Södra",
+        "resultName": "Östra Centrum, Björkekärr Södra",
+        "scbName": "Östra Centrum  Björkekärr Södra"
+      },
+      {
+        "id": "14800307",
+        "geometryName": "Östra Centrum, Björkekärr Norra",
+        "resultName": "Östra Centrum, Björkekärr Norra",
+        "scbName": "Östra Centrum  Björkekärr Norra"
+      },
+      {
+        "id": "14800922",
+        "geometryName": "Centrala Hisingen, Rambergsstaden Ö",
+        "resultName": "Centrala Hisingen, Rambergsstaden Ö",
+        "scbName": "Centrala Hisingen  Rambergsstaden Ö"
+      },
+      {
+        "id": "14800923",
+        "geometryName": "Centrala Hisingen, Rambergsstaden N",
+        "resultName": "Centrala Hisingen, Rambergsstaden N",
+        "scbName": "Centrala Hisingen  Rambergsstaden N"
+      },
+      {
+        "id": "14800925",
+        "geometryName": "Centrala Hisingen, Rambergsstaden S",
+        "resultName": "Centrala Hisingen, Rambergsstaden S",
+        "scbName": "Centrala Hisingen  Rambergsstaden S"
+      },
+      {
+        "id": "14800608",
+        "geometryName": "Sydvästra Göteborg, Marklandsgatan",
+        "resultName": "Sydvästra Göteborg, Marklandsgatan",
+        "scbName": "Sydvästra Göteborg  Marklandsgatan"
+      },
+      {
+        "id": "14800816",
+        "geometryName": "Västra Hisingen, Länsmansgården S",
+        "resultName": "Västra Hisingen, Länsmansgården S",
+        "scbName": "Västra Hisingen  Länsmansgården S"
+      },
+      {
+        "id": "14800801",
+        "geometryName": "Västra Hisingen, Länsmansgården Ö",
+        "resultName": "Västra Hisingen, Länsmansgården Ö",
+        "scbName": "Västra Hisingen  Länsmansgården Ö"
+      },
+      {
+        "id": "14800311",
+        "geometryName": "Östra Centrum, Björkekärr Västra",
+        "resultName": "Östra Centrum, Björkekärr Västra",
+        "scbName": "Östra Centrum  Björkekärr Västra"
+      },
+      {
+        "id": "14800219",
+        "geometryName": "Östra Göteborg, Bellevue",
+        "resultName": "Östra Göteborg, Bellevue",
+        "scbName": "Östra Göteborg  Bellevue"
+      },
+      {
+        "id": "14800221",
+        "geometryName": "Östra Göteborg, Gamlestaden Södra",
+        "resultName": "Östra Göteborg, Gamlestaden Södra",
+        "scbName": "Östra Göteborg  Gamlestaden Södra"
+      },
+      {
+        "id": "14800502",
+        "geometryName": "Västra Centrum, Masthuggstorget",
+        "resultName": "Västra Centrum, Masthuggstorget",
+        "scbName": "Västra Centrum  Masthuggstorget"
+      },
+      {
+        "id": "14800525",
+        "geometryName": "Västra Centrum, Änggården",
+        "resultName": "Västra Centrum, Änggården",
+        "scbName": "Västra Centrum  Änggården"
+      },
+      {
+        "id": "14800519",
+        "geometryName": "Västra Centrum, Haga Västra",
+        "resultName": "Västra Centrum, Haga Västra",
+        "scbName": "Västra Centrum  Haga Västra"
+      },
+      {
+        "id": "14800606",
+        "geometryName": "Sydvästra Göteborg, Högsbo",
+        "resultName": "Sydvästra Göteborg, Högsbo",
+        "scbName": "Sydvästra Göteborg  Högsbo"
+      },
+      {
+        "id": "14800604",
+        "geometryName": "Sydvästra Göteborg, Högsbotorp V",
+        "resultName": "Sydvästra Göteborg, Högsbotorp V",
+        "scbName": "Sydvästra Göteborg  Högsbotorp V"
+      },
+      {
+        "id": "14800830",
+        "geometryName": "Västra Hisingen, Torslanda",
+        "resultName": "Västra Hisingen, Torslanda",
+        "scbName": "Västra Hisingen  Torslanda"
+      },
+      {
+        "id": "14800222",
+        "geometryName": "Östra Göteborg, Nylöse",
+        "resultName": "Östra Göteborg, Nylöse",
+        "scbName": "Östra Göteborg  Nylöse"
+      },
+      {
+        "id": "14800216",
+        "geometryName": "Östra Göteborg, Kviberg Östra",
+        "resultName": "Östra Göteborg, Kviberg Östra",
+        "scbName": "Östra Göteborg  Kviberg Östra"
+      },
+      {
+        "id": "14800223",
+        "geometryName": "Östra Göteborg, Kviberg Västra",
+        "resultName": "Östra Göteborg, Kviberg Västra",
+        "scbName": "Östra Göteborg  Kviberg Västra"
+      },
+      {
+        "id": "14800215",
+        "geometryName": "Östra Göteborg, Kamgatan m fl",
+        "resultName": "Östra Göteborg, Kamgatan m fl",
+        "scbName": "Östra Göteborg  Kamgatan m fl"
+      },
+      {
+        "id": "14800212",
+        "geometryName": "Östra Göteborg, Fjällbo",
+        "resultName": "Östra Göteborg, Fjällbo",
+        "scbName": "Östra Göteborg  Fjällbo"
+      },
+      {
+        "id": "14800213",
+        "geometryName": "Östra Göteborg, Utbynäs",
+        "resultName": "Östra Göteborg, Utbynäs",
+        "scbName": "Östra Göteborg  Utbynäs"
+      },
+      {
+        "id": "14800227",
+        "geometryName": "Östra Göteborg, Kortedala Västra",
+        "resultName": "Östra Göteborg, Kortedala Västra",
+        "scbName": "Östra Göteborg  Kortedala Västra"
+      },
+      {
+        "id": "14800224",
+        "geometryName": "Östra Göteborg, Kortedala Södra",
+        "resultName": "Östra Göteborg, Kortedala Södra",
+        "scbName": "Östra Göteborg  Kortedala Södra"
+      },
+      {
+        "id": "14800228",
+        "geometryName": "Östra Göteborg, Kortedala Torg",
+        "resultName": "Östra Göteborg, Kortedala Torg",
+        "scbName": "Östra Göteborg  Kortedala Torg"
+      },
+      {
+        "id": "14800225",
+        "geometryName": "Östra Göteborg, Månadsparken",
+        "resultName": "Östra Göteborg, Månadsparken",
+        "scbName": "Östra Göteborg  Månadsparken"
+      },
+      {
+        "id": "14800230",
+        "geometryName": "Östra Göteborg, Kortedala Östra",
+        "resultName": "Östra Göteborg, Kortedala Östra",
+        "scbName": "Östra Göteborg  Kortedala Östra"
+      },
+      {
+        "id": "14800235",
+        "geometryName": "Östra Göteborg, Kortedala Norra",
+        "resultName": "Östra Göteborg, Kortedala Norra",
+        "scbName": "Östra Göteborg  Kortedala Norra"
+      },
+      {
+        "id": "14800231",
+        "geometryName": "Östra Göteborg, Månadsgatorna m fl",
+        "resultName": "Östra Göteborg, Månadsgatorna m fl",
+        "scbName": "Östra Göteborg  Månadsgatorna m fl"
+      },
+      {
+        "id": "14800518",
+        "geometryName": "Västra Centrum, Skansberget",
+        "resultName": "Västra Centrum, Skansberget",
+        "scbName": "Västra Centrum  Skansberget"
+      },
+      {
+        "id": "14800541",
+        "geometryName": "Västra Centrum, Godhem",
+        "resultName": "Västra Centrum, Godhem",
+        "scbName": "Västra Centrum  Godhem"
+      },
+      {
+        "id": "14800538",
+        "geometryName": "Västra Centrum, Slottsskogsgat. m fl",
+        "resultName": "Västra Centrum, Slottsskogsgat. m fl",
+        "scbName": "Västra Centrum  Slottsskogsgat. m fl"
+      },
+      {
+        "id": "14800547",
+        "geometryName": "Västra Centrum, Hängmattan",
+        "resultName": "Västra Centrum, Hängmattan",
+        "scbName": "Västra Centrum  Hängmattan"
+      },
+      {
+        "id": "14800536",
+        "geometryName": "Västra Centrum, Kusttorget",
+        "resultName": "Västra Centrum, Kusttorget",
+        "scbName": "Västra Centrum  Kusttorget"
+      },
+      {
+        "id": "14800539",
+        "geometryName": "Västra Centrum, Gråberget Västra",
+        "resultName": "Västra Centrum, Gråberget Västra",
+        "scbName": "Västra Centrum  Gråberget Västra"
+      },
+      {
+        "id": "14800543",
+        "geometryName": "Västra Centrum, Klareborgsgatan m fl",
+        "resultName": "Västra Centrum, Klareborgsgatan m fl",
+        "scbName": "Västra Centrum  Klareborgsgatan m fl"
+      },
+      {
+        "id": "14800542",
+        "geometryName": "Västra Centrum, Marieberg",
+        "resultName": "Västra Centrum, Marieberg",
+        "scbName": "Västra Centrum  Marieberg"
+      },
+      {
+        "id": "14800548",
+        "geometryName": "Västra Centrum, Gatenhielmska",
+        "resultName": "Västra Centrum, Gatenhielmska",
+        "scbName": "Västra Centrum  Gatenhielmska"
+      },
+      {
+        "id": "14800528",
+        "geometryName": "Västra Centrum, Kungsladugård Östra",
+        "resultName": "Västra Centrum, Kungsladugård Östra",
+        "scbName": "Västra Centrum  Kungsladugård Östra"
+      },
+      {
+        "id": "14800527",
+        "geometryName": "Västra Centrum, Skytteskogen",
+        "resultName": "Västra Centrum, Skytteskogen",
+        "scbName": "Västra Centrum  Skytteskogen"
+      },
+      {
+        "id": "14800526",
+        "geometryName": "Västra Centrum, Svalebo",
+        "resultName": "Västra Centrum, Svalebo",
+        "scbName": "Västra Centrum  Svalebo"
+      },
+      {
+        "id": "14800530",
+        "geometryName": "Västra Centrum, Mariaplan",
+        "resultName": "Västra Centrum, Mariaplan",
+        "scbName": "Västra Centrum  Mariaplan"
+      },
+      {
+        "id": "14800546",
+        "geometryName": "Västra Centrum, Kommendörsgatan m fl",
+        "resultName": "Västra Centrum, Kommendörsgatan m fl",
+        "scbName": "Västra Centrum  Kommendörsgatan m fl"
+      },
+      {
+        "id": "14800544",
+        "geometryName": "Västra Centrum, Karl Johan",
+        "resultName": "Västra Centrum, Karl Johan",
+        "scbName": "Västra Centrum  Karl Johan"
+      },
+      {
+        "id": "14800506",
+        "geometryName": "Västra Centrum, Oscar Fredrik",
+        "resultName": "Västra Centrum, Oscar Fredrik",
+        "scbName": "Västra Centrum  Oscar Fredrik"
+      },
+      {
+        "id": "14801013",
+        "geometryName": "Norra Hisingen, Skälltorp",
+        "resultName": "Norra Hisingen, Skälltorp",
+        "scbName": "Norra Hisingen  Skälltorp"
+      },
+      {
+        "id": "14801014",
+        "geometryName": "Norra Hisingen, Selma Lagerlöfs Torg",
+        "resultName": "Norra Hisingen, Selma Lagerlöfs Torg",
+        "scbName": "Norra Hisingen  Selma Lagerlöfs Torg"
+      },
+      {
+        "id": "14801016",
+        "geometryName": "Norra Hisingen, Backa Röd",
+        "resultName": "Norra Hisingen, Backa Röd",
+        "scbName": "Norra Hisingen  Backa Röd"
+      },
+      {
+        "id": "14801015",
+        "geometryName": "Norra Hisingen, Sankt Jörgen",
+        "resultName": "Norra Hisingen, Sankt Jörgen",
+        "scbName": "Norra Hisingen  Sankt Jörgen"
+      },
+      {
+        "id": "14801033",
+        "geometryName": "Norra Hisingen, Tången",
+        "resultName": "Norra Hisingen, Tången",
+        "scbName": "Norra Hisingen  Tången"
+      },
+      {
+        "id": "14801034",
+        "geometryName": "Norra Hisingen, Säve",
+        "resultName": "Norra Hisingen, Säve",
+        "scbName": "Norra Hisingen  Säve"
+      },
+      {
+        "id": "14801017",
+        "geometryName": "Norra Hisingen, Julias Gata m fl",
+        "resultName": "Norra Hisingen, Julias Gata m fl",
+        "scbName": "Norra Hisingen  Julias Gata m fl"
+      },
+      {
+        "id": "14801022",
+        "geometryName": "Norra Hisingen, Tingstad",
+        "resultName": "Norra Hisingen, Tingstad",
+        "scbName": "Norra Hisingen  Tingstad"
+      },
+      {
+        "id": "14800504",
+        "geometryName": "Västra Centrum, Masthugget Övre",
+        "resultName": "Västra Centrum, Masthugget Övre",
+        "scbName": "Västra Centrum  Masthugget Övre"
+      },
+      {
+        "id": "14800503",
+        "geometryName": "Västra Centrum, Stigberget",
+        "resultName": "Västra Centrum, Stigberget",
+        "scbName": "Västra Centrum  Stigberget"
+      },
+      {
+        "id": "14800509",
+        "geometryName": "Västra Centrum, Slottsskogen",
+        "resultName": "Västra Centrum, Slottsskogen",
+        "scbName": "Västra Centrum  Slottsskogen"
+      },
+      {
+        "id": "14800534",
+        "geometryName": "Västra Centrum, Klippan",
+        "resultName": "Västra Centrum, Klippan",
+        "scbName": "Västra Centrum  Klippan"
+      },
+      {
+        "id": "14800532",
+        "geometryName": "Västra Centrum, Sannaplan",
+        "resultName": "Västra Centrum, Sannaplan",
+        "scbName": "Västra Centrum  Sannaplan"
+      },
+      {
+        "id": "14800533",
+        "geometryName": "Västra Centrum, Sandarne",
+        "resultName": "Västra Centrum, Sandarne",
+        "scbName": "Västra Centrum  Sandarne"
+      },
+      {
+        "id": "14801031",
+        "geometryName": "Norra Hisingen, Tuve Norra",
+        "resultName": "Norra Hisingen, Tuve Norra",
+        "scbName": "Norra Hisingen  Tuve Norra"
+      },
+      {
+        "id": "14801011",
+        "geometryName": "Norra Hisingen, Backadalen",
+        "resultName": "Norra Hisingen, Backadalen",
+        "scbName": "Norra Hisingen  Backadalen"
+      },
+      {
+        "id": "14801032",
+        "geometryName": "Norra Hisingen, Norumshöjd",
+        "resultName": "Norra Hisingen, Norumshöjd",
+        "scbName": "Norra Hisingen  Norumshöjd"
+      },
+      {
+        "id": "14801012",
+        "geometryName": "Norra Hisingen, Bäckebol Södra",
+        "resultName": "Norra Hisingen, Bäckebol Södra",
+        "scbName": "Norra Hisingen  Bäckebol Södra"
+      },
+      {
+        "id": "14801021",
+        "geometryName": "Norra Hisingen, Bällskär",
+        "resultName": "Norra Hisingen, Bällskär",
+        "scbName": "Norra Hisingen  Bällskär"
+      },
+      {
+        "id": "14800522",
+        "geometryName": "Västra Centrum, Nilssonsberg Östra",
+        "resultName": "Västra Centrum, Nilssonsberg Östra",
+        "scbName": "Västra Centrum  Nilssonsberg Östra"
+      },
+      {
+        "id": "14800524",
+        "geometryName": "Västra Centrum, Annedal Västra",
+        "resultName": "Västra Centrum, Annedal Västra",
+        "scbName": "Västra Centrum  Annedal Västra"
+      },
+      {
+        "id": "14800607",
+        "geometryName": "Sydvästra Göteborg, Högsbotorp Östra",
+        "resultName": "Sydvästra Göteborg, Högsbotorp Östra",
+        "scbName": "Sydvästra Göteborg  Högsbotorp Östra"
+      },
+      {
+        "id": "14800622",
+        "geometryName": "Sydvästra Göteborg, Spinetten",
+        "resultName": "Sydvästra Göteborg, Spinetten",
+        "scbName": "Sydvästra Göteborg  Spinetten"
+      },
+      {
+        "id": "14800623",
+        "geometryName": "Sydvästra Göteborg, Tofta",
+        "resultName": "Sydvästra Göteborg, Tofta",
+        "scbName": "Sydvästra Göteborg  Tofta"
+      },
+      {
+        "id": "14800616",
+        "geometryName": "Sydvästra Göteborg, Ruddalen",
+        "resultName": "Sydvästra Göteborg, Ruddalen",
+        "scbName": "Sydvästra Göteborg  Ruddalen"
+      },
+      {
+        "id": "14800624",
+        "geometryName": "Sydvästra Göteborg, Järnbrott Västra",
+        "resultName": "Sydvästra Göteborg, Järnbrott Västra",
+        "scbName": "Sydvästra Göteborg  Järnbrott Västra"
+      },
+      {
+        "id": "14800625",
+        "geometryName": "Sydvästra Göteborg, Järnbrott Östra",
+        "resultName": "Sydvästra Göteborg, Järnbrott Östra",
+        "scbName": "Sydvästra Göteborg  Järnbrott Östra"
+      },
+      {
+        "id": "14800627",
+        "geometryName": "Sydvästra Göteborg, Flatås Östra",
+        "resultName": "Sydvästra Göteborg, Flatås Östra",
+        "scbName": "Sydvästra Göteborg  Flatås Östra"
+      },
+      {
+        "id": "14800439",
+        "geometryName": "Centrum, Landala Egnahem",
+        "resultName": "Centrum, Landala Egnahem",
+        "scbName": "Centrum  Landala Egnahem"
+      },
+      {
+        "id": "14800433",
+        "geometryName": "Centrum, Doktor Forselius Backe m fl",
+        "resultName": "Centrum, Doktor Forselius Backe m fl",
+        "scbName": "Centrum  Doktor Forselius Backe m fl"
+      },
+      {
+        "id": "14800435",
+        "geometryName": "Centrum, Guldheden Vattentornet",
+        "resultName": "Centrum, Guldheden Vattentornet",
+        "scbName": "Centrum  Guldheden Vattentornet"
+      },
+      {
+        "id": "14800233",
+        "geometryName": "Östra Göteborg, Adventsparken Västra",
+        "resultName": "Östra Göteborg, Adventsparken Västra",
+        "scbName": "Östra Göteborg  Adventsparken Västra"
+      },
+      {
+        "id": "14800202",
+        "geometryName": "Östra Göteborg, Gärdsmosse",
+        "resultName": "Östra Göteborg, Gärdsmosse",
+        "scbName": "Östra Göteborg  Gärdsmosse"
+      },
+      {
+        "id": "14800513",
+        "geometryName": "Västra Centrum, Linné",
+        "resultName": "Västra Centrum, Linné",
+        "scbName": "Västra Centrum  Linné"
+      },
+      {
+        "id": "14800512",
+        "geometryName": "Västra Centrum, Kommendantsängen",
+        "resultName": "Västra Centrum, Kommendantsängen",
+        "scbName": "Västra Centrum  Kommendantsängen"
+      },
+      {
+        "id": "14800511",
+        "geometryName": "Västra Centrum, Sveaplan",
+        "resultName": "Västra Centrum, Sveaplan",
+        "scbName": "Västra Centrum  Sveaplan"
+      },
+      {
+        "id": "14800621",
+        "geometryName": "Sydvästra Göteborg, Positivparken",
+        "resultName": "Sydvästra Göteborg, Positivparken",
+        "scbName": "Sydvästra Göteborg  Positivparken"
+      },
+      {
+        "id": "14800620",
+        "geometryName": "Sydvästra Göteborg, Frölunda Torg Ö",
+        "resultName": "Sydvästra Göteborg, Frölunda Torg Ö",
+        "scbName": "Sydvästra Göteborg  Frölunda Torg Ö"
+      },
+      {
+        "id": "14800617",
+        "geometryName": "Sydvästra Göteborg, Gånglåten",
+        "resultName": "Sydvästra Göteborg, Gånglåten",
+        "scbName": "Sydvästra Göteborg  Gånglåten"
+      },
+      {
+        "id": "14800618",
+        "geometryName": "Sydvästra Göteborg, Frölunda",
+        "resultName": "Sydvästra Göteborg, Frölunda",
+        "scbName": "Sydvästra Göteborg  Frölunda"
+      },
+      {
+        "id": "14800436",
+        "geometryName": "Centrum, Doktor Fries Torg",
+        "resultName": "Centrum, Doktor Fries Torg",
+        "scbName": "Centrum  Doktor Fries Torg"
+      },
+      {
+        "id": "14800437",
+        "geometryName": "Centrum, Guldheden Västra",
+        "resultName": "Centrum, Guldheden Västra",
+        "scbName": "Centrum  Guldheden Västra"
+      },
+      {
+        "id": "14800205",
+        "geometryName": "Östra Göteborg, Bergsjön Norra",
+        "resultName": "Östra Göteborg, Bergsjön Norra",
+        "scbName": "Östra Göteborg  Bergsjön Norra"
+      },
+      {
+        "id": "14800208",
+        "geometryName": "Östra Göteborg, Gärdsås",
+        "resultName": "Östra Göteborg, Gärdsås",
+        "scbName": "Östra Göteborg  Gärdsås"
+      },
+      {
+        "id": "14800510",
+        "geometryName": "Västra Centrum, Linnéplatsen",
+        "resultName": "Västra Centrum, Linnéplatsen",
+        "scbName": "Västra Centrum  Linnéplatsen"
+      },
+      {
+        "id": "14800516",
+        "geometryName": "Västra Centrum, Olivedal",
+        "resultName": "Västra Centrum, Olivedal",
+        "scbName": "Västra Centrum  Olivedal"
+      },
+      {
+        "id": "14800515",
+        "geometryName": "Västra Centrum, Risåsen",
+        "resultName": "Västra Centrum, Risåsen",
+        "scbName": "Västra Centrum  Risåsen"
+      },
+      {
+        "id": "14800724",
+        "geometryName": "Västra Göteborg, Korsåsen",
+        "resultName": "Västra Göteborg, Korsåsen",
+        "scbName": "Västra Göteborg  Korsåsen"
+      },
+      {
+        "id": "14800722",
+        "geometryName": "Västra Göteborg, Ängås",
+        "resultName": "Västra Göteborg, Ängås",
+        "scbName": "Västra Göteborg  Ängås"
+      },
+      {
+        "id": "14800730",
+        "geometryName": "Västra Göteborg, Önnered Västra",
+        "resultName": "Västra Göteborg, Önnered Västra",
+        "scbName": "Västra Göteborg  Önnered Västra"
+      },
+      {
+        "id": "14800729",
+        "geometryName": "Västra Göteborg, Önnered Östra",
+        "resultName": "Västra Göteborg, Önnered Östra",
+        "scbName": "Västra Göteborg  Önnered Östra"
+      },
+      {
+        "id": "14800443",
+        "geometryName": "Centrum, Lorensberg",
+        "resultName": "Centrum, Lorensberg",
+        "scbName": "Centrum  Lorensberg"
+      },
+      {
+        "id": "14800207",
+        "geometryName": "Östra Göteborg, Siriusgatan Västra",
+        "resultName": "Östra Göteborg, Siriusgatan Västra",
+        "scbName": "Östra Göteborg  Siriusgatan Västra"
+      },
+      {
+        "id": "14800204",
+        "geometryName": "Östra Göteborg, Bergsjön Östra",
+        "resultName": "Östra Göteborg, Bergsjön Östra",
+        "scbName": "Östra Göteborg  Bergsjön Östra"
+      },
+      {
+        "id": "14800501",
+        "geometryName": "Västra Centrum, Långgatorna",
+        "resultName": "Västra Centrum, Långgatorna",
+        "scbName": "Västra Centrum  Långgatorna"
+      },
+      {
+        "id": "14800422",
+        "geometryName": "Centrum, Kristinehöjd Västra",
+        "resultName": "Centrum, Kristinehöjd Västra",
+        "scbName": "Centrum  Kristinehöjd Västra"
+      },
+      {
+        "id": "14800720",
+        "geometryName": "Västra Göteborg, Skattegården",
+        "resultName": "Västra Göteborg, Skattegården",
+        "scbName": "Västra Göteborg  Skattegården"
+      },
+      {
+        "id": "14800727",
+        "geometryName": "Västra Göteborg, Grevegården",
+        "resultName": "Västra Göteborg, Grevegården",
+        "scbName": "Västra Göteborg  Grevegården"
+      },
+      {
+        "id": "14800450",
+        "geometryName": "Centrum, Valand",
+        "resultName": "Centrum, Valand",
+        "scbName": "Centrum  Valand"
+      },
+      {
+        "id": "14800449",
+        "geometryName": "Centrum, Vasastaden Östra",
+        "resultName": "Centrum, Vasastaden Östra",
+        "scbName": "Centrum  Vasastaden Östra"
+      },
+      {
+        "id": "14800210",
+        "geometryName": "Östra Göteborg, Komettorget",
+        "resultName": "Östra Göteborg, Komettorget",
+        "scbName": "Östra Göteborg  Komettorget"
+      },
+      {
+        "id": "14800201",
+        "geometryName": "Östra Göteborg, Rymdtorget",
+        "resultName": "Östra Göteborg, Rymdtorget",
+        "scbName": "Östra Göteborg  Rymdtorget"
+      },
+      {
+        "id": "14800209",
+        "geometryName": "Östra Göteborg, Bergsjön Södra",
+        "resultName": "Östra Göteborg, Bergsjön Södra",
+        "scbName": "Östra Göteborg  Bergsjön Södra"
+      },
+      {
+        "id": "14800912",
+        "geometryName": "Centrala Hisingen, Kvillebäcken N",
+        "resultName": "Centrala Hisingen, Kvillebäcken N",
+        "scbName": "Centrala Hisingen  Kvillebäcken N"
+      },
+      {
+        "id": "14800423",
+        "geometryName": "Centrum, Olofshöjd",
+        "resultName": "Centrum, Olofshöjd",
+        "scbName": "Centrum  Olofshöjd"
+      },
+      {
+        "id": "14800428",
+        "geometryName": "Centrum, Fredriksdal",
+        "resultName": "Centrum, Fredriksdal",
+        "scbName": "Centrum  Fredriksdal"
+      },
+      {
+        "id": "14800431",
+        "geometryName": "Centrum, Fridkullagatan m fl",
+        "resultName": "Centrum, Fridkullagatan m fl",
+        "scbName": "Centrum  Fridkullagatan m fl"
+      },
+      {
+        "id": "14800430",
+        "geometryName": "Centrum, Mossen",
+        "resultName": "Centrum, Mossen",
+        "scbName": "Centrum  Mossen"
+      },
+      {
+        "id": "14800731",
+        "geometryName": "Västra Göteborg, Åkered",
+        "resultName": "Västra Göteborg, Åkered",
+        "scbName": "Västra Göteborg  Åkered"
+      },
+      {
+        "id": "14800734",
+        "geometryName": "Västra Göteborg, Näset Södra",
+        "resultName": "Västra Göteborg, Näset Södra",
+        "scbName": "Västra Göteborg  Näset Södra"
+      },
+      {
+        "id": "14800733",
+        "geometryName": "Västra Göteborg, Näset Norra",
+        "resultName": "Västra Göteborg, Näset Norra",
+        "scbName": "Västra Göteborg  Näset Norra"
+      },
+      {
+        "id": "14800725",
+        "geometryName": "Västra Göteborg, Opaltorget Norra",
+        "resultName": "Västra Göteborg, Opaltorget Norra",
+        "scbName": "Västra Göteborg  Opaltorget Norra"
+      },
+      {
+        "id": "14800726",
+        "geometryName": "Västra Göteborg, Opaltorget Södra",
+        "resultName": "Västra Göteborg, Opaltorget Södra",
+        "scbName": "Västra Göteborg  Opaltorget Södra"
+      },
+      {
+        "id": "14800647",
+        "geometryName": "Sydvästra Göteborg, Hult",
+        "resultName": "Sydvästra Göteborg, Hult",
+        "scbName": "Sydvästra Göteborg  Hult"
+      },
+      {
+        "id": "14800448",
+        "geometryName": "Centrum, Vasastaden Västra",
+        "resultName": "Centrum, Vasastaden Västra",
+        "scbName": "Centrum  Vasastaden Västra"
+      },
+      {
+        "id": "14800451",
+        "geometryName": "Centrum, Vasastaden Norra",
+        "resultName": "Centrum, Vasastaden Norra",
+        "scbName": "Centrum  Vasastaden Norra"
+      },
+      {
+        "id": "14800908",
+        "geometryName": "Centrala Hisingen, Flunsås",
+        "resultName": "Centrala Hisingen, Flunsås",
+        "scbName": "Centrala Hisingen  Flunsås"
+      },
+      {
+        "id": "14800907",
+        "geometryName": "Centrala Hisingen, Tolered Östra",
+        "resultName": "Centrala Hisingen, Tolered Östra",
+        "scbName": "Centrala Hisingen  Tolered Östra"
+      },
+      {
+        "id": "14800416",
+        "geometryName": "Centrum, Carlandersplatsen",
+        "resultName": "Centrum, Carlandersplatsen",
+        "scbName": "Centrum  Carlandersplatsen"
+      },
+      {
+        "id": "14800429",
+        "geometryName": "Centrum, Framnäs",
+        "resultName": "Centrum, Framnäs",
+        "scbName": "Centrum  Framnäs"
+      },
+      {
+        "id": "14800424",
+        "geometryName": "Centrum, Kristinehöjd Östra",
+        "resultName": "Centrum, Kristinehöjd Östra",
+        "scbName": "Centrum  Kristinehöjd Östra"
+      },
+      {
+        "id": "14800442",
+        "geometryName": "Centrum, Johanneberg Nedre",
+        "resultName": "Centrum, Johanneberg Nedre",
+        "scbName": "Centrum  Johanneberg Nedre"
+      },
+      {
+        "id": "14800419",
+        "geometryName": "Centrum, Johanneberg Övre",
+        "resultName": "Centrum, Johanneberg Övre",
+        "scbName": "Centrum  Johanneberg Övre"
+      },
+      {
+        "id": "14800418",
+        "geometryName": "Centrum, Eklanda Norra",
+        "resultName": "Centrum, Eklanda Norra",
+        "scbName": "Centrum  Eklanda Norra"
+      },
+      {
+        "id": "14070105",
+        "geometryName": "Hyppeln, Hälsö, Knippla och Rörö",
+        "resultName": "Hyppeln, Hälsö, Knippla och Rörö",
+        "scbName": "Hyppeln  Hälsö  Knippla och Rörö"
+      },
+      {
+        "id": "14070101",
+        "geometryName": "Bohus-Björkö, Grötö och Kalvsund",
+        "resultName": "Bohus-Björkö, Grötö och Kalvsund",
+        "scbName": "Bohus-Björkö  Grötö och Kalvsund"
+      },
+      {
+        "id": "18640103",
+        "geometryName": "Kyrkbacksskolan, Kopparberg",
+        "resultName": "Kyrkbacksskolan, Kopparberg",
+        "scbName": "Kyrkbacksskolan  Kopparberg"
+      },
+      {
+        "id": "18640105",
+        "geometryName": "Tingshuset, Kopparberg",
+        "resultName": "Tingshuset, Kopparberg",
+        "scbName": "Tingshuset  Kopparberg"
+      },
+      {
+        "id": "19810103",
+        "geometryName": "Jakobsberg, Bryggeriet, Turbo m.fl",
+        "resultName": "Jakobsberg, Bryggeriet, Turbo m.fl",
+        "scbName": "Jakobsberg  Bryggeriet  Turbo m.fl"
+      },
+      {
+        "id": "19810108",
+        "geometryName": "Dalhem, Gärdesta, Hagaberg m.fl.",
+        "resultName": "Dalhem, Gärdesta, Hagaberg m.fl.",
+        "scbName": "Dalhem  Gärdesta  Hagaberg m.fl."
+      },
+      {
+        "id": "20840103",
+        "geometryName": "Avesta V-Bengtsbo-Nyhyttan",
+        "resultName": "Avesta V",
+        "scbName": "Avesta V"
+      },
+      {
+        "id": "20840601",
+        "geometryName": "Skogsbo N-Rutbo-Grytnäs",
+        "resultName": "Skogsbo N",
+        "scbName": "Skogsbo N"
+      },
+      {
+        "id": "20840602",
+        "geometryName": "Skogsbo C-Grytnäs gärde",
+        "resultName": "Skogsbo C",
+        "scbName": "Skogsbo C"
+      },
+      {
+        "id": "20840101",
+        "geometryName": "Avesta N-Högbo",
+        "resultName": "Avesta N",
+        "scbName": "Avesta N"
+      }
+    ],
+    "normalizedNameMismatchCount": 5,
+    "normalizedNameMismatches": [
+      {
+        "id": "07802989",
+        "geometryName": "Kronoberg",
+        "resultName": "Kronoberg",
+        "scbName": "Nya Hovshaga"
+      },
+      {
+        "id": "20840103",
+        "geometryName": "Avesta V-Bengtsbo-Nyhyttan",
+        "resultName": "Avesta V",
+        "scbName": "Avesta V"
+      },
+      {
+        "id": "20840601",
+        "geometryName": "Skogsbo N-Rutbo-Grytnäs",
+        "resultName": "Skogsbo N",
+        "scbName": "Skogsbo N"
+      },
+      {
+        "id": "20840602",
+        "geometryName": "Skogsbo C-Grytnäs gärde",
+        "resultName": "Skogsbo C",
+        "scbName": "Skogsbo C"
+      },
+      {
+        "id": "20840101",
+        "geometryName": "Avesta N-Högbo",
+        "resultName": "Avesta N",
+        "scbName": "Avesta N"
+      }
+    ]
+  },
+  "client": {
+    "geometryCrs": "WGS84 (EPSG:4326)",
+    "sourceGeometryCrs": "SWEREF99 TM (EPSG:3006)",
+    "simplifyToleranceMetres": 100,
+    "coordinateDecimals": 5,
+    "properties": [
+      "id",
+      "name",
+      "municipality",
+      "validVotes",
+      "turnout",
+      "older",
+      "education",
+      "parties",
+      "leadingParty",
+      "leadingShare",
+      "runnerUpParty",
+      "runnerUpShare"
+    ],
+    "partyScope": "Eight parties seated in the Riksdag after the 2022 election"
+  }
+}

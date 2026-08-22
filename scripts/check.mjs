@@ -1,0 +1,169 @@
+import { chromium } from "playwright";
+import { mkdirSync, readdirSync, unlinkSync } from "node:fs";
+
+const base = process.env.SCROLLY_PREVIEW_URL || "http://127.0.0.1:4173/scrolly-election/";
+const output = process.env.SCROLLY_SHOTS || "/tmp/scrolly-election-shots-general";
+const viewports = [
+  { name: "desktop", width: 1440, height: 900, reducedMotion: "no-preference" },
+  { name: "desktop-short", width: 1280, height: 680, reducedMotion: "no-preference" },
+  { name: "tablet", width: 820, height: 900, reducedMotion: "no-preference" },
+  { name: "phone-wide", width: 517, height: 707, reducedMotion: "no-preference" },
+  { name: "phone", width: 390, height: 740, reducedMotion: "no-preference" },
+  { name: "phone-small", width: 320, height: 640, reducedMotion: "reduce" },
+];
+
+mkdirSync(output, { recursive: true });
+for (const file of readdirSync(output)) {
+  if (file.endsWith(".png")) unlinkSync(`${output}/${file}`);
+}
+
+const browser = await chromium.launch();
+const problems = [];
+
+async function placeStepAtTrigger(page, step, triggerRatio) {
+  await step.evaluate((node, ratio) => {
+    const rect = node.getBoundingClientRect();
+    const top = window.scrollY + rect.top;
+    const target = top + rect.height / 2 - window.innerHeight * ratio;
+    window.scrollTo({ top: Math.max(0, target), behavior: "instant" });
+  }, triggerRatio);
+}
+
+for (const viewport of viewports) {
+  const context = await browser.newContext({
+    viewport,
+    colorScheme: "light",
+    reducedMotion: viewport.reducedMotion,
+  });
+  const page = await context.newPage();
+  page.on("pageerror", (error) => problems.push(`PAGEERROR [${viewport.name}]: ${error.message}`));
+  page.on("console", (message) => {
+    if (["error", "warning"].includes(message.type())) {
+      problems.push(`CONSOLE ${message.type()} [${viewport.name}]: ${message.text()}`);
+    }
+  });
+
+  await page.goto(base, { waitUntil: "networkidle" });
+  await page.evaluate(() => { document.documentElement.style.scrollBehavior = "auto"; });
+  await page.locator(".map-header").waitFor();
+  await page.waitForFunction(() => !document.querySelector(".map-act .loading"));
+
+  const semantics = await page.evaluate(() => ({
+    language: document.documentElement.lang,
+    h1: document.querySelectorAll("h1").length,
+    scrollys: document.querySelectorAll(".scrolly").length,
+    steps: document.querySelectorAll("[data-step]").length,
+    sourceLinks: document.querySelectorAll(".method a").length,
+    mapControls: document.querySelectorAll(".map-act button, .map-act input, .map-act select").length,
+    samplingControls: document.querySelectorAll(".sampling-act button, .sampling-act input, .sampling-act select").length,
+    title: document.querySelector("h1")?.textContent.trim().replace(/\s+/g, " "),
+  }));
+  if (semantics.language !== "sv" || semantics.h1 !== 1 || semantics.scrollys !== 3 || semantics.steps !== 15 || semantics.sourceLinks < 10 || semantics.mapControls !== 0 || semantics.samplingControls !== 0 || semantics.title !== "Kan vi lita på valundersökningarna?") {
+    problems.push(`STRUCTURE [${viewport.name}]: ${JSON.stringify(semantics)}`);
+  }
+
+  const overflow = await page.evaluate(() => {
+    const viewportWidth = window.innerWidth;
+    const offenders = [];
+    for (const element of document.querySelectorAll("body *")) {
+      if (element.closest(".hero-dots")) continue;
+      if (element.closest("svg") && element.tagName.toLowerCase() !== "svg") continue;
+      const rect = element.getBoundingClientRect();
+      if (rect.width && (rect.left < -1 || rect.right > viewportWidth + 1)) {
+        offenders.push(`${element.tagName.toLowerCase()}.${String(element.className).slice(0, 35)} [${Math.round(rect.left)}, ${Math.round(rect.right)}]`);
+      }
+      if (offenders.length === 8) break;
+    }
+    return { scrollWidth: document.documentElement.scrollWidth, viewportWidth, offenders };
+  });
+  if (overflow.scrollWidth > overflow.viewportWidth || overflow.offenders.length) {
+    problems.push(`OVERFLOW [${viewport.name}]: ${JSON.stringify(overflow)}`);
+  }
+
+  if (viewport.width > 820) {
+    const collisions = await page.evaluate(() => {
+      const intersects = (left, right) => left.right > right.left + 1
+        && left.left < right.right - 1
+        && left.bottom > right.top + 1
+        && left.top < right.bottom - 1;
+      const pairs = [
+        [document.querySelector(".hero h1"), document.querySelector(".population-intro"), "hero-title/population"],
+        [document.querySelector(".profiles-head h2"), document.querySelector(".profiles-head > p:last-child"), "profiles-title/intro"],
+      ];
+      return pairs.filter(([left, right]) => left && right && intersects(left.getBoundingClientRect(), right.getBoundingClientRect())).map(([, , label]) => label);
+    });
+    if (collisions.length) problems.push(`COLLISION [${viewport.name}]: ${collisions.join(", ")}`);
+  }
+
+  for (const [scrollyIndex, scrolly] of (await page.locator(".scrolly").all()).entries()) {
+    for (const [stepIndex, step] of (await scrolly.locator("[data-step]").all()).entries()) {
+      const triggerRatio = viewport.width <= 820 ? (scrollyIndex === 0 ? 0.72 : 0.90) : 0.52;
+      await placeStepAtTrigger(page, step, triggerRatio);
+      if (scrollyIndex === 0 && [2, 3, 5].includes(stepIndex) && viewport.reducedMotion !== "reduce") {
+        await page.waitForTimeout(380);
+        await page.screenshot({ path: `${output}/${viewport.name}-map-${stepIndex + 1}-transition.png` });
+      }
+      if (scrollyIndex === 1 && stepIndex > 0 && viewport.reducedMotion !== "reduce") {
+        await page.waitForTimeout(100);
+        const visibleLayers = await scrolly.locator(".layer").evaluateAll((nodes) => nodes.filter((node) => Number.parseFloat(getComputedStyle(node).opacity) > 0.05).length);
+        if (visibleLayers > 1) problems.push(`TRANSITION [${viewport.name}]: ${visibleLayers} gender layers visible at step ${stepIndex + 1}`);
+      }
+      if (scrollyIndex === 2 && viewport.reducedMotion !== "reduce") {
+        await page.waitForTimeout(120);
+        const visibleLayers = await scrolly.locator(".layer").evaluateAll((nodes) => nodes.filter((node) => Number.parseFloat(getComputedStyle(node).opacity) > 0.05).length);
+        if (visibleLayers !== 1) problems.push(`TRANSITION [${viewport.name}]: ${visibleLayers} sampling layers visible at step ${stepIndex + 1}`);
+      }
+      const visualWait = viewport.reducedMotion === "reduce" ? 90 : scrollyIndex === 0 ? 850 : 300;
+      await page.waitForTimeout(visualWait);
+      if (scrollyIndex === 1 && stepIndex <= 1) {
+        const chartFit = await scrolly.locator(".party-view").evaluate((layer) => {
+          const rows = [...layer.querySelectorAll(".party-row")];
+          const note = layer.querySelector(".note");
+          return {
+            lastRowBottom: Math.round(rows.at(-1).getBoundingClientRect().bottom),
+            noteTop: Math.round(note.getBoundingClientRect().top),
+            noteBottom: Math.round(note.getBoundingClientRect().bottom),
+            layerBottom: Math.round(layer.getBoundingClientRect().bottom),
+          };
+        });
+        if (chartFit.lastRowBottom > chartFit.noteTop - 3 || chartFit.noteBottom > chartFit.layerBottom + 1) {
+          problems.push(`GENDER FIT [${viewport.name}] step ${stepIndex + 1}: ${JSON.stringify(chartFit)}`);
+        }
+      }
+      if (!(await step.evaluate((node) => node.classList.contains("is-active")))) {
+        problems.push(`SCROLL [${viewport.name}]: step ${scrollyIndex + 1}.${stepIndex + 1} did not activate`);
+      }
+      if (scrollyIndex === 0 || ["desktop", "phone-small"].includes(viewport.name)) {
+        const label = ["map", "gender", "sampling"][scrollyIndex];
+        await page.screenshot({ path: `${output}/${viewport.name}-${label}-${stepIndex + 1}.png` });
+      }
+    }
+  }
+
+  const finalMapLabel = await page.locator(".map-act figure").getAttribute("aria-label");
+  if (!finalMapLabel?.includes("6 264")) {
+    problems.push(`MAP [${viewport.name}]: unexpected final aria label ${finalMapLabel}`);
+  }
+
+  await page.evaluate(() => {
+    for (const element of document.querySelectorAll(".skip-link, .progress")) element.style.visibility = "hidden";
+  });
+
+  await page.locator(".hero").screenshot({ path: `${output}/${viewport.name}-hero.png` });
+  await page.locator(".party-intro").evaluate((node) => node.scrollIntoView({ block: "center" }));
+  await page.waitForTimeout(viewport.reducedMotion === "reduce" ? 80 : 1300);
+  await page.locator(".party-intro").screenshot({ path: `${output}/${viewport.name}-parties.png` });
+  await page.locator(".profiles").screenshot({ path: `${output}/${viewport.name}-profiles.png` });
+  await page.locator(".sampling-act").screenshot({ path: `${output}/${viewport.name}-sampling-act.png` });
+  await page.locator(".poll-reading").screenshot({ path: `${output}/${viewport.name}-poll-return.png` });
+  await page.locator(".closing").screenshot({ path: `${output}/${viewport.name}-closing.png` });
+  await context.close();
+}
+
+await browser.close();
+if (problems.length) {
+  console.error(problems.join("\n"));
+  process.exitCode = 1;
+} else {
+  console.log(`Checks passed: 15 steps, no overflow, sampling sequence, reduced motion. Screenshots: ${output}`);
+}

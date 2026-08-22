@@ -1,0 +1,88 @@
+export const districtWinnerCounts = { S: 4351, SD: 1048, M: 814, V: 46, KD: 3, MP: 2 };
+
+export const parties = [
+  { code: "M", name: "Moderaterna", color: "#3378d4", seats2022: 68 },
+  { code: "C", name: "Centerpartiet", color: "#4a8d57", seats2022: 24 },
+  { code: "L", name: "Liberalerna", color: "#4f9fc3", seats2022: 16 },
+  { code: "KD", name: "Kristdemokraterna", color: "#5962a7", seats2022: 19 },
+  { code: "MP", name: "Miljöpartiet", color: "#2f8f70", seats2022: 18 },
+  { code: "S", name: "Socialdemokraterna", color: "#d84b5d", seats2022: 107 },
+  { code: "V", name: "Vänsterpartiet", color: "#a93f78", seats2022: 24 },
+  { code: "SD", name: "Sverigedemokraterna", color: "#d0a52a", seats2022: 73 },
+  { code: "Övr", name: "Övriga", color: "#8f999f" },
+];
+
+export const districts = [
+  {
+    id: "01620116",
+    short: "Södra Djursholm",
+    municipality: "Danderyd",
+    position: [18.04, 59.40],
+    eligible: 1034,
+    voters: 904,
+    turnout: 87.4,
+    profile: { young: 20.2, older: 26.7, longEducation: 54.8 },
+    result: { M: 58.4, C: 6.8, L: 9.9, KD: 8.2, MP: 2.1, S: 3.3, V: 1.1, SD: 9.8, Övr: 0.4 },
+  },
+  {
+    id: "20810124",
+    short: "Tjärna Allé",
+    municipality: "Borlänge",
+    position: [15.39, 60.49],
+    eligible: 1058,
+    voters: 625,
+    turnout: 59.1,
+    profile: { young: 32.0, older: 15.7, longEducation: 5.3 },
+    result: { M: 3.4, C: 1.6, L: 0.5, KD: 1.0, MP: 7.6, S: 68.0, V: 8.9, SD: 7.0, Övr: 2.1 },
+  },
+  {
+    id: "12750103",
+    short: "Oderljunga",
+    municipality: "Perstorp",
+    position: [13.34, 56.20],
+    eligible: 785,
+    voters: 622,
+    turnout: 79.2,
+    profile: { young: 11.3, older: 30.2, longEducation: 12.0 },
+    result: { M: 13.6, C: 6.3, L: 1.1, KD: 6.8, MP: 3.1, S: 14.4, V: 1.3, SD: 53.0, Övr: 0.5 },
+  },
+  {
+    id: "12800222",
+    short: "Möllevångstorget S",
+    municipality: "Malmö",
+    position: [13.00, 55.59],
+    eligible: 1197,
+    voters: 856,
+    turnout: 71.5,
+    profile: { young: 26.9, older: 7.8, longEducation: 40.1 },
+    result: { M: 3.8, C: 2.9, L: 2.7, KD: 0.5, MP: 16.9, S: 19.8, V: 44.6, SD: 6.9, Övr: 1.9 },
+  },
+];
+
+export const genderParties = [
+  { code: "M", women: 16.0, womenMargin: 1.5, men: 20.1, menMargin: 1.6, significant: true },
+  { code: "C", women: 7.0, womenMargin: 1.1, men: 5.8, menMargin: 1.0, significant: false },
+  { code: "L", women: 2.2, womenMargin: 0.7, men: 2.4, menMargin: 0.6, significant: false },
+  { code: "KD", women: 4.1, womenMargin: 0.9, men: 4.3, menMargin: 0.9, significant: false },
+  { code: "MP", women: 8.5, womenMargin: 1.1, men: 4.1, menMargin: 0.9, significant: true },
+  { code: "S", women: 38.4, womenMargin: 2.1, men: 28.7, menMargin: 1.9, significant: true },
+  { code: "V", women: 10.7, womenMargin: 1.3, men: 6.8, menMargin: 1.2, significant: true },
+  { code: "SD", women: 12.2, womenMargin: 1.6, men: 24.6, menMargin: 1.8, significant: true },
+];
+
+export const sources = {
+  election2026: "https://www.val.se/valresultat-och-statistik/statistik-och-data/radata-val-2026",
+  election2022: "https://www.val.se/valresultat-och-statistik/statistik-och-data/radata-fran-val-2002-2022",
+  election2022Summary: "https://www.val.se/valresultat-och-statistik/riksdags--region--och-kommunval/valresultat-2022",
+  election2022DistrictResults: "https://www.val.se/download/18.162047b519a91d0533118f4b/1764336897948/Roster-per-distrikt-slutligt-antal-roster-inklusive-totalt-valdeltagande-riksdagsvalet-2022.xlsx",
+  districtProfiles: "https://services8.arcgis.com/9CUL84k8apjo6IDh/ArcGIS/rest/services/Valdistrikt_SocEk_ValResult_2022/FeatureServer/0",
+  scbDistrictTool: "https://www.scb.se/pressmeddelande/analysera-riksdagsvalet-med-scbs-nya-verktyg/?menu=open",
+  scb2026: "https://www.scb.se/contentassets/ce8e9149498a40ac99d5a3b07a0f5040/me0201_2026m05_br_me60br2601.pdf",
+  cartogramPrinciple: "https://storymaps.arcgis.com/stories/0e636a652d44484b9457f953994b212b",
+  ruralResearch: "https://journals.lub.lu.se/st/article/view/27485",
+  aapor: "https://aapor.org/wp-content/uploads/2022/12/Sampling-Methods-for-Political-Polling-508.pdf",
+  gsfReference: "https://gsf-goteborg.github.io/test-scrolly/",
+  caltech: "https://scienceexchange.caltech.edu/topics/voting-elections/political-polls-science",
+  puddingReference: "https://pudding.cool/2025/11/democracy/",
+  motionReference: "https://netmotionsoftware.maglr.com/the-future-of-work/report",
+};
