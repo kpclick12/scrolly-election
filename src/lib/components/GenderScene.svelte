@@ -11,7 +11,7 @@
   const format = (value) => value.toLocaleString("sv-SE", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 </script>
 
-<figure aria-label="SCB:s partisympati i maj 2026 bland kvinnor och män som uppgav ett parti. Fem av de åtta visade riksdagspartierna har en statistiskt tydlig skillnad. Övriga partier visas inte.">
+<figure aria-label="SCB:s partisympati i maj 2026 bland kvinnor och män som uppgav ett parti. Det är inte frågan hur de skulle rösta i dag. SCB beskriver tydliga könsskillnader för fem av de åtta visade riksdagspartierna. Linjerna visar 95-procentiga osäkerhetsintervall. Övriga partier visas inte.">
   <div class="layer party-view active" class:focus={step === 1}>
     <header>
       <p>SCB · Partisympati · maj 2026</p>
@@ -36,7 +36,7 @@
         {#each [0, 10, 20, 30, 40] as tick}<span style={`left:${x(tick)}`}>{tick}{tick === 40 ? "%" : ""}</span>{/each}
       </div>
     </div>
-    <p class="note">Andel bland dem som uppgav ett parti. Linjerna är SCB:s osäkerhetstal. Övriga visas inte.</p>
+    <p class="note">Partisympati bland dem som uppgav ett parti. Linjerna visar SCB:s 95-procentiga osäkerhetsintervall. Övriga visas inte.</p>
   </div>
 
 </figure>
@@ -69,7 +69,7 @@
   .point b { position:absolute; left:50%; padding:1px 3px; color:var(--ink); background:var(--surface); font-size:10px; line-height:1; font-variant-numeric:tabular-nums; white-space:nowrap; }
   .point.women b { top:-14px; transform:translateX(-50%); }
   .point.men b { top:13px; transform:translateX(-50%); }
-  .party-view.focus .party-row:not(.significant) { opacity:.28; }
+  .party-view.focus .party-row:not(.significant) { opacity:.62; }
   .party-view:not(.focus) .party-row > em { visibility:hidden; }
   .axis { position:relative; height:14px; margin:5px 130px 0 46px; color:var(--muted-light); font-size:10px; }
   .axis span { position:absolute; transform:translateX(-50%); }

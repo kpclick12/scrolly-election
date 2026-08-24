@@ -1,4 +1,4 @@
-export const districtWinnerCounts = { S: 4351, SD: 1048, M: 814, V: 46, KD: 3, MP: 2 };
+export const districtWinnerCounts = { S: 4341, SD: 1048, M: 808, V: 46, KD: 3, MP: 2, ties: 16 };
 
 export const national2022 = {
   M: 19.10,
@@ -32,6 +32,7 @@ export const districts = [
     position: [18.04, 59.40],
     eligible: 1034,
     voters: 904,
+    validVotes: 902,
     turnout: 87.4,
     profile: { young: 20.2, older: 26.7, longEducation: 54.8 },
     result: { M: 58.4, C: 6.8, L: 9.9, KD: 8.2, MP: 2.1, S: 3.3, V: 1.1, SD: 9.8, Övr: 0.4 },
@@ -43,6 +44,7 @@ export const districts = [
     position: [15.39, 60.49],
     eligible: 1058,
     voters: 625,
+    validVotes: 618,
     turnout: 59.1,
     profile: { young: 32.0, older: 15.7, longEducation: 5.3 },
     result: { M: 3.4, C: 1.6, L: 0.5, KD: 1.0, MP: 7.6, S: 68.0, V: 8.9, SD: 7.0, Övr: 2.1 },
@@ -54,6 +56,7 @@ export const districts = [
     position: [13.34, 56.20],
     eligible: 785,
     voters: 622,
+    validVotes: 619,
     turnout: 79.2,
     profile: { young: 11.3, older: 30.2, longEducation: 12.0 },
     result: { M: 13.6, C: 6.3, L: 1.1, KD: 6.8, MP: 3.1, S: 14.4, V: 1.3, SD: 53.0, Övr: 0.5 },
@@ -65,6 +68,7 @@ export const districts = [
     position: [13.00, 55.59],
     eligible: 1197,
     voters: 856,
+    validVotes: 850,
     turnout: 71.5,
     profile: { young: 26.9, older: 7.8, longEducation: 40.1 },
     result: { M: 3.8, C: 2.9, L: 2.7, KD: 0.5, MP: 16.9, S: 19.8, V: 44.6, SD: 6.9, Övr: 1.9 },
@@ -84,6 +88,7 @@ export const genderParties = [
 
 export const sources = {
   election2026: "https://www.val.se/valresultat-och-statistik/statistik-och-data/radata-val-2026",
+  election2026Press: "https://www.val.se/servicelankar/servicelankar/pressrum/nyheter--pressmeddelanden/pressmeddelande-nya/2026-08-18-forsta-gangen-over-8-miljoner-valjare-i-riksdagsvalet",
   election2022: "https://www.val.se/valresultat-och-statistik/statistik-och-data/radata-fran-val-2002-2022",
   election2022Summary: "https://www.val.se/valresultat-och-statistik/riksdags--region--och-kommunval/valresultat-2022",
   election2022DistrictResults: "https://www.val.se/download/18.162047b519a91d0533118f4b/1764336897948/Roster-per-distrikt-slutligt-antal-roster-inklusive-totalt-valdeltagande-riksdagsvalet-2022.xlsx",

@@ -23,7 +23,8 @@
       ticking = false;
       if (!visible) return;
       const mobile = window.matchMedia("(max-width: 820px)").matches;
-      const targetRatio = mobile ? (variant === "overlay" ? 0.72 : 0.90) : 0.52;
+      const veryNarrow = window.matchMedia("(max-width: 360px)").matches;
+      const targetRatio = mobile ? (variant === "overlay" ? (veryNarrow ? 0.86 : 0.78) : 0.86) : 0.52;
       const target = window.innerHeight * targetRatio;
       let closest = 0;
       let distance = Infinity;
@@ -119,14 +120,16 @@
   @media (max-width: 820px) {
     .scrolly { grid-template-columns: minmax(0, 1fr); gap: 0; }
     .visual {
-      z-index: 3;
-      height: 66svh;
-      min-height: 420px;
+      z-index: 1;
+      height: 64svh;
+      min-height: 390px;
+      max-height: 520px;
       padding: 10px 12px 16px;
       background: var(--scene);
       border-bottom: 1px solid var(--rule-strong);
     }
     .steps {
+      z-index: 2;
       padding: 14svh 16px 56svh;
       gap: 52svh;
     }

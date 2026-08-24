@@ -6,6 +6,8 @@ const output = process.env.SCROLLY_SHOTS || "/tmp/scrolly-election-shots-general
 const viewports = [
   { name: "desktop", width: 1440, height: 900, reducedMotion: "no-preference" },
   { name: "desktop-short", width: 1280, height: 680, reducedMotion: "no-preference" },
+  { name: "tablet-edge-high", width: 902, height: 900, reducedMotion: "no-preference" },
+  { name: "tablet-edge-low", width: 821, height: 900, reducedMotion: "no-preference" },
   { name: "tablet", width: 820, height: 900, reducedMotion: "no-preference" },
   { name: "phone-wide", width: 517, height: 707, reducedMotion: "no-preference" },
   { name: "phone", width: 390, height: 740, reducedMotion: "no-preference" },
@@ -51,8 +53,8 @@ for (const viewport of viewports) {
   await page.locator(".skip-link").focus();
   await page.keyboard.press("Enter");
   await page.waitForTimeout(80);
-  const skipTarget = await page.evaluate(() => ({ hash: location.hash, id: document.activeElement?.id }));
-  if (skipTarget.hash !== "#story" || skipTarget.id !== "story") {
+  const skipTarget = await page.evaluate(() => ({ hash: location.hash, id: document.activeElement?.id, outline: getComputedStyle(document.activeElement).outlineStyle }));
+  if (skipTarget.hash !== "#story" || skipTarget.id !== "story" || skipTarget.outline === "none") {
     problems.push(`SKIP LINK [${viewport.name}]: ${JSON.stringify(skipTarget)}`);
   }
   await page.evaluate(() => {
@@ -72,9 +74,10 @@ for (const viewport of viewports) {
     mandateSummary: document.querySelector(".party-intro .sr-only")?.textContent,
     symbolPointNote: document.querySelector(".sampling-act .field-reading small")?.textContent,
     genderValueLabels: document.querySelectorAll('.gender-act [aria-label^="Kvinnor "], .gender-act [aria-label^="Män "]').length,
+    mapLegendItems: document.querySelectorAll(".map-act .party-legend span").length,
     title: document.querySelector("h1")?.textContent.trim().replace(/\s+/g, " "),
   }));
-  if (semantics.language !== "sv" || semantics.h1 !== 1 || semantics.scrollys !== 3 || semantics.steps !== 17 || semantics.sourceLinks < 10 || semantics.mapControls !== 0 || semantics.samplingControls !== 0 || semantics.mainTabIndex !== "-1" || !semantics.mandateSummary?.includes("Socialdemokraterna 107") || !semantics.symbolPointNote?.includes("500 symbolpunkter") || semantics.genderValueLabels !== 16 || semantics.title !== "Kan några tusen tala för åtta miljoner?") {
+  if (semantics.language !== "sv" || semantics.h1 !== 1 || semantics.scrollys !== 4 || semantics.steps !== 21 || semantics.sourceLinks < 12 || semantics.mapControls !== 0 || semantics.samplingControls !== 0 || semantics.mainTabIndex !== "-1" || !semantics.mandateSummary?.includes("Socialdemokraterna 107") || !semantics.symbolPointNote?.includes("500 symbolpunkter") || semantics.genderValueLabels !== 16 || semantics.mapLegendItems !== 8 || semantics.title !== "Kan några tusen tala för åtta miljoner?") {
     problems.push(`STRUCTURE [${viewport.name}]: ${JSON.stringify(semantics)}`);
   }
 
@@ -148,8 +151,18 @@ for (const viewport of viewports) {
       if (!(await step.evaluate((node) => node.classList.contains("is-active")))) {
         problems.push(`SCROLL [${viewport.name}]: step ${scrollyIndex + 1}.${stepIndex + 1} did not activate`);
       }
+      if (viewport.width <= 820) {
+        const visibleCard = await step.evaluate((node) => {
+          const rect = node.getBoundingClientRect();
+          const visible = Math.max(0, Math.min(innerHeight, rect.bottom) - Math.max(0, rect.top));
+          return { visible: Math.round(visible), height: Math.round(rect.height), top: Math.round(rect.top), bottom: Math.round(rect.bottom) };
+        });
+        if (visibleCard.visible < Math.min(90, visibleCard.height * .65)) {
+          problems.push(`MOBILE CARD [${viewport.name}] ${scrollyIndex + 1}.${stepIndex + 1}: ${JSON.stringify(visibleCard)}`);
+        }
+      }
       if (scrollyIndex === 0 || ["desktop", "phone-small"].includes(viewport.name)) {
-        const label = ["map", "gender", "sampling"][scrollyIndex];
+        const label = ["map", "gender", "sampling", "ending"][scrollyIndex];
         await page.screenshot({ path: `${output}/${viewport.name}-${label}-${stepIndex + 1}.png` });
       }
       if (scrollyIndex === 0 && stepIndex === 3) {
@@ -162,6 +175,12 @@ for (const viewport of viewports) {
         const responsePipeline = await scrolly.locator(".response .pipeline").innerText();
         if (!responsePipeline.includes("27,3%") || !responsePipeline.includes("30,0%")) {
           problems.push(`RESPONSE BIAS [${viewport.name}]: ${responsePipeline}`);
+        }
+      }
+      if (scrollyIndex === 3 && stepIndex === 2) {
+        const endingText = await scrolly.locator("figure").innerText();
+        if (!endingText.includes("4 542") || !endingText.includes("4 718")) {
+          problems.push(`SCB ENDING [${viewport.name}]: ${endingText}`);
         }
       }
     }
@@ -190,10 +209,32 @@ for (const viewport of viewports) {
   await context.close();
 }
 
+const sweepContext = await browser.newContext({ viewport: { width: 300, height: 800 }, reducedMotion: "reduce" });
+const sweepPage = await sweepContext.newPage();
+await sweepPage.goto(base, { waitUntil: "networkidle" });
+await sweepPage.locator(".map-header").waitFor();
+for (let width = 300; width <= 1000; width += 10) {
+  await sweepPage.setViewportSize({ width, height: 800 });
+  const fit = await sweepPage.evaluate(() => {
+    const party = document.querySelector(".party-intro-visual")?.getBoundingClientRect();
+    const pageWidth = document.documentElement.scrollWidth;
+    return {
+      pageWidth,
+      viewportWidth: innerWidth,
+      partyLeft: party ? Math.round(party.left) : null,
+      partyRight: party ? Math.round(party.right) : null,
+    };
+  });
+  if (fit.pageWidth > fit.viewportWidth || fit.partyLeft < -1 || fit.partyRight > fit.viewportWidth + 1) {
+    problems.push(`WIDTH SWEEP [${width}px]: ${JSON.stringify(fit)}`);
+  }
+}
+await sweepContext.close();
+
 await browser.close();
 if (problems.length) {
   console.error(problems.join("\n"));
   process.exitCode = 1;
 } else {
-  console.log(`Checks passed: 17 steps, no overflow, sampling sequence, reduced motion. Screenshots: ${output}`);
+  console.log(`Checks passed: 21 steps, eight full viewports, 71-width sweep, no overflow, sampling and SCB sequences, reduced motion. Screenshots: ${output}`);
 }

@@ -133,9 +133,6 @@
 
   const responseProfiles = [
     { label: "Kvinnor", target: 51, answer: responseWomen, weighted: 51 },
-    { label: "18–29 år", target: 18, answer: 13, weighted: 18 },
-    { label: "Landsbygd", target: 25, answer: 19, weighted: 25 },
-    { label: "Lång utbildning", target: 36, answer: 43, weighted: 36 },
   ];
 
   const tokenColors = ["#2f7f78", "#e4a63a", "#7a67a8", "#d66a55", "#879d56"];
@@ -273,7 +270,7 @@
       <div><span>Bland 642 svarande</span><strong>{format(responseEstimate)}%</strong></div><i>→<small>kön viktas</small></i>
       <div><span>Efter viktning</span><strong>{format(weightedEstimate)}%</strong></div>
     </div>
-    <div class="response-chart">
+    <div class="response-chart" aria-label="Kvinnor utgör 51 procent i den fiktiva populationen, 62 procent bland de svarande och 51 procent efter viktning för kön.">
       <div class="response-head"><span></span><b>Svar</b><b>Efter viktning</b></div>
       {#each responseProfiles as profile}
         <div class="response-row">
@@ -283,7 +280,7 @@
         </div>
       {/each}
     </div>
-    <p class="reading">I den fiktiva populationen är stödet 18,0 procent bland kvinnor och 42,5 bland män. När kvinnor utgör 62 procent av de svarande underskattas stödet. Viktning för kön rättar felet eftersom det är den enda inbyggda skevheten.</p>
+    <p class="reading">I den fiktiva populationen är stödet 18,0 procent bland kvinnor och 42,5 bland män. När kvinnor utgör 62 procent av de svarande underskattas stödet. Tabellen visar bara kön, eftersom det är den enda inbyggda skevheten.</p>
     <p class="note">Exemplet isolerar en känd skillnad. Verklig viktning kan inte säkert rätta sådant som inte har mätts.</p>
   </div>
 </figure>

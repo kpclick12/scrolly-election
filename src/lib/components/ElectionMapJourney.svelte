@@ -34,7 +34,7 @@
   let ariaLabel = $derived(selectedFeature
     ? `Kartan zoomar till ${selectedFeature.properties.name} i ${selectedFeature.properties.municipality}. ${selectedFeature.properties.leadingParty} var största riksdagsparti 2022 med ${format(selectedFeature.properties.leadingShare)} procent.`
     : step === 8
-      ? "Samma 6 264 valdistrikt har lämnat kartan och placerats efter andel 65 år eller äldre och andel med lång utbildning. De fyra besökta distrikten är markerade."
+      ? "Samma 6 264 valdistrikt har lämnat kartan och placerats efter andel 65 år eller äldre och andel med minst treårig eftergymnasial utbildning. De fyra besökta distrikten är markerade."
       : step === 0
       ? "Neutral karta över Sveriges 6 264 valdistrikt vid riksdagsvalet 2022."
       : step === 1
@@ -69,6 +69,39 @@
       minY: Math.min(top, bottom),
       maxY: Math.max(top, bottom),
     };
+  }
+
+  function projectedCentroid(feature, project) {
+    const polygons = feature.geometry.type === "Polygon"
+      ? [feature.geometry.coordinates]
+      : feature.geometry.coordinates;
+    let weightedX = 0;
+    let weightedY = 0;
+    let totalArea = 0;
+    for (const polygon of polygons) {
+      for (const ring of polygon) {
+        const points = ring.map(project);
+        let crossSum = 0;
+        let centroidX = 0;
+        let centroidY = 0;
+        for (let index = 0; index < points.length - 1; index += 1) {
+          const [x1, y1] = points[index];
+          const [x2, y2] = points[index + 1];
+          const cross = x1 * y2 - x2 * y1;
+          crossSum += cross;
+          centroidX += (x1 + x2) * cross;
+          centroidY += (y1 + y2) * cross;
+        }
+        const area = crossSum / 2;
+        if (Math.abs(area) < 1e-6) continue;
+        weightedX += centroidX / (6 * area) * area;
+        weightedY += centroidY / (6 * area) * area;
+        totalArea += area;
+      }
+    }
+    if (Math.abs(totalArea) > 1e-6) return [weightedX / totalArea, weightedY / totalArea];
+    const box = projectedBox(feature, project);
+    return [(box.minX + box.maxX) / 2, (box.minY + box.maxY) / 2];
   }
 
   function overviewView(width, height) {
@@ -168,7 +201,7 @@
     context.save();
     context.translate(width <= 820 ? 14 : 24, (chart.top + chart.bottom) / 2);
     context.rotate(-Math.PI / 2);
-    context.fillText("Lång utbildning →", 0, 0);
+    context.fillText("Minst 3 års eftergymnasial utbildning →", 0, 0);
     context.restore();
     context.restore();
   }
@@ -364,10 +397,7 @@
     const project = projector(boundsOf(mapData.features), width, height, width <= 820 ? 28 : 46);
     paths = mapData.features.map((feature) => pathFor(feature, project));
     projectedBounds = mapData.features.map((feature) => projectedBox(feature, project));
-    projectedCenters = projectedBounds.map((box) => [
-      (box.minX + box.maxX) / 2,
-      (box.minY + box.maxY) / 2,
-    ]);
+    projectedCenters = mapData.features.map((feature) => projectedCentroid(feature, project));
     currentView = viewForStep();
     currentColorMix = step === 0 ? 0 : 1;
     currentScatterMix = step === 8 ? 1 : 0;
@@ -407,7 +437,7 @@
   });
 </script>
 
-<figure bind:this={wrapper} role="img" aria-label={ariaLabel}>
+<figure bind:this={wrapper} aria-label={ariaLabel}>
   <canvas bind:this={canvas} aria-hidden="true"></canvas>
   <header class="map-header">
     <span>Riksdagsvalet 2022</span>
@@ -418,13 +448,11 @@
     <p class="loading">Läser Valmyndighetens 21 länsfiler …</p>
   {/if}
 
-  {#if step >= 1}
-    <div class="party-legend" aria-hidden="true">
-      {#each ["S", "M", "SD", "V", "KD", "MP"] as party}
-        <span><i style={`--party:${partyColors[party]}`}></i>{party}</span>
-      {/each}
-    </div>
-  {/if}
+  <div class="party-legend" class:visible={step >= 1} aria-label="Partifärger" aria-hidden={step < 1}>
+    {#each parties.filter((party) => party.code !== "Övr") as party}
+      <span><i style={`--party:${party.color}`} aria-hidden="true"></i><abbr title={party.name}>{party.code}</abbr></span>
+    {/each}
+  </div>
 
   {#if step === 7 && mapData}
     <div class="route-summary" aria-hidden="true">
@@ -435,7 +463,7 @@
     </div>
   {/if}
 
-  <figcaption>{step < 2 ? "Färgen visar största riksdagsparti 2022. Kartytan visar mark, inte antal väljare." : step === 8 ? "En punkt är fortfarande ett valdistrikt. Positionen visar områdets andel 65+ och andel med lång utbildning. Färgen visar största parti 2022." : "En punkt motsvarar ett valdistrikt. Storleken följer antalet giltiga röster, med en minsta visningsstorlek. Färgen visar största parti 2022."}</figcaption>
+  <figcaption>{step < 2 ? "Färgen visar största riksdagsparti 2022. Vid 16 delade förstaplatser används alfabetisk partikod. Kartytan visar mark, inte antal väljare." : step === 8 ? "En punkt är fortfarande ett valdistrikt. Positionen visar områdets andel 65+ och andel med minst treårig eftergymnasial utbildning. Färgen visar största parti 2022." : "En punkt motsvarar ett valdistrikt. Storleken följer antalet giltiga röster, med en minsta visningsstorlek. Färgen visar största parti 2022."}</figcaption>
 </figure>
 
 <style>
@@ -445,8 +473,10 @@
   .map-header span { color:var(--muted); }
   .map-header strong { color:var(--ink); font-size:13px; font-weight:700; }
   .loading { position:absolute; inset:0; display:grid; place-items:center; margin:0; color:var(--muted); font-size:12px; }
-  .party-legend { position:absolute; right:clamp(15px,2.7vw,40px); top:clamp(18px,3vw,38px); display:flex; flex-wrap:wrap; justify-content:flex-end; gap:7px 12px; max-width:360px; color:var(--muted); font-size:10px; font-weight:700; }
+  .party-legend { position:absolute; right:clamp(15px,2.7vw,40px); top:clamp(18px,3vw,38px); display:flex; flex-wrap:wrap; justify-content:flex-end; gap:7px 12px; max-width:360px; color:var(--muted); font-size:10px; font-weight:700; opacity:0; visibility:hidden; }
+  .party-legend.visible { opacity:1; visibility:visible; }
   .party-legend span { display:flex; align-items:center; gap:5px; }
+  .party-legend abbr { text-decoration:none; }
   .party-legend i, .route-summary i { width:9px; height:9px; border-radius:50%; background:var(--party); }
   .route-summary { position:absolute; right:clamp(18px,4vw,64px); bottom:74px; display:grid; gap:7px; color:var(--ink); font-size:10px; font-weight:700; }
   .route-summary span { display:flex; align-items:center; gap:7px; }
