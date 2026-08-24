@@ -46,22 +46,22 @@
   .flow { display:grid; grid-template-columns:1.2fr auto .75fr auto .75fr auto .9fr; align-items:center; gap:clamp(12px,2.3vw,30px); }
   section { min-width:0; }
   .dots { display:grid; grid-template-columns:repeat(12,1fr); gap:4px; width:100%; min-height:73px; align-content:center; }
-  .dots i { display:block; aspect-ratio:1; border-radius:50%; background:#b7c0c2; }
+  .dots i { display:block; aspect-ratio:1; border-radius:50%; background:#bcc5d5; }
   .sample { grid-template-columns:repeat(6,1fr); }
   .sample i { background:var(--accent); }
   .response { grid-template-columns:repeat(6,1fr); }
-  .response i { transform:scale(var(--size,1)); background:#2f817d; }
-  .response i.missing { background:transparent; border:1px solid #b8afa2; }
+  .response i { transform:scale(var(--size,1)); background:#008b95; }
+  .response i.missing { background:transparent; border:1px solid #aeb8ca; }
   .estimate { display:flex; align-items:center; justify-content:center; gap:7px; min-height:73px; }
-  .estimate i { width:14px; height:14px; border-radius:50%; background:#7663a8; }
-  .estimate i:nth-child(2) { width:21px; height:21px; background:#2f817d; }
-  .estimate i:nth-child(3) { width:11px; height:11px; background:#d96f5d; }
-  .estimate i:nth-child(4) { width:18px; height:18px; background:#e0ad35; }
-  .estimate i:nth-child(5) { width:13px; height:13px; background:#7c9854; }
+  .estimate i { width:14px; height:14px; border-radius:50%; background:#7457c9; }
+  .estimate i:nth-child(2) { width:21px; height:21px; background:#008b95; }
+  .estimate i:nth-child(3) { width:11px; height:11px; background:#4355d9; }
+  .estimate i:nth-child(4) { width:18px; height:18px; background:#58a4c6; }
+  .estimate i:nth-child(5) { width:13px; height:13px; background:#5d967c; }
   .arrow { color:var(--muted-light); font-size:24px; }
   p { margin:14px 0 2px; color:var(--muted); font-size:9px; font-weight:750; text-transform:uppercase; letter-spacing:.05em; }
   strong { display:block; font-family:var(--display); font-size:clamp(21px,2.4vw,30px); line-height:1.04; letter-spacing:-.03em; font-variant-numeric:tabular-nums; }
-  small { display:block; margin-top:3px; color:#8b4a49; font-size:10px; }
+  small { display:block; margin-top:3px; color:#6652a6; font-size:10px; }
   figcaption { margin:30px 0 0; padding-top:15px; border-top:1px solid var(--rule); color:var(--muted); font-size:11px; line-height:1.5; }
   @media (max-width:820px) {
     figure { padding:23px 18px; }

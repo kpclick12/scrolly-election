@@ -216,7 +216,7 @@
     context.setTransform(dpr, 0, 0, dpr, 0, 0);
     context.clearRect(0, 0, width, height);
     const backgroundFrom = [231, 235, 245];
-    const backgroundTo = [247, 245, 239];
+    const backgroundTo = [247, 249, 253];
     const background = backgroundFrom.map((channel, index) => Math.round(channel + (backgroundTo[index] - channel) * currentScatterMix));
     context.fillStyle = `rgb(${background.join(",")})`;
     context.fillRect(0, 0, width, height);
@@ -467,7 +467,7 @@
 </figure>
 
 <style>
-  figure { position:relative; width:100%; height:100%; margin:0; overflow:hidden; color:var(--ink); background:#e7ebf5; }
+  figure { position:relative; width:100%; height:100%; margin:0; overflow:hidden; color:var(--ink); background:#e7ecf5; }
   canvas { position:absolute; inset:0; display:block; width:100%; height:100%; }
   .map-header { position:absolute; left:clamp(18px,3vw,46px); top:clamp(18px,3vw,38px); display:grid; gap:4px; padding-left:10px; border-left:3px solid var(--accent); font-size:11px; line-height:1.3; }
   .map-header span { color:var(--muted); }

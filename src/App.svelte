@@ -3,15 +3,12 @@
   import ScrollyShell from "./lib/components/ScrollyShell.svelte";
   import ElectionMapJourney from "./lib/components/ElectionMapJourney.svelte";
   import GenderScene from "./lib/components/GenderScene.svelte";
-  import SamplingStory from "./lib/components/SamplingStory.svelte";
-  import CampaignPosters from "./lib/components/CampaignPosters.svelte";
   import PartyMandates from "./lib/components/PartyMandates.svelte";
   import PointFlowEnding from "./lib/components/PointFlowEnding.svelte";
   import { districts, districtWinnerCounts, national2022, parties, sources } from "./data/story.js";
 
   let mapStep = $state(0);
   let genderStep = $state(0);
-  let samplingStep = $state(0);
   let progress = $state(0);
 
   const districtNotes = [
@@ -34,14 +31,6 @@
     "Hundra punkter visar partisympatins blandning bland kvinnor och män i SCB:s mätning i maj 2026.",
     "Socialdemokraterna och Sverigedemokraterna markeras eftersom skillnaderna är störst där.",
   ][genderStep]);
-
-  const samplingStatus = $derived([
-    "En skål med fem godisfärger visar en population med flera grupper.",
-    "En handfull från skålens hörn får en annan färgblandning än helheten.",
-    "Ett urval dras från hela den blandade skålen.",
-    "Godisbitar försvinner ur urvalet. Ovanligt många av de lila bitarna saknas.",
-    "De lila svar som finns kvar får större vikt, men kan inte berätta vad de saknade skulle ha svarat.",
-  ][samplingStep]);
 
   function format(value) {
     return Number(value).toLocaleString("sv-SE", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
@@ -113,12 +102,11 @@
   <div class="hero-inner">
     <div class="hero-copy">
       <p class="eyebrow">Riksdagsvalet 2026</p>
-      <p class="campaign-line">Debatter, utspel och valaffischer som får mustasch innan limmet har torkat. Snart kommer också mätningarna.</p>
+      <p class="campaign-line">Valrörelsen är igång. Debatter, utspel och snart nya opinionsmätningar.</p>
       <h1>Kan några tusen tala för åtta miljoner?</h1>
       <p class="standfirst">Vi provar på ett val där vi redan vet svaret.</p>
       <p class="hero-question">Hur en valundersökning fungerar, varför den ibland missar och vad det betyder inför den 13 september.</p>
     </div>
-    <CampaignPosters />
     <dl class="hero-facts">
       <div>
         <dt>Valdag</dt>
@@ -198,47 +186,11 @@
     </ScrollyShell>
   </section>
 
-  <section class="sampling-act" aria-labelledby="sample-title">
-    <div class="act-head" data-reveal>
-      <p class="section-index">Godispåsen</p>
-      <h2 id="sample-title">En handfull kan räcka</h2>
-      <p>Det avgörande är hur vi plockar.</p>
-    </div>
-    <ScrollyShell onStepChange={(index) => samplingStep = index} label="Godispåsen som analogi för ett representativt urval" status={samplingStatus}>
-      {#snippet visual()}<SamplingStory step={samplingStep} />{/snippet}
-      <article class="sampling-step" data-step>
-        <p class="step-index">1 av 5 · Hela påsen</p>
-        <h3>Hela blandningen</h3>
-        <p>Färgerna får föreställa grupper som kan tycka olika.</p>
-      </article>
-      <article class="sampling-step" data-step>
-        <p class="step-index">2 av 5 · Den enkla vägen</p>
-        <h3>Vi tar det som ligger närmast</h3>
-        <p>Det går fort. Men färgerna i hörnet behöver inte likna hela påsen. Precis som ett valdistrikt inte behöver likna Sverige.</p>
-      </article>
-      <article class="sampling-step" data-step>
-        <p class="step-index">3 av 5 · Slumpen</p>
-        <h3>Urval från hela påsen</h3>
-        <p>När hela påsen blandas kan varje bit hamna i handen. Då kan en liten handfull faktiskt likna helheten.</p>
-      </article>
-      <article class="sampling-step" data-step>
-        <p class="step-index">4 av 5 · Bortfallet</p>
-        <h3>Någon äter upp en del av urvalet</h3>
-        <p>Om bitarna försvinner lite huller om buller är skadan mindre. Om främst en färg försvinner vet vi inte längre om handen liknar påsen.</p>
-      </article>
-      <article class="sampling-step" data-step>
-        <p class="step-index">5 av 5 · Viktningen</p>
-        <h3>Några svar får större vikt</h3>
-        <p>En vikt kan kompensera för en känd lucka. Men den kan inte avslöja vad de uppätna bitarna hade svarat.</p>
-      </article>
-    </ScrollyShell>
-  </section>
-
   <section class="gender-act" aria-labelledby="gender-title">
     <div class="act-head" data-reveal>
-      <p class="section-index">Färgerna finns på riktigt</p>
-      <h2 id="gender-title">Kvinnor och män svarar inte likadant</h2>
-      <p>I SCB:s mätning i maj skilde partisympatierna sig mellan könen. Det gör ett skevt bortfall politiskt intressant.</p>
+      <p class="section-index">Vilka som ingår spelar roll</p>
+      <h2 id="gender-title">Kvinnor och män har olika partisympatier</h2>
+      <p>I SCB:s mätning i maj skilde sig blandningen mellan könen. Det visar varför sammansättningen i ett urval spelar roll.</p>
     </div>
     <ScrollyShell onStepChange={(index) => genderStep = index} label="Partisympatins blandning bland kvinnor och män" status={genderStatus}>
       {#snippet visual()}<GenderScene step={genderStep} />{/snippet}
@@ -250,30 +202,30 @@
       <article class="gender-step" data-step>
         <p class="step-index">2 av 2 · De största skillnaderna</p>
         <h3>S och SD drar åt varsitt håll</h3>
-        <p>S hade högre sympati bland kvinnor och SD bland män. Skillnader fanns också för M, V och MP. Om den ena gruppen svarar oftare kan totalsiffran flytta sig.</p>
+        <p>S hade högre sympati bland kvinnor och SD bland män. Skillnader fanns också för M, V och MP. Om den ena gruppen blir överrepresenterad måste det hanteras i beräkningen.</p>
       </article>
     </ScrollyShell>
   </section>
 
   <section class="poll-reading" aria-labelledby="poll-reading-title">
     <div class="poll-reading-head" data-reveal>
-      <p class="section-index">Tillbaka till verkligheten</p>
-      <h2 id="poll-reading-title">Så såg det ut hos SCB</h2>
-      <p>I maj 2026 drogs ett verkligt urval ur den svenska väljarkåren.</p>
+      <p class="section-index">Så gör man i verkligheten</p>
+      <h2 id="poll-reading-title">Från åtta miljoner till några tusen</h2>
+      <p>SCB:s mätning i maj visar både att det går och varför det fortfarande är klurigt.</p>
     </div>
     <PointFlowEnding />
     <div class="poll-coda" data-reveal>
-      <p><strong>Det går alltså.</strong> Några tusen kan säga något om drygt åtta miljoner, om urvalsramen täcker målpopulationen, sannolikheten att väljas är känd och bortfallet hanteras öppet.</p>
-      <p>Mätningen visar vad de svarande sade då. Följ utvecklingen över tid och titta efter hur urvalet gjordes.</p>
+      <p><strong>Först urvalet.</strong> Personerna dras ur hela målpopulationen. Då får inte ett enskilt distrikt, en viss ålder eller ett kön dominera bara för att de råkar vara lättast att nå.</p>
+      <p><strong>Sedan bortfallet.</strong> 4 542 av 9 260 utvalda svarade. SCB viktar svaren med hjälp av kända skillnader, men en vikt kan inte berätta exakt vad de andra skulle ha svarat.</p>
     </div>
   </section>
 
   <section class="closing prose-section" data-reveal aria-labelledby="closing-title">
-    <p class="section-index">Inför den 13 september</p>
-    <h2 id="closing-title">Så, kan vi lita på mätningarna?</h2>
+    <p class="section-index">Valnatten</p>
+    <h2 id="closing-title">Blir det spännande ändå?</h2>
     <div class="body-copy">
-      <p>Det lokala resultatet blev fel svar på en nationell fråga. Godiset visar varför: handen måste kunna nå hela påsen, och det spelar roll vilka färger som försvinner på vägen. Skillnaden mellan kvinnor och män visar att de färgerna faktiskt kan flytta en partisiffra.</p>
-      <p>Så ja. En bra undersökning kan säga något om valet den 13 september, om vägen från väljare till siffra håller.</p>
+      <p>Ja. Om flera bra mätningar pekar åt samma håll kan vi vara ganska trygga med riktningen. Men mätningarna visar läget när frågan ställdes, inte hur valresultatet måste bli.</p>
+      <p>När skillnaderna är små finns spänningen kvar. Den 13 september räknas röster i stället för svar.</p>
     </div>
   </section>
 
@@ -287,7 +239,6 @@
         <li><strong>Distriktskartan.</strong> Geometrin kommer från Valmyndighetens <a href={sources.election2022}>21 länsvisa GIS-filer</a>. Partandel, giltiga röster och valdeltagande räknas från myndighetens <a href={sources.election2022DistrictResults}>slutliga distriktsfil</a>. Samtliga 6 264 geometrier har matchats mot resultatfilen. Kartan använder Web Mercator. Först fylls distriktet med färgen för största parti, därefter blir varje distrikt en punkt vars yta följer antalet giltiga röster. Punktens läge är polygonens ytcentroid. Sexton distrikt hade delad förstaplats; där väljs kartfärgen deterministiskt efter alfabetisk partikod. Principen bakom skillnaden mellan landyta och väljare illustreras också i <a href={sources.cartogramPrinciple}>ArcGIS StoryMaps genomgång av valkartor och befolkning</a>.</li>
         <li><strong>Karta till spridningsdiagram.</strong> Samma 6 264 distrikt behåller sin identitet i övergången. Andel 65+ är <code>A_65__år / A_TOTålde</code>. Utbildningsmåttet är andelen röstberättigade med minst treårig eftergymnasial utbildning, <code>UTB_Lång_ / UTB_TOTutb</code>, från <a href={sources.scbDistrictTool}>SCB:s valanalysverktyg</a> och dess <a href={sources.districtProfiles}>ArcGIS-lager</a>. Baserna är fältspecifika. Diagrammet beskriver områden och visar inte hur en enskild person röstade eller att ålder och utbildning orsakar ett valresultat.</li>
         <li><strong>SCB:s partisympati och bortfall.</strong> Värden och osäkerhetstal för kvinnor och män kommer från SCB:s tabell för maj 2026 och gäller bland dem som uppgav en partisympati. Undersökningen drog 9 260 röstberättigade och fick 4 542 svar, ett individbortfall på 51,0 procent. Bortfallet varierade mellan grupper, bland annat 62,4 procent bland 18–24-åringar och 43,8 procent bland 65–74-åringar. I skattningen använde SCB kön gånger ålder, region, utbildning, födelseland och partival 2022 som hjälpinformation. Måttet skiljer sig från frågan hur man skulle rösta om det vore val i dag. Slutfigurens ”drygt 8 miljoner” beskriver målpopulationens storleksordning vid mättillfället; Valmyndighetens exakta 8 046 725 gäller först kvalifikationsdagen i augusti. <a href={sources.scb2026}>SCB, maj 2026</a>. SCB beskriver också hur bortfallet har ökat över tid och hur viktning kompenserar för en del av skevheten i sina <a href={sources.scbFaq}>frågor och svar om PSU</a>.</li>
-        <li><strong>Godispåsen.</strong> Färgerna är en analogi för grupper i populationen, inte partier eller skattningar av väljarkåren. De streckade bitarna visar ett konstruerat bortfall där en grupp svarar mer sällan. De större punkterna visar principen bakom viktning: ett svar får representera fler. Verkliga vikter kan minska kända skevheter men inte avslöja vad de som inte svarade hade sagt. <a href={sources.aapor}>AAPOR</a> och <a href={sources.caltech}>Caltech Science Exchange</a> förklarar urval, viktning och felkällor.</li>
         <li><strong>Sannolikhetsurval och paneler.</strong> Berättelsens designbaserade exempel kräver en känd urvalssannolikhet. Icke-sannolikhetsurval, som opt-in-paneler, kan också ge användbara och ibland jämförbara resultat. Då kan en vanlig urvalsfelmarginal inte beräknas på samma sätt; bedömningen vilar i stället på rekrytering, statistisk modellering, viktning och transparent metodredovisning. <a href={sources.aapor}>AAPOR:s metodöversikt</a>.</li>
       </ul>
     </div>

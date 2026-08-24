@@ -87,7 +87,7 @@
   .legend span { display:flex; align-items:center; gap:5px; }
   .legend i { width:8px; height:8px; border-radius:50%; background:var(--party); }
   .focus-reading { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1px; margin:27px clamp(24px,6vw,65px) 0; background:var(--rule); border-block:1px solid var(--rule); }
-  .focus-reading > div { display:grid; grid-template-columns:auto 1fr 1fr; align-items:center; gap:10px 16px; padding:13px 15px; background:#fbfaf6; }
+  .focus-reading > div { display:grid; grid-template-columns:auto 1fr 1fr; align-items:center; gap:10px 16px; padding:13px 15px; background:#f7f9fd; }
   .focus-reading b { display:grid; place-items:center; width:31px; height:27px; border-bottom:4px solid var(--party); font-size:12px; }
   .focus-reading span { color:var(--muted); font-size:9px; line-height:1.3; }
   .focus-reading strong { display:block; color:var(--ink); font-size:14px; font-variant-numeric:tabular-nums; }
