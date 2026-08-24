@@ -15,9 +15,12 @@ Produktionsbygge och visuell kontroll:
 pnpm build
 pnpm preview
 pnpm check
+pnpm capture:og
 ```
 
 `pnpm check` förutsätter att preview-servern kör på port 4173. Testet går igenom berättelsens 16 scrollsteg i åtta fulla viewports: 1440, ett kort desktopfönster, brytpunkterna 902, 821 och 820 samt 517, 390 och 320 px. Därefter sveps varje tiotal pixlar från 300 till 1 000. Det minsta läget använder reducerad rörelse. Testet kontrollerar kartresan, godisflödet, könswafflarna, SCB-syntesen, mandatfigurens 349 punkter, konsolfel, fokus, mobilkort, brytpunktsklippning och horisontellt spill. Skärmbilder sparas i `/tmp/scrolly-election-shots-general`.
+
+`pnpm capture:og` tar en 1200 × 630-bild av det lokala introt och sparar den som `public/og.png` för länkförhandsvisningar.
 
 Berättelsen använder punkter som ett återkommande språk utan att göra varje avsnitt till en effekt. Mandatpunkterna ordnas till en halvcirkel med riksdagens 349 mandat. Kartan växlar från färgad landyta till 6 264 valdistriktspunkter, flyttar kameran mellan fyra distrikt och låter därefter samma distrikt övergå till ett demografiskt spridningsdiagram. Godispåsen är den bärande analogin för population, urval, bortfall och viktning. Könsdiagrammet använder två hundrapunktsfält. Avslutningen återvänder till verkliga data från SCB:s undersökning i maj 2026 i en statisk syntes.
 
