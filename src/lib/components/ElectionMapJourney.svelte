@@ -12,6 +12,7 @@
     { id: "12800222", short: "Möllevångstorget S" },
   ];
   const stepDistrict = [null, null, stops[0].id, stops[0].id, stops[1].id, stops[2].id, stops[3].id, null, null];
+  const stopIds = new Set(stops.map((stop) => stop.id));
   const partyColors = Object.fromEntries(parties.map((party) => [party.code, party.color]));
 
   let wrapper;
@@ -28,13 +29,15 @@
   let targetView = { scale: 1, x: 0, y: 0 };
   let currentColorMix = 0;
   let currentScatterMix = 0;
+  let mobileRendering = false;
+  let lastAnimationDraw = 0;
 
   let selectedId = $derived(stepDistrict[step] ?? null);
   let selectedFeature = $derived(selectedId ? mapData?.features[featureIndex.get(selectedId)] : null);
   let ariaLabel = $derived(selectedFeature
     ? `Kartan zoomar till ${selectedFeature.properties.name} i ${selectedFeature.properties.municipality}. ${selectedFeature.properties.leadingParty} var största riksdagsparti 2022 med ${format(selectedFeature.properties.leadingShare)} procent.`
     : step === 8
-      ? "Samma 6 264 valdistrikt har lämnat kartan och placerats efter andel 65 år eller äldre och andel med minst treårig eftergymnasial utbildning. De fyra besökta distrikten är markerade."
+      ? "Samma 6 264 valdistrikt har lämnat kartan och placerats efter andel med minst treårig eftergymnasial utbildning och röstandelen för distriktets största parti. De fyra besökta distrikten är markerade."
       : step === 0
       ? "Neutral karta över Sveriges 6 264 valdistrikt vid riksdagsvalet 2022."
       : step === 1
@@ -197,11 +200,11 @@
     context.textBaseline = "alphabetic";
     context.font = `700 ${width <= 820 ? 10 : 12}px ui-sans-serif, system-ui, sans-serif`;
     context.fillStyle = "#273843";
-    context.fillText("Andel 65 år eller äldre →", (chart.left + chart.right) / 2, chart.bottom + (width <= 820 ? 39 : 49));
+    context.fillText("Minst 3 års eftergymnasial utbildning →", (chart.left + chart.right) / 2, chart.bottom + (width <= 820 ? 39 : 49));
     context.save();
     context.translate(width <= 820 ? 14 : 24, (chart.top + chart.bottom) / 2);
     context.rotate(-Math.PI / 2);
-    context.fillText("Minst 3 års eftergymnasial utbildning →", 0, 0);
+    context.fillText("Röstandel för största parti →", 0, 0);
     context.restore();
     context.restore();
   }
@@ -223,7 +226,7 @@
 
     const pointMode = step >= 2;
 
-    if (currentScatterMix < .999) {
+    if (currentScatterMix < .999 && !pointMode) {
       context.setTransform(
         dpr * viewScale,
         0,
@@ -254,34 +257,50 @@
       context.setTransform(dpr, 0, 0, dpr, 0, 0);
       drawScatterAxes(context, width, height, currentScatterMix);
       const chart = chartLayout(width, height);
+      const batches = new Map();
+      const highlights = [];
       mapData.features.forEach((feature, index) => {
         const isSelected = feature.properties.id === selectedId;
         const validVotes = feature.properties.validVotes ?? 1000;
         const mapX = projectedCenters[index][0] * viewScale + view.x;
         const mapY = projectedCenters[index][1] * viewScale + view.y;
-        const scatterX = chart.x(feature.properties.older);
-        const scatterY = chart.y(feature.properties.education);
+        const scatterX = chart.x(feature.properties.education);
+        const scatterY = chart.y(feature.properties.leadingShare);
         const x = mapX + (scatterX - mapX) * currentScatterMix;
         const y = mapY + (scatterY - mapY) * currentScatterMix;
-        const isStop = stops.some((stop) => stop.id === feature.properties.id);
+        const isStop = stopIds.has(feature.properties.id);
         const screenRadius = isSelected
           ? Math.min(14, 7 + Math.sqrt(validVotes / 1000) * 2.3)
           : isStop && currentScatterMix > .5
             ? 5.4
             : Math.max(1.05, Math.min(2.55, Math.sqrt(validVotes / 1000) * 1.35));
-        context.beginPath();
-        context.arc(x, y, screenRadius, 0, Math.PI * 2);
-        context.fillStyle = selectedId && !isSelected
-          ? "rgba(91,97,112,.17)"
-          : partyColors[feature.properties.leadingParty] ?? "#8f999f";
-        context.globalAlpha = selectedId && !isSelected ? 0.5 : currentScatterMix > 0 ? .32 + (isStop ? .68 : 0) : .9;
-        context.fill();
         if (isSelected || (isStop && currentScatterMix > .5)) {
-          context.strokeStyle = currentScatterMix > .5 ? "#1f3039" : "#ffffff";
-          context.lineWidth = currentScatterMix > .5 ? 1.8 : 3.5;
-          context.stroke();
+          highlights.push({ feature, x, y, radius: screenRadius });
+          return;
         }
+        const key = selectedId ? "context" : feature.properties.leadingParty;
+        if (!batches.has(key)) batches.set(key, new Path2D());
+        const path = batches.get(key);
+        path.moveTo(x + screenRadius, y);
+        path.arc(x, y, screenRadius, 0, Math.PI * 2);
       });
+
+      for (const [key, path] of batches) {
+        context.fillStyle = key === "context" ? "rgba(91,97,112,.17)" : partyColors[key] ?? "#8f999f";
+        context.globalAlpha = key === "context" ? 1 : .9 - currentScatterMix * .58;
+        context.fill(path);
+      }
+
+      context.globalAlpha = 1;
+      for (const { feature, x, y, radius } of highlights) {
+        context.beginPath();
+        context.arc(x, y, radius, 0, Math.PI * 2);
+        context.fillStyle = partyColors[feature.properties.leadingParty] ?? "#8f999f";
+        context.fill();
+        context.strokeStyle = currentScatterMix > .5 ? "#1f3039" : "#ffffff";
+        context.lineWidth = currentScatterMix > .5 ? 1.8 : 3.5;
+        context.stroke();
+      }
       context.globalAlpha = 1;
 
       if (currentScatterMix > .72) {
@@ -291,18 +310,25 @@
         context.textAlign = "left";
         context.textBaseline = "middle";
         context.fillStyle = "#1f3039";
-        const offsets = [-11, 12, -11, 12];
+        const labelOffsets = [
+          { x: 8, y: -11, align: "left" },
+          { x: -8, y: 12, align: "right" },
+          { x: 8, y: -11, align: "left" },
+          { x: 8, y: 12, align: "left" },
+        ];
         stops.forEach((stop, stopIndex) => {
           const feature = mapData.features[featureIndex.get(stop.id)];
-          const x = chart.x(feature.properties.older);
-          const y = chart.y(feature.properties.education) + offsets[stopIndex];
-          context.fillText(stop.short, x + 8, y);
+          const x = chart.x(feature.properties.education);
+          const label = labelOffsets[stopIndex];
+          const y = chart.y(feature.properties.leadingShare) + label.y;
+          context.textAlign = label.align;
+          context.fillText(stop.short, x + label.x, y);
         });
         context.restore();
       }
     }
 
-    if (selectedId) {
+    if (selectedId && !pointMode) {
       const index = featureIndex.get(selectedId);
       const feature = mapData.features[index];
       const partyColor = partyColors[feature.properties.leadingParty] ?? "#56666e";
@@ -369,7 +395,7 @@
       return;
     }
     const started = performance.now();
-    const duration = 760;
+    const duration = mobileRendering ? 480 : 760;
     const tick = (now) => {
       const raw = Math.min(1, (now - started) / duration);
       const eased = 1 - Math.pow(1 - raw, 3);
@@ -380,7 +406,10 @@
       };
       currentColorMix = startColorMix + (nextColorMix - startColorMix) * eased;
       currentScatterMix = startScatterMix + (nextScatterMix - startScatterMix) * eased;
-      draw();
+      if (!mobileRendering || raw === 1 || now - lastAnimationDraw >= 30) {
+        lastAnimationDraw = now;
+        draw();
+      }
       if (raw < 1) animationFrame = requestAnimationFrame(tick);
     };
     animationFrame = requestAnimationFrame(tick);
@@ -389,7 +418,8 @@
   function rebuild() {
     if (!wrapper || !canvas || !mapData) return;
     const { width, height } = wrapper.getBoundingClientRect();
-    const dpr = Math.min(2, window.devicePixelRatio || 1);
+    mobileRendering = width <= 820;
+    const dpr = mobileRendering ? 1 : Math.min(1.75, window.devicePixelRatio || 1);
     canvas.width = Math.max(1, Math.round(width * dpr));
     canvas.height = Math.max(1, Math.round(height * dpr));
     canvas.style.width = `${width}px`;
@@ -463,7 +493,7 @@
     </div>
   {/if}
 
-  <figcaption>{step < 2 ? "Färgen visar största riksdagsparti 2022. Vid 16 delade förstaplatser används alfabetisk partikod. Kartytan visar mark, inte antal väljare." : step === 8 ? "En punkt är fortfarande ett valdistrikt. Positionen visar områdets andel 65+ och andel med minst treårig eftergymnasial utbildning. Färgen visar största parti 2022." : "En punkt motsvarar ett valdistrikt. Storleken följer antalet giltiga röster, med en minsta visningsstorlek. Färgen visar största parti 2022."}</figcaption>
+  <figcaption>{step < 2 ? "Färgen visar största riksdagsparti 2022. Vid 16 delade förstaplatser används alfabetisk partikod. Kartytan visar mark, inte antal väljare." : step === 8 ? "En punkt är fortfarande ett valdistrikt. Positionen visar andelen med minst treårig eftergymnasial utbildning och röstandelen för största parti. Färgen visar vilket parti som var störst 2022." : "En punkt motsvarar ett valdistrikt. Storleken följer antalet giltiga röster, med en minsta visningsstorlek. Färgen visar största parti 2022."}</figcaption>
 </figure>
 
 <style>

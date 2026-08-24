@@ -17,9 +17,9 @@ pnpm preview
 pnpm check
 ```
 
-`pnpm check` förutsätter att preview-servern kör på port 4173. Testet går igenom berättelsens 11 scrollsteg i åtta fulla viewports: 1440, ett kort desktopfönster, brytpunkterna 902, 821 och 820 samt 517, 390 och 320 px. Därefter sveps varje tiotal pixlar från 300 till 1 000. Det minsta läget använder reducerad rörelse. Testet kontrollerar kartresan, könswafflarna, SCB-syntesen, mandatfigurens 349 punkter, konsolfel, fokus, mobilkort, brytpunktsklippning och horisontellt spill. Skärmbilder sparas i `/tmp/scrolly-election-shots-general`.
+`pnpm check` förutsätter att preview-servern kör på port 4173. Testet går igenom berättelsens 16 scrollsteg i åtta fulla viewports: 1440, ett kort desktopfönster, brytpunkterna 902, 821 och 820 samt 517, 390 och 320 px. Därefter sveps varje tiotal pixlar från 300 till 1 000. Det minsta läget använder reducerad rörelse. Testet kontrollerar kartresan, könswafflarna, urvalsflödet, mandatfigurens 349 punkter, konsolfel, fokus, mobilkort, brytpunktsklippning och horisontellt spill. Skärmbilder sparas i `/tmp/scrolly-election-shots-general`.
 
-Berättelsen använder punkter som ett återkommande språk utan att göra varje avsnitt till en effekt. Mandatpunkterna ordnas till en halvcirkel med riksdagens 349 mandat. Kartan växlar från färgad landyta till 6 264 valdistriktspunkter, flyttar kameran mellan fyra distrikt och låter därefter samma distrikt övergå till ett demografiskt spridningsdiagram. Könsdiagrammet använder två hundrapunktsfält. Avslutningen visar den verkliga vägen från målpopulation till viktad skattning i SCB:s undersökning i maj 2026.
+Berättelsen använder punkter som ett återkommande språk utan att göra varje avsnitt till en effekt. Mandatpunkterna ordnas till en halvcirkel med riksdagens 349 mandat. Kartan växlar från färgad landyta till 6 264 valdistriktspunkter, flyttar kameran mellan fyra distrikt och låter därefter samma distrikt övergå till ett spridningsdiagram över utbildning och största partiets röstandel. Könsdiagrammet använder två hundrapunktsfält. Huvudförklaringen följer den verkliga vägen från målpopulation till viktad skattning i SCB:s undersökning i maj 2026.
 
 ## Data
 

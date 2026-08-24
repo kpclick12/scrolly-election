@@ -77,7 +77,7 @@ for (const viewport of viewports) {
     title: document.querySelector("h1")?.textContent.trim().replace(/\s+/g, " "),
     documentTitle: document.title,
   }));
-  if (semantics.language !== "sv" || semantics.h1 !== 1 || semantics.scrollys !== 2 || semantics.steps !== 11 || semantics.sourceLinks < 9 || semantics.mapControls !== 0 || semantics.mainTabIndex !== "-1" || !semantics.mandateSummary?.includes("Socialdemokraterna 107") || semantics.genderDots !== 200 || semantics.genderDataRows !== 9 || semantics.mapLegendItems !== 8 || semantics.title !== "Kan några tusen tala för åtta miljoner?" || semantics.documentTitle !== semantics.title) {
+  if (semantics.language !== "sv" || semantics.h1 !== 1 || semantics.scrollys !== 3 || semantics.steps !== 16 || semantics.sourceLinks < 9 || semantics.mapControls !== 0 || semantics.mainTabIndex !== "-1" || !semantics.mandateSummary?.includes("Socialdemokraterna 107") || semantics.genderDots !== 200 || semantics.genderDataRows !== 9 || semantics.mapLegendItems !== 8 || semantics.title !== "Kan några tusen tala för åtta miljoner?" || semantics.documentTitle !== semantics.title) {
     problems.push(`STRUCTURE [${viewport.name}]: ${JSON.stringify(semantics)}`);
   }
 
@@ -123,7 +123,7 @@ for (const viewport of viewports) {
         }
       }
       if (scrollyIndex === 0 || ["desktop", "phone-small"].includes(viewport.name)) {
-        const label = ["map", "gender"][scrollyIndex];
+        const label = ["map", "gender", "explanation"][scrollyIndex];
         await page.screenshot({ path: `${output}/${viewport.name}-${label}-${stepIndex + 1}.png` });
       }
       if (scrollyIndex === 0 && stepIndex === 3) {
@@ -139,7 +139,7 @@ for (const viewport of viewports) {
   if (!finalMapLabel?.includes("6 264")) {
     problems.push(`MAP [${viewport.name}]: unexpected final aria label ${finalMapLabel}`);
   }
-  const endingText = await page.locator(".poll-reading figure").innerText();
+  const endingText = await page.locator(".explanation-act").innerText();
   if (!endingText.includes("9 260") || !endingText.includes("4 542") || !endingText.includes("51% bortfall")) {
     problems.push(`SCB ENDING [${viewport.name}]: ${endingText}`);
   }
@@ -153,9 +153,9 @@ for (const viewport of viewports) {
   await page.waitForTimeout(viewport.reducedMotion === "reduce" ? 80 : 1300);
   await page.locator(".party-intro").screenshot({ path: `${output}/${viewport.name}-parties.png` });
   await page.locator(".gender-act").screenshot({ path: `${output}/${viewport.name}-gender-act.png` });
-  await page.locator(".poll-reading").evaluate((node) => node.scrollIntoView({ block: "center" }));
+  await page.locator(".explanation-act").evaluate((node) => node.scrollIntoView({ block: "center" }));
   await page.waitForTimeout(viewport.reducedMotion === "reduce" ? 80 : 800);
-  await page.locator(".poll-reading").screenshot({ path: `${output}/${viewport.name}-poll-return.png` });
+  await page.locator(".explanation-act").screenshot({ path: `${output}/${viewport.name}-explanation.png` });
   await page.locator(".closing").evaluate((node) => node.scrollIntoView({ block: "center" }));
   await page.waitForTimeout(viewport.reducedMotion === "reduce" ? 80 : 800);
   await page.locator(".closing").screenshot({ path: `${output}/${viewport.name}-closing.png` });
@@ -189,5 +189,5 @@ if (problems.length) {
   console.error(problems.join("\n"));
   process.exitCode = 1;
 } else {
-  console.log(`Checks passed: 11 steps, eight full viewports, 71-width sweep, no overflow, gender waffles, SCB synthesis, reduced motion. Screenshots: ${output}`);
+  console.log(`Checks passed: 16 steps, eight full viewports, 71-width sweep, no overflow, gender waffles, sampling explanation, reduced motion. Screenshots: ${output}`);
 }

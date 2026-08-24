@@ -9,6 +9,7 @@
 
   let mapStep = $state(0);
   let genderStep = $state(0);
+  let explanationStep = $state(0);
   let progress = $state(0);
 
   const districtNotes = [
@@ -24,13 +25,21 @@
     `${districts[0].short} jämförs med hela landets valresultat.`,
     ...districts.slice(1).map((district) => `Kartan zoomar till ${district.short} i ${district.municipality}.`),
     "Kartan zoomar ut och visar de fyra redaktionellt valda kontrasterna.",
-    "Samma 6 264 valdistrikt flyttar från sin geografiska position till en position efter andel 65 år eller äldre och andel med minst treårig eftergymnasial utbildning.",
+    "Samma 6 264 valdistrikt flyttar från sin geografiska position till en position efter andel med minst treårig eftergymnasial utbildning och röstandelen för distriktets största parti.",
   ][mapStep]);
 
   const genderStatus = $derived([
     "Hundra punkter visar partisympatins blandning bland kvinnor och män i SCB:s mätning i maj 2026.",
     "Socialdemokraterna och Sverigedemokraterna markeras eftersom skillnaderna är störst där.",
   ][genderStep]);
+
+  const explanationStatus = $derived([
+    "Målpopulationen är de drygt åtta miljoner personer som undersökningen vill säga något om.",
+    "SCB drog 9 260 personer ur hela målpopulationen med kända urvalssannolikheter.",
+    "4 542 personer svarade. Individbortfallet var 51 procent och varierade mellan grupper.",
+    "Svaren viktades med hjälp av bland annat kön, ålder, region, utbildning, födelseland och partival 2022.",
+    "Viktningen minskar kända skevheter men kan inte ta bort bortfallsrisken eller urvalets statistiska osäkerhet.",
+  ][explanationStep]);
 
   function format(value) {
     return Number(value).toLocaleString("sv-SE", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
@@ -180,8 +189,8 @@
 
       <article class="map-step scatter-step" data-step>
         <p class="step-index">9 av 9 · Samma distrikt, ny position</p>
-        <h3>Geografin blir en demografisk karta</h3>
-        <p>Varje punkt är fortfarande samma valdistrikt. Nu visar positionen andelen 65 år eller äldre och andelen med minst treårig eftergymnasial utbildning. De fyra stoppen hamnar på olika platser även här.</p>
+        <h3>Utbildning möter valresultat</h3>
+        <p>Varje punkt är fortfarande samma valdistrikt. Vågrätt visas andelen med minst treårig eftergymnasial utbildning. Lodrätt visas röstandelen för distriktets största parti.</p>
       </article>
     </ScrollyShell>
   </section>
@@ -207,17 +216,40 @@
     </ScrollyShell>
   </section>
 
-  <section class="poll-reading" aria-labelledby="poll-reading-title">
-    <div class="poll-reading-head" data-reveal>
-      <p class="section-index">Så gör man i verkligheten</p>
-      <h2 id="poll-reading-title">Från åtta miljoner till några tusen</h2>
-      <p>SCB:s mätning i maj visar både att det går och varför det fortfarande är klurigt.</p>
+  <section class="explanation-act" aria-labelledby="explanation-title">
+    <div class="act-head" data-reveal>
+      <p class="section-index">Förklaringen</p>
+      <h2 id="explanation-title">Så får några tusen representera alla andra</h2>
+      <p>Vi har sett att både plats och grupp kan flytta resultatet. SCB:s mätning i maj 2026 visar hur man försöker hantera det.</p>
     </div>
-    <PointFlowEnding />
-    <div class="poll-coda" data-reveal>
-      <p><strong>Först urvalet.</strong> Personerna dras ur hela målpopulationen. Då får inte ett enskilt distrikt, en viss ålder eller ett kön dominera bara för att de råkar vara lättast att nå.</p>
-      <p><strong>Sedan bortfallet.</strong> 4 542 av 9 260 utvalda svarade. SCB viktar svaren med hjälp av kända skillnader, men en vikt kan inte berätta exakt vad de andra skulle ha svarat.</p>
-    </div>
+    <ScrollyShell onStepChange={(index) => explanationStep = index} label="Från målpopulation till viktad skattning i SCB:s partisympatiundersökning" status={explanationStatus}>
+      {#snippet visual()}<PointFlowEnding step={explanationStep} />{/snippet}
+      <article class="ending-step" data-step>
+        <p class="step-index">1 av 5 · Målpopulationen</p>
+        <h3>Börja med alla du vill säga något om</h3>
+        <p>Undersökningen gäller drygt åtta miljoner röstberättigade. Det är den grupp urvalet ska kunna representera.</p>
+      </article>
+      <article class="ending-step" data-step>
+        <p class="step-index">2 av 5 · Urvalet</p>
+        <h3>Dra från hela populationen</h3>
+        <p>SCB valde ut 9 260 personer. Med kända urvalssannolikheter går det att räkna från de utvalda tillbaka till helheten.</p>
+      </article>
+      <article class="ending-step" data-step>
+        <p class="step-index">3 av 5 · Bortfallet</p>
+        <h3>Hälften svarar inte</h3>
+        <p>4 542 svarade. Bortfallet har ökat över tid och skiljer sig mellan grupper. Det blir besvärligt om de som saknas hade svarat annorlunda.</p>
+      </article>
+      <article class="ending-step" data-step>
+        <p class="step-index">4 av 5 · Viktningen</p>
+        <h3>Vikta med det du redan vet</h3>
+        <p>SCB använder bland annat kön, ålder, region, utbildning, födelseland och partivalet 2022 för att justera kända skevheter.</p>
+      </article>
+      <article class="ending-step" data-step>
+        <p class="step-index">5 av 5 · Osäkerheten</p>
+        <h3>Det blir fortfarande inget facit</h3>
+        <p>Viktning kan inte avslöja vad de som saknas hade svarat. Dessutom har varje urval en statistisk osäkerhet som ska följa med resultatet.</p>
+      </article>
+    </ScrollyShell>
   </section>
 
   <section class="closing prose-section" data-reveal aria-labelledby="closing-title">
@@ -237,7 +269,7 @@
         <li><strong>Valet 2026.</strong> Valdagen är 13 september. Antalet 8 046 725 gäller röstberättigade till riksdagen på kvalifikationsdagen 14 augusti 2026. Rättelser fram till valdagen kan påverka den slutliga statistiken. <a href={sources.election2026}>Valmyndighetens rådata</a> och <a href={sources.election2026Press}>pressmeddelande om röstlängden</a>.</li>
         <li><strong>Valet 2022 som experiment.</strong> Hela landets röstandelar var S 30,33, SD 20,54, M 19,10, V 6,75, C 6,71, KD 5,34, MP 5,08, L 4,61 och övriga 1,54 procent. Mandatfördelningen var S 107, SD 73, M 68, V 24, C 24, KD 19, MP 18 och L 16. Distriktsstoppen är redaktionellt valda kontraster, inte ett urval. <a href={sources.election2022Summary}>Valmyndighetens valresultat 2022</a>.</li>
         <li><strong>Distriktskartan.</strong> Geometrin kommer från Valmyndighetens <a href={sources.election2022}>21 länsvisa GIS-filer</a>. Partandel, giltiga röster och valdeltagande räknas från myndighetens <a href={sources.election2022DistrictResults}>slutliga distriktsfil</a>. Samtliga 6 264 geometrier har matchats mot resultatfilen. Kartan använder Web Mercator. Först fylls distriktet med färgen för största parti, därefter blir varje distrikt en punkt vars yta följer antalet giltiga röster. Punktens läge är polygonens ytcentroid. Sexton distrikt hade delad förstaplats; där väljs kartfärgen deterministiskt efter alfabetisk partikod. Principen bakom skillnaden mellan landyta och väljare illustreras också i <a href={sources.cartogramPrinciple}>ArcGIS StoryMaps genomgång av valkartor och befolkning</a>.</li>
-        <li><strong>Karta till spridningsdiagram.</strong> Samma 6 264 distrikt behåller sin identitet i övergången. Andel 65+ är <code>A_65__år / A_TOTålde</code>. Utbildningsmåttet är andelen röstberättigade med minst treårig eftergymnasial utbildning, <code>UTB_Lång_ / UTB_TOTutb</code>, från <a href={sources.scbDistrictTool}>SCB:s valanalysverktyg</a> och dess <a href={sources.districtProfiles}>ArcGIS-lager</a>. Baserna är fältspecifika. Diagrammet beskriver områden och visar inte hur en enskild person röstade eller att ålder och utbildning orsakar ett valresultat.</li>
+        <li><strong>Karta till spridningsdiagram.</strong> Samma 6 264 distrikt behåller sin identitet i övergången. Vågrätt visas andelen röstberättigade med minst treårig eftergymnasial utbildning, <code>UTB_Lång_ / UTB_TOTutb</code>, från <a href={sources.scbDistrictTool}>SCB:s valanalysverktyg</a> och dess <a href={sources.districtProfiles}>ArcGIS-lager</a>. Lodrätt visas röstandelen för det största riksdagspartiet bland distriktets giltiga röster från Valmyndighetens distriktsfil. Diagrammet beskriver områden. Det visar inte hur en enskild person röstade eller att utbildning orsakar ett valresultat.</li>
         <li><strong>SCB:s partisympati och bortfall.</strong> Värden och osäkerhetstal för kvinnor och män kommer från SCB:s tabell för maj 2026 och gäller bland dem som uppgav en partisympati. Undersökningen drog 9 260 röstberättigade och fick 4 542 svar, ett individbortfall på 51,0 procent. Bortfallet varierade mellan grupper, bland annat 62,4 procent bland 18–24-åringar och 43,8 procent bland 65–74-åringar. I skattningen använde SCB kön gånger ålder, region, utbildning, födelseland och partival 2022 som hjälpinformation. Måttet skiljer sig från frågan hur man skulle rösta om det vore val i dag. Slutfigurens ”drygt 8 miljoner” beskriver målpopulationens storleksordning vid mättillfället; Valmyndighetens exakta 8 046 725 gäller först kvalifikationsdagen i augusti. <a href={sources.scb2026}>SCB, maj 2026</a>. SCB beskriver också hur bortfallet har ökat över tid och hur viktning kompenserar för en del av skevheten i sina <a href={sources.scbFaq}>frågor och svar om PSU</a>.</li>
         <li><strong>Sannolikhetsurval och paneler.</strong> Berättelsens designbaserade exempel kräver en känd urvalssannolikhet. Icke-sannolikhetsurval, som opt-in-paneler, kan också ge användbara och ibland jämförbara resultat. Då kan en vanlig urvalsfelmarginal inte beräknas på samma sätt; bedömningen vilar i stället på rekrytering, statistisk modellering, viktning och transparent metodredovisning. <a href={sources.aapor}>AAPOR:s metodöversikt</a>.</li>
       </ul>
