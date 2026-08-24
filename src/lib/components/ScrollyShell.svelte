@@ -131,7 +131,7 @@
     .steps {
       z-index: 2;
       padding: 14svh 16px 56svh;
-      gap: 52svh;
+      gap: 36svh;
     }
     .overlay .visual { height:100svh; min-height:520px; padding:0; border-bottom:0; }
     .overlay .steps {
@@ -139,7 +139,7 @@
       margin-top:-100svh;
       margin-left:0;
       padding:55svh 12px 60svh;
-      gap:58svh;
+      gap:40svh;
     }
   }
 

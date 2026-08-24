@@ -72,12 +72,14 @@ for (const viewport of viewports) {
     samplingControls: document.querySelectorAll(".sampling-act button, .sampling-act input, .sampling-act select").length,
     mainTabIndex: document.querySelector("main")?.getAttribute("tabindex"),
     mandateSummary: document.querySelector(".party-intro .sr-only")?.textContent,
-    symbolPointNote: document.querySelector(".sampling-act .field-reading small")?.textContent,
-    genderValueLabels: document.querySelectorAll('.gender-act [aria-label^="Kvinnor "], .gender-act [aria-label^="Män "]').length,
+    candyGroups: document.querySelectorAll(".sampling-act .key span").length,
+    genderDots: document.querySelectorAll(".gender-act .waffle > i").length,
+    genderDataRows: document.querySelectorAll(".gender-act .gender-data li").length,
     mapLegendItems: document.querySelectorAll(".map-act .party-legend span").length,
     title: document.querySelector("h1")?.textContent.trim().replace(/\s+/g, " "),
+    documentTitle: document.title,
   }));
-  if (semantics.language !== "sv" || semantics.h1 !== 1 || semantics.scrollys !== 4 || semantics.steps !== 21 || semantics.sourceLinks < 12 || semantics.mapControls !== 0 || semantics.samplingControls !== 0 || semantics.mainTabIndex !== "-1" || !semantics.mandateSummary?.includes("Socialdemokraterna 107") || !semantics.symbolPointNote?.includes("500 symbolpunkter") || semantics.genderValueLabels !== 16 || semantics.mapLegendItems !== 8 || semantics.title !== "Kan några tusen tala för åtta miljoner?") {
+  if (semantics.language !== "sv" || semantics.h1 !== 1 || semantics.scrollys !== 3 || semantics.steps !== 16 || semantics.sourceLinks < 10 || semantics.mapControls !== 0 || semantics.samplingControls !== 0 || semantics.mainTabIndex !== "-1" || !semantics.mandateSummary?.includes("Socialdemokraterna 107") || semantics.candyGroups !== 5 || semantics.genderDots !== 200 || semantics.genderDataRows !== 9 || semantics.mapLegendItems !== 8 || semantics.title !== "Kan några tusen tala för åtta miljoner?" || semantics.documentTitle !== semantics.title) {
     problems.push(`STRUCTURE [${viewport.name}]: ${JSON.stringify(semantics)}`);
   }
 
@@ -106,7 +108,7 @@ for (const viewport of viewports) {
         && left.bottom > right.top + 1
         && left.top < right.bottom - 1;
       const pairs = [
-        [document.querySelector(".hero h1"), document.querySelector(".population-intro"), "hero-title/population"],
+        [document.querySelector(".hero h1"), document.querySelector(".hero figure"), "hero-title/posters"],
       ];
       return pairs.filter(([left, right]) => left && right && intersects(left.getBoundingClientRect(), right.getBoundingClientRect())).map(([, , label]) => label);
     });
@@ -121,33 +123,8 @@ for (const viewport of viewports) {
         await page.waitForTimeout(380);
         await page.screenshot({ path: `${output}/${viewport.name}-map-${stepIndex + 1}-transition.png` });
       }
-      if (scrollyIndex === 1 && stepIndex > 0 && viewport.reducedMotion !== "reduce") {
-        await page.waitForTimeout(100);
-        const visibleLayers = await scrolly.locator(".layer").evaluateAll((nodes) => nodes.filter((node) => Number.parseFloat(getComputedStyle(node).opacity) > 0.05).length);
-        if (visibleLayers > 1) problems.push(`TRANSITION [${viewport.name}]: ${visibleLayers} gender layers visible at step ${stepIndex + 1}`);
-      }
-      if (scrollyIndex === 2 && viewport.reducedMotion !== "reduce") {
-        await page.waitForTimeout(120);
-        const visibleLayers = await scrolly.locator(".layer").evaluateAll((nodes) => nodes.filter((node) => Number.parseFloat(getComputedStyle(node).opacity) > 0.05).length);
-        if (visibleLayers !== 1) problems.push(`TRANSITION [${viewport.name}]: ${visibleLayers} sampling layers visible at step ${stepIndex + 1}`);
-      }
       const visualWait = viewport.reducedMotion === "reduce" ? 90 : scrollyIndex === 0 ? 850 : 300;
       await page.waitForTimeout(visualWait);
-      if (scrollyIndex === 1 && stepIndex <= 1) {
-        const chartFit = await scrolly.locator(".party-view").evaluate((layer) => {
-          const rows = [...layer.querySelectorAll(".party-row")];
-          const note = layer.querySelector(".note");
-          return {
-            lastRowBottom: Math.round(rows.at(-1).getBoundingClientRect().bottom),
-            noteTop: Math.round(note.getBoundingClientRect().top),
-            noteBottom: Math.round(note.getBoundingClientRect().bottom),
-            layerBottom: Math.round(layer.getBoundingClientRect().bottom),
-          };
-        });
-        if (chartFit.lastRowBottom > chartFit.noteTop - 3 || chartFit.noteBottom > chartFit.layerBottom + 1) {
-          problems.push(`GENDER FIT [${viewport.name}] step ${stepIndex + 1}: ${JSON.stringify(chartFit)}`);
-        }
-      }
       if (!(await step.evaluate((node) => node.classList.contains("is-active")))) {
         problems.push(`SCROLL [${viewport.name}]: step ${scrollyIndex + 1}.${stepIndex + 1} did not activate`);
       }
@@ -162,7 +139,7 @@ for (const viewport of viewports) {
         }
       }
       if (scrollyIndex === 0 || ["desktop", "phone-small"].includes(viewport.name)) {
-        const label = ["map", "gender", "sampling", "ending"][scrollyIndex];
+        const label = ["map", "sampling", "gender"][scrollyIndex];
         await page.screenshot({ path: `${output}/${viewport.name}-${label}-${stepIndex + 1}.png` });
       }
       if (scrollyIndex === 0 && stepIndex === 3) {
@@ -171,17 +148,12 @@ for (const viewport of viewports) {
           problems.push(`EXPERIMENT [${viewport.name}]: ${comparison}`);
         }
       }
-      if (scrollyIndex === 2 && stepIndex === 5) {
-        const responsePipeline = await scrolly.locator(".response .pipeline").innerText();
-        if (!responsePipeline.includes("27,3%") || !responsePipeline.includes("30,0%")) {
-          problems.push(`RESPONSE BIAS [${viewport.name}]: ${responsePipeline}`);
-        }
-      }
-      if (scrollyIndex === 3 && stepIndex === 2) {
-        const endingText = await scrolly.locator("figure").innerText();
-        if (!endingText.includes("4 542") || !endingText.includes("4 718")) {
-          problems.push(`SCB ENDING [${viewport.name}]: ${endingText}`);
-        }
+      if (scrollyIndex === 1 && stepIndex === 4) {
+        const state = await scrolly.locator("figure").evaluate((figure) => ({
+          missing: figure.querySelectorAll(".sweet.missing").length,
+          weighted: figure.querySelectorAll(".sweet.weighted").length,
+        }));
+        if (!state.missing || !state.weighted) problems.push(`CANDY ENDING [${viewport.name}]: ${JSON.stringify(state)}`);
       }
     }
   }
@@ -189,6 +161,10 @@ for (const viewport of viewports) {
   const finalMapLabel = await page.locator(".map-act figure").getAttribute("aria-label");
   if (!finalMapLabel?.includes("6 264")) {
     problems.push(`MAP [${viewport.name}]: unexpected final aria label ${finalMapLabel}`);
+  }
+  const endingText = await page.locator(".poll-reading figure").innerText();
+  if (!endingText.includes("9 260") || !endingText.includes("4 542") || !endingText.includes("51% bortfall")) {
+    problems.push(`SCB ENDING [${viewport.name}]: ${endingText}`);
   }
 
   await page.evaluate(() => {
@@ -236,5 +212,5 @@ if (problems.length) {
   console.error(problems.join("\n"));
   process.exitCode = 1;
 } else {
-  console.log(`Checks passed: 21 steps, eight full viewports, 71-width sweep, no overflow, sampling and SCB sequences, reduced motion. Screenshots: ${output}`);
+  console.log(`Checks passed: 16 steps, eight full viewports, 71-width sweep, no overflow, candy flow, gender waffles, SCB synthesis, reduced motion. Screenshots: ${output}`);
 }

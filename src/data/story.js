@@ -99,8 +99,5 @@ export const sources = {
   cartogramPrinciple: "https://storymaps.arcgis.com/stories/0e636a652d44484b9457f953994b212b",
   ruralResearch: "https://journals.lub.lu.se/st/article/view/27485",
   aapor: "https://aapor.org/wp-content/uploads/2022/12/Sampling-Methods-for-Political-Polling-508.pdf",
-  gsfReference: "https://gsf-goteborg.github.io/test-scrolly/",
   caltech: "https://scienceexchange.caltech.edu/topics/voting-elections/political-polls-science",
-  puddingReference: "https://pudding.cool/2025/11/democracy/",
-  motionReference: "https://netmotionsoftware.maglr.com/the-future-of-work/report",
 };
