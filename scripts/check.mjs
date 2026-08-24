@@ -48,6 +48,18 @@ for (const viewport of viewports) {
   await page.locator(".map-header").waitFor();
   await page.waitForFunction(() => !document.querySelector(".map-act .loading"));
 
+  await page.locator(".skip-link").focus();
+  await page.keyboard.press("Enter");
+  await page.waitForTimeout(80);
+  const skipTarget = await page.evaluate(() => ({ hash: location.hash, id: document.activeElement?.id }));
+  if (skipTarget.hash !== "#story" || skipTarget.id !== "story") {
+    problems.push(`SKIP LINK [${viewport.name}]: ${JSON.stringify(skipTarget)}`);
+  }
+  await page.evaluate(() => {
+    history.replaceState(null, "", location.pathname);
+    window.scrollTo({ top: 0, behavior: "instant" });
+  });
+
   const semantics = await page.evaluate(() => ({
     language: document.documentElement.lang,
     h1: document.querySelectorAll("h1").length,
@@ -56,9 +68,13 @@ for (const viewport of viewports) {
     sourceLinks: document.querySelectorAll(".method a").length,
     mapControls: document.querySelectorAll(".map-act button, .map-act input, .map-act select").length,
     samplingControls: document.querySelectorAll(".sampling-act button, .sampling-act input, .sampling-act select").length,
+    mainTabIndex: document.querySelector("main")?.getAttribute("tabindex"),
+    mandateSummary: document.querySelector(".party-intro .sr-only")?.textContent,
+    symbolPointNote: document.querySelector(".sampling-act .field-reading small")?.textContent,
+    genderValueLabels: document.querySelectorAll('.gender-act [aria-label^="Kvinnor "], .gender-act [aria-label^="Män "]').length,
     title: document.querySelector("h1")?.textContent.trim().replace(/\s+/g, " "),
   }));
-  if (semantics.language !== "sv" || semantics.h1 !== 1 || semantics.scrollys !== 3 || semantics.steps !== 15 || semantics.sourceLinks < 10 || semantics.mapControls !== 0 || semantics.samplingControls !== 0 || semantics.title !== "Kan vi lita på valundersökningarna?") {
+  if (semantics.language !== "sv" || semantics.h1 !== 1 || semantics.scrollys !== 3 || semantics.steps !== 17 || semantics.sourceLinks < 10 || semantics.mapControls !== 0 || semantics.samplingControls !== 0 || semantics.mainTabIndex !== "-1" || !semantics.mandateSummary?.includes("Socialdemokraterna 107") || !semantics.symbolPointNote?.includes("500 symbolpunkter") || semantics.genderValueLabels !== 16 || semantics.title !== "Kan några tusen tala för åtta miljoner?") {
     problems.push(`STRUCTURE [${viewport.name}]: ${JSON.stringify(semantics)}`);
   }
 
@@ -88,7 +104,6 @@ for (const viewport of viewports) {
         && left.top < right.bottom - 1;
       const pairs = [
         [document.querySelector(".hero h1"), document.querySelector(".population-intro"), "hero-title/population"],
-        [document.querySelector(".profiles-head h2"), document.querySelector(".profiles-head > p:last-child"), "profiles-title/intro"],
       ];
       return pairs.filter(([left, right]) => left && right && intersects(left.getBoundingClientRect(), right.getBoundingClientRect())).map(([, , label]) => label);
     });
@@ -99,7 +114,7 @@ for (const viewport of viewports) {
     for (const [stepIndex, step] of (await scrolly.locator("[data-step]").all()).entries()) {
       const triggerRatio = viewport.width <= 820 ? (scrollyIndex === 0 ? 0.72 : 0.90) : 0.52;
       await placeStepAtTrigger(page, step, triggerRatio);
-      if (scrollyIndex === 0 && [2, 3, 5].includes(stepIndex) && viewport.reducedMotion !== "reduce") {
+      if (scrollyIndex === 0 && [2, 3, 5, 8].includes(stepIndex) && viewport.reducedMotion !== "reduce") {
         await page.waitForTimeout(380);
         await page.screenshot({ path: `${output}/${viewport.name}-map-${stepIndex + 1}-transition.png` });
       }
@@ -137,6 +152,18 @@ for (const viewport of viewports) {
         const label = ["map", "gender", "sampling"][scrollyIndex];
         await page.screenshot({ path: `${output}/${viewport.name}-${label}-${stepIndex + 1}.png` });
       }
+      if (scrollyIndex === 0 && stepIndex === 3) {
+        const comparison = await step.locator(".experiment-compare").innerText();
+        if (!comparison.includes("58,4%") || !comparison.includes("19,1%") || !comparison.includes("+39,3 p")) {
+          problems.push(`EXPERIMENT [${viewport.name}]: ${comparison}`);
+        }
+      }
+      if (scrollyIndex === 2 && stepIndex === 5) {
+        const responsePipeline = await scrolly.locator(".response .pipeline").innerText();
+        if (!responsePipeline.includes("27,3%") || !responsePipeline.includes("30,0%")) {
+          problems.push(`RESPONSE BIAS [${viewport.name}]: ${responsePipeline}`);
+        }
+      }
     }
   }
 
@@ -153,9 +180,12 @@ for (const viewport of viewports) {
   await page.locator(".party-intro").evaluate((node) => node.scrollIntoView({ block: "center" }));
   await page.waitForTimeout(viewport.reducedMotion === "reduce" ? 80 : 1300);
   await page.locator(".party-intro").screenshot({ path: `${output}/${viewport.name}-parties.png` });
-  await page.locator(".profiles").screenshot({ path: `${output}/${viewport.name}-profiles.png` });
   await page.locator(".sampling-act").screenshot({ path: `${output}/${viewport.name}-sampling-act.png` });
+  await page.locator(".poll-reading").evaluate((node) => node.scrollIntoView({ block: "center" }));
+  await page.waitForTimeout(viewport.reducedMotion === "reduce" ? 80 : 800);
   await page.locator(".poll-reading").screenshot({ path: `${output}/${viewport.name}-poll-return.png` });
+  await page.locator(".closing").evaluate((node) => node.scrollIntoView({ block: "center" }));
+  await page.waitForTimeout(viewport.reducedMotion === "reduce" ? 80 : 800);
   await page.locator(".closing").screenshot({ path: `${output}/${viewport.name}-closing.png` });
   await context.close();
 }
@@ -165,5 +195,5 @@ if (problems.length) {
   console.error(problems.join("\n"));
   process.exitCode = 1;
 } else {
-  console.log(`Checks passed: 15 steps, no overflow, sampling sequence, reduced motion. Screenshots: ${output}`);
+  console.log(`Checks passed: 17 steps, no overflow, sampling sequence, reduced motion. Screenshots: ${output}`);
 }

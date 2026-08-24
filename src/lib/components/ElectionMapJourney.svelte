@@ -11,7 +11,7 @@
     { id: "12750103", short: "Oderljunga" },
     { id: "12800222", short: "Möllevångstorget S" },
   ];
-  const stepDistrict = [null, null, null, ...stops.map((stop) => stop.id), null];
+  const stepDistrict = [null, null, stops[0].id, stops[0].id, stops[1].id, stops[2].id, stops[3].id, null, null];
   const partyColors = Object.fromEntries(parties.map((party) => [party.code, party.color]));
 
   let wrapper;
@@ -27,14 +27,19 @@
   let currentView = { scale: 1, x: 0, y: 0 };
   let targetView = { scale: 1, x: 0, y: 0 };
   let currentColorMix = 0;
+  let currentScatterMix = 0;
 
   let selectedId = $derived(stepDistrict[step] ?? null);
   let selectedFeature = $derived(selectedId ? mapData?.features[featureIndex.get(selectedId)] : null);
   let ariaLabel = $derived(selectedFeature
     ? `Kartan zoomar till ${selectedFeature.properties.name} i ${selectedFeature.properties.municipality}. ${selectedFeature.properties.leadingParty} var största riksdagsparti 2022 med ${format(selectedFeature.properties.leadingShare)} procent.`
-    : step === 0
+    : step === 8
+      ? "Samma 6 264 valdistrikt har lämnat kartan och placerats efter andel 65 år eller äldre och andel med lång utbildning. De fyra besökta distrikten är markerade."
+      : step === 0
       ? "Neutral karta över Sveriges 6 264 valdistrikt vid riksdagsvalet 2022."
-      : "Karta över största riksdagsparti i Sveriges 6 264 valdistrikt vid valet 2022. Kartytan visar mark, inte antal väljare.");
+      : step === 1
+        ? "Karta över största riksdagsparti i Sveriges 6 264 valdistrikt vid valet 2022. Kartytan visar mark, inte antal väljare."
+        : "Sveriges 6 264 valdistrikt visas som punkter. Fyra redaktionellt valda distrikt används som kontraster i experimentet.");
 
   function pathFor(feature, project) {
     const path = new Path2D();
@@ -110,6 +115,64 @@
     return `rgb(${rgb.join(",")})`;
   }
 
+  function chartLayout(width, height) {
+    const mobile = width <= 820;
+    const left = mobile ? 49 : Math.max(78, width * .11);
+    const right = mobile ? width - 20 : width - Math.max(54, width * .08);
+    const top = mobile ? 126 : 112;
+    const bottom = mobile ? height * .48 : height - 86;
+    return {
+      left,
+      right,
+      top,
+      bottom,
+      x: (value) => left + Math.max(0, Math.min(65, value)) / 65 * (right - left),
+      y: (value) => bottom - Math.max(0, Math.min(80, value)) / 80 * (bottom - top),
+    };
+  }
+
+  function drawScatterAxes(context, width, height, alpha) {
+    if (alpha <= 0) return;
+    const chart = chartLayout(width, height);
+    context.save();
+    context.globalAlpha = alpha;
+    context.strokeStyle = "rgba(37,52,69,.22)";
+    context.fillStyle = "#57656d";
+    context.lineWidth = 1;
+    context.font = `${width <= 820 ? 9 : 11}px ui-sans-serif, system-ui, sans-serif`;
+    context.textAlign = "center";
+    context.textBaseline = "top";
+    for (const value of [0, 20, 40, 60]) {
+      const x = chart.x(value);
+      context.beginPath();
+      context.moveTo(x, chart.top);
+      context.lineTo(x, chart.bottom);
+      context.stroke();
+      context.fillText(`${value}%`, x, chart.bottom + 8);
+    }
+    context.textAlign = "right";
+    context.textBaseline = "middle";
+    for (const value of [0, 20, 40, 60, 80]) {
+      const y = chart.y(value);
+      context.beginPath();
+      context.moveTo(chart.left, y);
+      context.lineTo(chart.right, y);
+      context.stroke();
+      context.fillText(`${value}%`, chart.left - 8, y);
+    }
+    context.textAlign = "center";
+    context.textBaseline = "alphabetic";
+    context.font = `700 ${width <= 820 ? 10 : 12}px ui-sans-serif, system-ui, sans-serif`;
+    context.fillStyle = "#273843";
+    context.fillText("Andel 65 år eller äldre →", (chart.left + chart.right) / 2, chart.bottom + (width <= 820 ? 39 : 49));
+    context.save();
+    context.translate(width <= 820 ? 14 : 24, (chart.top + chart.bottom) / 2);
+    context.rotate(-Math.PI / 2);
+    context.fillText("Lång utbildning →", 0, 0);
+    context.restore();
+    context.restore();
+  }
+
   function draw(view = currentView) {
     if (!canvas || !wrapper || !mapData || paths.length === 0) return;
     const context = canvas.getContext("2d");
@@ -119,63 +182,105 @@
     const viewScale = Number.isFinite(view.scale) ? Math.max(0.05, view.scale) : 1;
     context.setTransform(dpr, 0, 0, dpr, 0, 0);
     context.clearRect(0, 0, width, height);
-    context.fillStyle = "#e7ebf5";
+    const backgroundFrom = [231, 235, 245];
+    const backgroundTo = [247, 245, 239];
+    const background = backgroundFrom.map((channel, index) => Math.round(channel + (backgroundTo[index] - channel) * currentScatterMix));
+    context.fillStyle = `rgb(${background.join(",")})`;
     context.fillRect(0, 0, width, height);
 
     const pointMode = step >= 2;
 
-    context.setTransform(
-      dpr * viewScale,
-      0,
-      0,
-      dpr * viewScale,
-      dpr * view.x,
-      dpr * view.y,
-    );
-    mapData.features.forEach((feature, index) => {
-      const isContext = selectedId && feature.properties.id !== selectedId;
-      context.globalAlpha = 1;
-      context.fillStyle = pointMode ? (selectedId && !isContext ? "#ffffff" : "#f1f3f9") : colorFor(feature, index);
-      context.fill(paths[index], "evenodd");
-      context.strokeStyle = isContext
-        ? "rgba(36,51,77,.08)"
-        : step === 0
-          ? "rgba(36,51,77,.28)"
-          : pointMode
-            ? "rgba(36,51,77,.14)"
-            : "rgba(36,51,77,.42)";
-      context.lineWidth = isContext ? 0.48 / viewScale : 0.42 / viewScale;
-      context.stroke(paths[index]);
-    });
+    if (currentScatterMix < .999) {
+      context.setTransform(
+        dpr * viewScale,
+        0,
+        0,
+        dpr * viewScale,
+        dpr * view.x,
+        dpr * view.y,
+      );
+      mapData.features.forEach((feature, index) => {
+        const isContext = selectedId && feature.properties.id !== selectedId;
+        context.globalAlpha = 1 - currentScatterMix;
+        context.fillStyle = pointMode ? (selectedId && !isContext ? "#ffffff" : "#f1f3f9") : colorFor(feature, index);
+        context.fill(paths[index], "evenodd");
+        context.strokeStyle = isContext
+          ? "rgba(36,51,77,.08)"
+          : step === 0
+            ? "rgba(36,51,77,.28)"
+            : pointMode
+              ? "rgba(36,51,77,.14)"
+              : "rgba(36,51,77,.42)";
+        context.lineWidth = isContext ? 0.48 / viewScale : 0.42 / viewScale;
+        context.stroke(paths[index]);
+      });
+    }
     context.globalAlpha = 1;
 
     if (pointMode) {
+      context.setTransform(dpr, 0, 0, dpr, 0, 0);
+      drawScatterAxes(context, width, height, currentScatterMix);
+      const chart = chartLayout(width, height);
       mapData.features.forEach((feature, index) => {
         const isSelected = feature.properties.id === selectedId;
         const validVotes = feature.properties.validVotes ?? 1000;
+        const mapX = projectedCenters[index][0] * viewScale + view.x;
+        const mapY = projectedCenters[index][1] * viewScale + view.y;
+        const scatterX = chart.x(feature.properties.older);
+        const scatterY = chart.y(feature.properties.education);
+        const x = mapX + (scatterX - mapX) * currentScatterMix;
+        const y = mapY + (scatterY - mapY) * currentScatterMix;
+        const isStop = stops.some((stop) => stop.id === feature.properties.id);
         const screenRadius = isSelected
           ? Math.min(14, 7 + Math.sqrt(validVotes / 1000) * 2.3)
-          : Math.max(1.05, Math.min(2.55, Math.sqrt(validVotes / 1000) * 1.35));
+          : isStop && currentScatterMix > .5
+            ? 5.4
+            : Math.max(1.05, Math.min(2.55, Math.sqrt(validVotes / 1000) * 1.35));
         context.beginPath();
-        context.arc(projectedCenters[index][0], projectedCenters[index][1], screenRadius / viewScale, 0, Math.PI * 2);
+        context.arc(x, y, screenRadius, 0, Math.PI * 2);
         context.fillStyle = selectedId && !isSelected
           ? "rgba(91,97,112,.17)"
           : partyColors[feature.properties.leadingParty] ?? "#8f999f";
-        context.globalAlpha = selectedId && !isSelected ? 0.5 : 0.9;
+        context.globalAlpha = selectedId && !isSelected ? 0.5 : currentScatterMix > 0 ? .32 + (isStop ? .68 : 0) : .9;
         context.fill();
-        if (isSelected) {
-          context.strokeStyle = "#ffffff";
-          context.lineWidth = 3.5 / viewScale;
+        if (isSelected || (isStop && currentScatterMix > .5)) {
+          context.strokeStyle = currentScatterMix > .5 ? "#1f3039" : "#ffffff";
+          context.lineWidth = currentScatterMix > .5 ? 1.8 : 3.5;
           context.stroke();
         }
       });
       context.globalAlpha = 1;
+
+      if (currentScatterMix > .72) {
+        context.save();
+        context.globalAlpha = (currentScatterMix - .72) / .28;
+        context.font = `700 ${width <= 820 ? 8 : 10}px ui-sans-serif, system-ui, sans-serif`;
+        context.textAlign = "left";
+        context.textBaseline = "middle";
+        context.fillStyle = "#1f3039";
+        const offsets = [-11, 12, -11, 12];
+        stops.forEach((stop, stopIndex) => {
+          const feature = mapData.features[featureIndex.get(stop.id)];
+          const x = chart.x(feature.properties.older);
+          const y = chart.y(feature.properties.education) + offsets[stopIndex];
+          context.fillText(stop.short, x + 8, y);
+        });
+        context.restore();
+      }
     }
 
     if (selectedId) {
       const index = featureIndex.get(selectedId);
       const feature = mapData.features[index];
       const partyColor = partyColors[feature.properties.leadingParty] ?? "#56666e";
+      context.setTransform(
+        dpr * viewScale,
+        0,
+        0,
+        dpr * viewScale,
+        dpr * view.x,
+        dpr * view.y,
+      );
       context.strokeStyle = partyColor;
       context.lineWidth = 2.2 / viewScale;
       context.stroke(paths[index]);
@@ -219,11 +324,14 @@
     cancelAnimationFrame(animationFrame);
     const startView = { ...currentView };
     const startColorMix = currentColorMix;
+    const startScatterMix = currentScatterMix;
     const nextColorMix = step === 0 ? 0 : 1;
+    const nextScatterMix = step === 8 ? 1 : 0;
     targetView = viewForStep();
     if (reducedMotion) {
       currentView = { ...targetView };
       currentColorMix = nextColorMix;
+      currentScatterMix = nextScatterMix;
       draw();
       return;
     }
@@ -238,6 +346,7 @@
         y: startView.y + (targetView.y - startView.y) * eased,
       };
       currentColorMix = startColorMix + (nextColorMix - startColorMix) * eased;
+      currentScatterMix = startScatterMix + (nextScatterMix - startScatterMix) * eased;
       draw();
       if (raw < 1) animationFrame = requestAnimationFrame(tick);
     };
@@ -261,6 +370,7 @@
     ]);
     currentView = viewForStep();
     currentColorMix = step === 0 ? 0 : 1;
+    currentScatterMix = step === 8 ? 1 : 0;
     targetView = { ...currentView };
     draw();
   }
@@ -301,7 +411,7 @@
   <canvas bind:this={canvas} aria-hidden="true"></canvas>
   <header class="map-header">
     <span>Riksdagsvalet 2022</span>
-    <strong>{step === 0 ? "6 264 valdistrikt" : step === 1 ? "Största parti per valdistrikt" : "Valdistrikten som punkter"}</strong>
+    <strong>{step === 0 ? "6 264 valdistrikt" : step === 1 ? "Största parti per valdistrikt" : step === 8 ? "Samma distrikt, ny position" : selectedFeature ? selectedFeature.properties.name : "Valdistrikten som punkter"}</strong>
   </header>
 
   {#if !mapData}
@@ -325,7 +435,7 @@
     </div>
   {/if}
 
-  <figcaption>{step < 2 ? "Färgen visar det största av de åtta riksdagspartierna 2022. Kartytan visar mark, inte antal väljare." : "En punkt motsvarar ett valdistrikt. Punktens yta följer antalet giltiga röster. Färgen visar största parti 2022."}</figcaption>
+  <figcaption>{step < 2 ? "Färgen visar största riksdagsparti 2022. Kartytan visar mark, inte antal väljare." : step === 8 ? "En punkt är fortfarande ett valdistrikt. Positionen visar områdets andel 65+ och andel med lång utbildning. Färgen visar största parti 2022." : "En punkt motsvarar ett valdistrikt. Storleken följer antalet giltiga röster, med en minsta visningsstorlek. Färgen visar största parti 2022."}</figcaption>
 </figure>
 
 <style>

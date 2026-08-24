@@ -11,7 +11,7 @@
   const format = (value) => value.toLocaleString("sv-SE", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 </script>
 
-<figure aria-label="SCB:s partisympati i maj 2026 uppdelad på kvinnor och män. Fem partier har en statistiskt tydlig skillnad mellan grupperna.">
+<figure aria-label="SCB:s partisympati i maj 2026 bland kvinnor och män som uppgav ett parti. Fem av de åtta visade riksdagspartierna har en statistiskt tydlig skillnad. Övriga partier visas inte.">
   <div class="layer party-view active" class:focus={step === 1}>
     <header>
       <p>SCB · Partisympati · maj 2026</p>
@@ -26,8 +26,8 @@
             <i class="difference-line" style={`left:${gapLeft(party.women, party.men)};width:${gapWidth(party.women, party.men)}`}></i>
             <i class="uncertainty women" style={`left:${x(party.women)};width:${width(party.womenMargin * 2)};transform:translateX(-50%)`}></i>
             <i class="uncertainty men" style={`left:${x(party.men)};width:${width(party.menMargin * 2)};transform:translateX(-50%)`}></i>
-            <span class="point women" style={`left:${x(party.women)}`}><b>{format(party.women)}</b></span>
-            <span class="point men" style={`left:${x(party.men)}`}><b>{format(party.men)}</b></span>
+            <span class="point women" role="img" style={`left:${x(party.women)}`} aria-label={`Kvinnor ${format(party.women)} procent`}><b aria-hidden="true">{format(party.women)}</b></span>
+            <span class="point men" role="img" style={`left:${x(party.men)}`} aria-label={`Män ${format(party.men)} procent`}><b aria-hidden="true">{format(party.men)}</b></span>
           </div>
           <em>{party.significant ? "tydlig skillnad" : "ingen tydlig skillnad"}</em>
         </div>
@@ -36,7 +36,7 @@
         {#each [0, 10, 20, 30, 40] as tick}<span style={`left:${x(tick)}`}>{tick}{tick === 40 ? "%" : ""}</span>{/each}
       </div>
     </div>
-    <p class="note">Punkterna är skattningar. De tunna linjerna visar SCB:s publicerade osäkerhetstal. Måttet är partisympati, inte ”val i dag”.</p>
+    <p class="note">Andel bland dem som uppgav ett parti. Linjerna är SCB:s osäkerhetstal. Övriga visas inte.</p>
   </div>
 
 </figure>

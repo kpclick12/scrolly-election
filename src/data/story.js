@@ -1,5 +1,17 @@
 export const districtWinnerCounts = { S: 4351, SD: 1048, M: 814, V: 46, KD: 3, MP: 2 };
 
+export const national2022 = {
+  M: 19.10,
+  C: 6.71,
+  L: 4.61,
+  KD: 5.34,
+  MP: 5.08,
+  S: 30.33,
+  V: 6.75,
+  SD: 20.54,
+  Övr: 1.54,
+};
+
 export const parties = [
   { code: "M", name: "Moderaterna", color: "#3378d4", seats2022: 68 },
   { code: "C", name: "Centerpartiet", color: "#4a8d57", seats2022: 24 },
@@ -78,6 +90,7 @@ export const sources = {
   districtProfiles: "https://services8.arcgis.com/9CUL84k8apjo6IDh/ArcGIS/rest/services/Valdistrikt_SocEk_ValResult_2022/FeatureServer/0",
   scbDistrictTool: "https://www.scb.se/pressmeddelande/analysera-riksdagsvalet-med-scbs-nya-verktyg/?menu=open",
   scb2026: "https://www.scb.se/contentassets/ce8e9149498a40ac99d5a3b07a0f5040/me0201_2026m05_br_me60br2601.pdf",
+  scbFaq: "https://www.scb.se/hitta-statistik/statistik-efter-amne/demokrati/partisympatier/partisympatiundersokningen-psu/produktrelaterat/Fordjupad-information/fragor-och-svar-om-partisympatiundersokningen-psu/",
   cartogramPrinciple: "https://storymaps.arcgis.com/stories/0e636a652d44484b9457f953994b212b",
   ruralResearch: "https://journals.lub.lu.se/st/article/view/27485",
   aapor: "https://aapor.org/wp-content/uploads/2022/12/Sampling-Methods-for-Political-Polling-508.pdf",

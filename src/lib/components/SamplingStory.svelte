@@ -55,14 +55,27 @@
     { value: "Landsbygd", count: 2500 },
   ], 93);
   const education = shuffledLabels(N, [{ value: "Lång", count: 3600 }, { value: "Övrig", count: 6400 }], 104);
-  const support = shuffledLabels(N, [{ value: true, count: 3000 }, { value: false, count: 7000 }], 115);
+  const supportIndices = new Set();
+  const supportByGender = [
+    { label: "Kvinnor", count: 918 },
+    { label: "Män", count: 2082 },
+  ];
+  supportByGender.forEach((group, groupIndex) => {
+    const indices = gender.flatMap((label, index) => label === group.label ? [index] : []);
+    const rng = random(115 + groupIndex * 97);
+    for (let index = indices.length - 1; index > 0; index -= 1) {
+      const swap = Math.floor(rng() * (index + 1));
+      [indices[index], indices[swap]] = [indices[swap], indices[index]];
+    }
+    indices.slice(0, group.count).forEach((index) => supportIndices.add(index));
+  });
   const population = Array.from({ length: N }, (_, index) => ({
     index,
     gender: gender[index],
     age: age[index],
     place: place[index],
     education: education[index],
-    support: support[index],
+    support: supportIndices.has(index),
   }));
 
   function samplePopulation(seed, count = SAMPLE_N) {
@@ -87,6 +100,11 @@
   const margin = 1.96 * Math.sqrt(.3 * .7 / SAMPLE_N) * Math.sqrt((N - SAMPLE_N) / (N - 1)) * 100;
   const plotX = (value) => `${(value - 24) / 12 * 100}%`;
   const format = (value) => value.toLocaleString("sv-SE", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+  const womenSupport = 918 / 5100 * 100;
+  const menSupport = 2082 / 4900 * 100;
+  const responseWomen = 62;
+  const responseEstimate = responseWomen / 100 * womenSupport + (1 - responseWomen / 100) * menSupport;
+  const weightedEstimate = .51 * womenSupport + .49 * menSupport;
 
   const fieldPoints = [];
   let pointIndex = 0;
@@ -114,20 +132,64 @@
   const sampledPoints = new Set(pointOrder.slice(0, 50));
 
   const responseProfiles = [
-    { label: "Kvinnor", target: 51, answer: 56, weighted: 51 },
+    { label: "Kvinnor", target: 51, answer: responseWomen, weighted: 51 },
     { label: "18–29 år", target: 18, answer: 13, weighted: 18 },
     { label: "Landsbygd", target: 25, answer: 19, weighted: 25 },
     { label: "Lång utbildning", target: 36, answer: 43, weighted: 36 },
   ];
+
+  const tokenColors = ["#2f7f78", "#e4a63a", "#7a67a8", "#d66a55", "#879d56"];
+  const tokenRng = random(260913);
+  const tokens = Array.from({ length: 220 }, (_, index) => {
+    const column = index % 20;
+    const row = Math.floor(index / 20);
+    const colorIndex = Math.max(0, Math.min(4, Math.floor((column + tokenRng() * 5) / 5)));
+    return {
+      x: 69 + column * 32.4 + (tokenRng() - .5) * 9,
+      y: 92 + row * 23.2 + (tokenRng() - .5) * 8,
+      r: 7.2 + tokenRng() * 2.6,
+      color: tokenColors[colorIndex],
+      corner: column < 5 && row > 4,
+    };
+  });
 </script>
 
-<figure aria-label="Fiktivt exempel på hur ett sannolikhetsurval dras, hur dess sammansättning jämförs med populationen, hur skattningen varierar och hur bortfall kan ge nya skevheter">
-  <div class="layer population" class:active={step <= 1} aria-hidden={step > 1}>
+<figure aria-label="Fiktivt exempel som först jämför ett skevt urval ur en behållare med ett sannolikhetsurval, och sedan visar slumpvariation, bortfall och viktning">
+  <div class="layer analogy" class:active={step <= 1} aria-hidden={step > 1}>
+    <header>
+      <p>Analogi · färgerna är olika grupper</p>
+      <h3>{step === 0 ? "En population är en blandning" : "Ett hörn är inte en miniatyr av helheten"}</h3>
+    </header>
+    <svg class="token-tray" viewBox="0 0 760 410" role="img" aria-label={step === 0 ? "En behållare fylld med fem färger av kulor" : "En handfull från behållarens vänstra hörn innehåller en skev blandning av färger"}>
+      <rect class="tray" x="38" y="50" width="684" height="314" rx="28" />
+      {#each tokens as token}
+        <circle
+          class="token"
+          class:corner={token.corner}
+          class:scoop-active={step === 1}
+          cx={token.x}
+          cy={token.y}
+          r={token.r}
+          fill={token.color}
+        />
+      {/each}
+      {#if step === 1}
+        <ellipse class="scoop" cx="130" cy="250" rx="99" ry="116" />
+        <text class="scoop-label" x="222" y="339">urval från ett hörn</text>
+      {/if}
+    </svg>
+    <div class="token-key" aria-hidden="true">
+      {#each tokenColors as color, index}<span><i style={`--token:${color}`}></i>Grupp {index + 1}</span>{/each}
+    </div>
+    <p class="note">Analogi: grupperna är konstruerade och motsvarar inte partier. I en riktig undersökning är det människors chans att bli valda och svara som spelar roll.</p>
+  </div>
+
+  <div class="layer population" class:active={step === 2} aria-hidden={step !== 2}>
     <header>
       <p>Fiktiv population · 10 000 personer</p>
-      <h3>{step === 0 ? "Urvalsramen behöver omfatta hela populationen" : "1 000 personer dras slumpmässigt"}</h3>
+      <h3>1 000 personer dras slumpmässigt</h3>
     </header>
-    <svg viewBox="0 0 790 430" role="img" aria-label={step === 0 ? "Förenklad punktmatris över en population uppdelad efter ålder och boendeort" : "Samma matris där ett slumpmässigt urval är markerat i alla åldrar och typer av boendeort"}>
+    <svg viewBox="0 0 790 430" role="img" aria-label="Punktmatris där ett slumpmässigt urval är markerat i alla åldrar och typer av boendeort">
       {#each PLACE as item, index}
         <text class="column-label" x={187 + index * 225} y="77" text-anchor="middle">{item.key}</text>
       {/each}
@@ -143,7 +205,7 @@
         <circle
           class="person"
           class:sampled={sampledPoints.has(point.index)}
-          class:sample-active={step === 1}
+          class:sample-active={step === 2}
           cx={point.x}
           cy={point.y}
           r="3.15"
@@ -152,12 +214,12 @@
     </svg>
     <div class="field-reading">
       <span><i class="population-mark"></i>Population</span>
-      {#if step === 1}<span class="selected-key"><i></i>Urval: 1 000 av 10 000</span>{/if}
-      <small>Punktfältet förenklar proportionerna. Beräkningarna görs på 10 000 individer.</small>
+      <span class="selected-key"><i></i>Urval: 1 000 av 10 000</span>
+      <small>500 symbolpunkter · 1 punkt ≈ 20 personer. Beräkningen använder 10 000 individer.</small>
     </div>
   </div>
 
-  <div class="layer composition" class:active={step === 2} aria-hidden={step !== 2}>
+  <div class="layer composition" class:active={step === 3} aria-hidden={step !== 3}>
     <header>
       <p>Ett slumpurval · n = 1 000</p>
       <h3>Urvalet ligger nära populationens sammansättning</h3>
@@ -171,7 +233,7 @@
             <i class="population-line" style={`width:${profile.population}%`}></i>
             <i class="sample-line" style={`width:${profile.sample}%`}></i>
           </div>
-          <div class="profile-values"><span>{format(profile.population)}%</span><b>{format(profile.sample)}%</b></div>
+          <div class="profile-values"><span aria-label={`Population ${format(profile.population)} procent`}>{format(profile.population)}%</span><b aria-label={`Urval ${format(profile.sample)} procent`}>{format(profile.sample)}%</b></div>
         </div>
       {/each}
     </div>
@@ -179,7 +241,7 @@
     <p class="note">Fördelningarna är konstruerade för att visa principen. De är inte skattningar av Sveriges väljarkår.</p>
   </div>
 
-  <div class="layer variation" class:active={step === 3} aria-hidden={step !== 3}>
+  <div class="layer variation" class:active={step === 4} aria-hidden={step !== 4}>
     <header>
       <p>20 oberoende slumpurval · n = 1 000</p>
       <h3>Samma metod ger inte exakt samma skattning</h3>
@@ -201,28 +263,28 @@
     <p class="note">Marginalen visar enbart slumpvariation i det fiktiva exemplet. Den tar inte hänsyn till bortfall, mätfel eller frågeformulering.</p>
   </div>
 
-  <div class="layer response" class:active={step === 4} aria-hidden={step !== 4}>
+  <div class="layer response" class:active={step === 5} aria-hidden={step !== 5}>
     <header>
       <p>Efter urvalet</p>
-      <h3>De utvalda är inte samma sak som de som svarar</h3>
+      <h3>Ett skevt bortfall flyttar skattningen</h3>
     </header>
-    <div class="pipeline" aria-label="Urval, svar och viktning">
-      <div><span>Slumpmässigt valda</span><strong>1 000</strong></div><i>→<small>bortfall</small></i>
-      <div><span>Svarande</span><strong>642</strong></div><i>→<small>viktning</small></i>
-      <div><span>Justerat resultat</span><strong>kända skillnader</strong></div>
+    <div class="pipeline" aria-label={`Det fiktiva partiets stöd är 30,0 procent i populationen, ${format(responseEstimate)} procent bland de svarande och ${format(weightedEstimate)} procent efter viktning för kön.`}>
+      <div><span>Facit i populationen</span><strong>30,0%</strong></div><i>→<small>skevt bortfall</small></i>
+      <div><span>Bland 642 svarande</span><strong>{format(responseEstimate)}%</strong></div><i>→<small>kön viktas</small></i>
+      <div><span>Efter viktning</span><strong>{format(weightedEstimate)}%</strong></div>
     </div>
     <div class="response-chart">
       <div class="response-head"><span></span><b>Svar</b><b>Efter viktning</b></div>
       {#each responseProfiles as profile}
         <div class="response-row">
           <strong>{profile.label}</strong>
-          <span class:below={profile.answer < profile.target} class:above={profile.answer > profile.target}>{format(profile.answer)}%</span>
-          <span class="weighted">{format(profile.weighted)}%</span>
+          <span class:below={profile.answer < profile.target} class:above={profile.answer > profile.target} aria-label={`Bland svarande ${format(profile.answer)} procent`}>{format(profile.answer)}%</span>
+          <span class="weighted" aria-label={`Efter viktning ${format(profile.weighted)} procent`}>{format(profile.weighted)}%</span>
         </div>
       {/each}
     </div>
-    <p class="reading">Viktning kan föra kända fördelningar tillbaka mot populationen. Den kan inte säkert rätta politiska skillnader som inte har mätts.</p>
-    <p class="note">Bortfallet och de viktade värdena är illustrativa. Ett riktigt institut redovisar sin rekrytering, svarsfrekvens och viktning.</p>
+    <p class="reading">I den fiktiva populationen är stödet 18,0 procent bland kvinnor och 42,5 bland män. När kvinnor utgör 62 procent av de svarande underskattas stödet. Viktning för kön rättar felet eftersom det är den enda inbyggda skevheten.</p>
+    <p class="note">Exemplet isolerar en känd skillnad. Verklig viktning kan inte säkert rätta sådant som inte har mätts.</p>
   </div>
 </figure>
 
@@ -233,6 +295,16 @@
   header p { margin:0 0 7px; color:var(--accent-dark); font-size:12px; font-weight:700; }
   header h3 { max-width:760px; margin:0; font-family:var(--display); font-size:clamp(31px,3.5vw,40px); font-weight:760; line-height:1.01; letter-spacing:-.035em; }
   svg { display:block; width:100%; height:auto; margin-top:12px; }
+  .token-tray { margin-top:4px; }
+  .tray { fill:#f5f1e8; stroke:#d8d2c5; stroke-width:1.2; }
+  .token { stroke:rgba(255,255,255,.8); stroke-width:1.4; transition:opacity .35s ease,transform .45s cubic-bezier(.22,.72,.22,1); transform-box:fill-box; transform-origin:center; }
+  .token.scoop-active:not(.corner) { opacity:.12; }
+  .token.scoop-active.corner { transform:scale(1.12); }
+  .scoop { fill:rgba(255,255,255,.08); stroke:var(--ink); stroke-width:2; stroke-dasharray:6 5; }
+  .scoop-label { fill:var(--ink); font:700 11px var(--sans); }
+  .token-key { display:flex; flex-wrap:wrap; gap:7px 14px; padding-top:8px; border-top:1px solid var(--rule); color:var(--muted); font-size:9px; }
+  .token-key span { display:flex; align-items:center; gap:5px; }
+  .token-key i { width:8px; height:8px; border-radius:50%; background:var(--token); }
   .cell { fill:#f4f8f9; stroke:var(--rule); stroke-width:1; }
   .column-label,.row-label { fill:var(--muted); font:650 11px var(--sans); }
   .person { fill:#96aab1; opacity:.58; transition:fill .42s ease,opacity .42s ease,r .42s ease,stroke .42s ease; }
@@ -278,7 +350,7 @@
   .pipeline > div { min-height:92px; padding:15px 16px; border-top:4px solid var(--accent); background:var(--paper-alt); }
   .pipeline span { display:block; color:var(--muted); font-size:10px; font-weight:700; }
   .pipeline strong { display:block; margin-top:8px; font-family:var(--display); font-size:29px; font-weight:600; line-height:1; }
-  .pipeline div:last-child strong { font-family:var(--sans); font-size:14px; line-height:1.25; }
+  .pipeline div:last-child strong { line-height:1; }
   .pipeline > i { display:grid; color:var(--accent-dark); font-size:22px; font-style:normal; text-align:center; }
   .pipeline > i small { color:var(--muted); font-size:8px; font-weight:500; }
   .response-chart { margin-top:24px; border-top:1px solid var(--rule-strong); }
