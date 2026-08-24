@@ -272,7 +272,7 @@
     <p class="section-index">Inför den 13 september</p>
     <h2 id="closing-title">Så, kan vi lita på mätningarna?</h2>
     <div class="body-copy">
-      <p>Det lokala resultatet blev fel svar på en nationell fråga. Godiset visar varför: handen måste kunna nå hela påsen, och det spelar roll vilka färger som försvinner på vägen.</p>
+      <p>Det lokala resultatet blev fel svar på en nationell fråga. Godiset visar varför: handen måste kunna nå hela påsen, och det spelar roll vilka färger som försvinner på vägen. Skillnaden mellan kvinnor och män visar att de färgerna faktiskt kan flytta en partisiffra.</p>
       <p>Så ja. En bra undersökning kan säga något om valet den 13 september, om vägen från väljare till siffra håller.</p>
     </div>
   </section>

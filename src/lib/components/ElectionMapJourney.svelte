@@ -126,8 +126,8 @@
     const boxHeight = Math.max(1, box.maxY - box.minY);
     const mobile = width <= 820;
     const scale = Math.min(
-      mobile ? 22 : 30,
-      Math.max(4.4, Math.min((width * (mobile ? 0.56 : 0.38)) / boxWidth, (height * 0.36) / boxHeight)),
+      mobile ? 30 : 42,
+      Math.max(4.4, Math.min((width * (mobile ? 0.64 : 0.46)) / boxWidth, (height * (mobile ? 0.44 : 0.46)) / boxHeight)),
     );
     const centerX = (box.minX + box.maxX) / 2;
     const centerY = (box.minY + box.maxY) / 2;
