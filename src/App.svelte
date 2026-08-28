@@ -1,49 +1,45 @@
 <script>
   import { onMount } from "svelte";
   import ScrollyShell from "./lib/components/ScrollyShell.svelte";
-  import ElectionMapJourney from "./lib/components/ElectionMapJourney.svelte";
-  import GenderScene from "./lib/components/GenderScene.svelte";
-  import PartyMandates from "./lib/components/PartyMandates.svelte";
-  import PointFlowEnding from "./lib/components/PointFlowEnding.svelte";
-  import { districts, districtWinnerCounts, national2022, parties, sources } from "./data/story.js";
+  import LiberalHistory from "./lib/components/LiberalHistory.svelte";
+  import SeatCliff from "./lib/components/SeatCliff.svelte";
+  import CoordinationGame from "./lib/components/CoordinationGame.svelte";
+  import EvidenceJourney from "./lib/components/EvidenceJourney.svelte";
+  import { scenarioForL, sources } from "./data/story.js";
 
-  let mapStep = $state(0);
-  let genderStep = $state(0);
-  let explanationStep = $state(0);
+  let seatStep = $state(0);
+  let gameStep = $state(0);
+  let evidenceStep = $state(0);
   let progress = $state(0);
 
-  const districtNotes = [
-    "S fick mer än två tredjedelar av de giltiga rösterna.",
-    "SD fick egen majoritet bland de giltiga rösterna.",
-    "V var störst och MP fick 16,9 procent i samma distrikt.",
-  ];
+  const seatStatus = $derived([
+    "Med Liberalernas stöd på 2,2 procent får de inga mandat. Blågula får 162 mandat och oppositionen 187.",
+    "När röster flyttas från Moderaterna tills Liberalerna når 3,5 procent får L fortfarande inga mandat. Blågula får 159 mandat.",
+    "Vid 3,9 procent får Liberalerna fortfarande inga mandat. Blågula får 159 mandat och oppositionen 190.",
+    "Vid 4,0 procent får Liberalerna 14 mandat. Blågula får 166 mandat och oppositionen 183.",
+    "Vid 4,5 procent får Liberalerna 16 mandat. Blågula ligger kvar på 166 eftersom rösterna har flyttats inom samma sida.",
+    "Ett räddat Liberalerna ger 166 blågula mandat. Det saknas fortfarande tio till egen majoritet.",
+  ][seatStep]);
 
-  const mapStatus = $derived([
-    "Facit från riksdagsvalet 2022 omfattar Sveriges 6 264 valdistrikt.",
-    "Kartan färgas efter största riksdagsparti i varje valdistrikt 2022.",
-    `Kartan zoomar till ${districts[0].short} i ${districts[0].municipality}.`,
-    `${districts[0].short} jämförs med hela landets valresultat.`,
-    ...districts.slice(1).map((district) => `Kartan zoomar till ${district.short} i ${district.municipality}.`),
-    "Kartan zoomar ut och visar de fyra redaktionellt valda kontrasterna.",
-    "Samma 6 264 valdistrikt flyttar från sin geografiska position till en position efter andel med minst treårig eftergymnasial utbildning och röstandelen för distriktets största parti.",
-  ][mapStep]);
+  const gameStatus = $derived([
+    "Från 2,2 procent saknas omkring 117 000 väljare till spärren.",
+    "Från 3,5 procent saknas omkring 32 000 väljare till spärren.",
+    "Utfallet beror på både det egna valet och vad andra väljare gör.",
+    "Opinionsmätningen blir en gemensam signal som kan hjälpa väljarna att samordna sig.",
+    "Varje väljare kan hoppas att andra tar risken. Om många gör det faller samordningen.",
+  ][gameStep]);
 
-  const genderStatus = $derived([
-    "Hundra punkter visar partisympatins blandning bland kvinnor och män i SCB:s mätning i maj 2026.",
-    "Socialdemokraterna och Sverigedemokraterna markeras eftersom skillnaderna är störst där.",
-  ][genderStep]);
+  const evidenceStatus = $derived([
+    "Sexton procent röstade 2022 på ett annat parti än sitt tydliga förstahandsval.",
+    "Bland Liberalernas väljare bestämde sig 60 procent sista veckan och 32 procent föredrog ett annat parti.",
+    "Det svenska experimentet gav ett svagt och statistiskt osäkert stöd för en försäkringseffekt för Liberalerna.",
+    "I tre av de fyra senaste valen backade Liberalerna från den sena mätningen till valresultatet.",
+    "Från 2,2 krävs en ökning på 1,8 procentenheter. Från 3,5 krävs 0,5.",
+  ][evidenceStep]);
 
-  const explanationStatus = $derived([
-    "Målpopulationen är de drygt åtta miljoner personer som undersökningen vill säga något om.",
-    "SCB drog 9 260 personer ur hela målpopulationen med kända urvalssannolikheter.",
-    "4 542 personer svarade. Individbortfallet var 51 procent och varierade mellan grupper.",
-    "Svaren viktades med hjälp av bland annat kön, ålder, region, utbildning, födelseland och partival 2022.",
-    "Viktningen minskar kända skevheter men kan inte ta bort bortfallsrisken eller urvalets statistiska osäkerhet.",
-  ][explanationStep]);
-
-  function format(value) {
-    return Number(value).toLocaleString("sv-SE", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
-  }
+  const fromM = scenarioForL(4.0, "M");
+  const fromKD = scenarioForL(4.0, "KD");
+  const overFromKD = scenarioForL(4.5, "KD");
 
   function skipToStory(event) {
     event.preventDefault();
@@ -63,221 +59,298 @@
           revealObserver.unobserve(entry.target);
         }
       });
-    }, { threshold: .08, rootMargin: "0px 0px -2%" });
+    }, { threshold: .08, rootMargin: "0px 0px -3%" });
     document.querySelectorAll("[data-reveal]").forEach((element) => revealObserver.observe(element));
+
+    let ticking = false;
     const update = () => {
+      ticking = false;
       const max = document.documentElement.scrollHeight - window.innerHeight;
       progress = max > 0 ? Math.min(1, window.scrollY / max) : 0;
     };
+    const requestUpdate = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(update);
+    };
     update();
-    window.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update);
+    window.addEventListener("scroll", requestUpdate, { passive: true });
+    window.addEventListener("resize", requestUpdate);
     return () => {
       revealObserver.disconnect();
       document.documentElement.classList.remove("motion-ready");
-      window.removeEventListener("scroll", update);
-      window.removeEventListener("resize", update);
+      window.removeEventListener("scroll", requestUpdate);
+      window.removeEventListener("resize", requestUpdate);
     };
   });
 </script>
-
-{#snippet districtResult(district, compareWithCountry = false)}
-  <div class="local-result" aria-label={`Partifördelning och valdeltagande i ${district.short}`}>
-    <div class="result-strip" aria-hidden="true">
-      {#each parties as party}
-        <i style={`--share:${district.result[party.code]};--party:${party.color}`}></i>
-      {/each}
-    </div>
-    <dl>
-      {#each parties as party}
-        <div><dt style={`--party:${party.color}`}>{party.code}</dt><dd>{format(district.result[party.code])}%</dd></div>
-      {/each}
-    </dl>
-    {#if compareWithCountry}
-      <div class="experiment-compare">
-        <div><span>M i distriktet</span><strong>{format(district.result.M)}%</strong></div>
-        <div><span>M i hela landet</span><strong>{format(national2022.M)}%</strong></div>
-        <div class="miss"><span>Skillnad</span><strong>+{format(district.result.M - national2022.M)} p</strong></div>
-      </div>
-    {/if}
-    <p><span>{district.validVotes.toLocaleString("sv-SE")} giltiga röster</span><span>Valdeltagande <strong>{format(district.turnout)}%</strong></span></p>
-  </div>
-{/snippet}
 
 <a class="skip-link" href="#story" onclick={skipToStory}>Hoppa till berättelsen</a>
 <div class="progress" aria-hidden="true"><i style={`transform:scaleX(${progress})`}></i></div>
 
 <header class="hero">
-  <div class="hero-inner">
-    <div class="hero-copy">
-      <p class="eyebrow">Riksdagsvalet 2026</p>
-      <p class="campaign-line">Valrörelsen är igång. Debatter, utspel och snart nya opinionsmätningar.</p>
-      <h1>Kan några tusen tala för åtta miljoner?</h1>
-      <p class="standfirst">Vi provar på ett val där vi redan vet svaret.</p>
-      <p class="hero-question">Hur en valundersökning fungerar, varför den ibland missar och vad det betyder inför den 13 september.</p>
+  <div class="hero-copy">
+    <p class="eyebrow">Riksdagsvalet 2026</p>
+    <h1>Vad är en taktikröst på Liberalerna värd?</h1>
+    <p class="standfirst">Liberalerna ligger långt under spärren och ber andra blågula väljare om hjälp. Hur nära måste partiet vara för att den hjälpen ska löna sig?</p>
+    <div class="hero-facts" aria-label="Två avgörande tal">
+      <div><span>Indikator, augusti</span><strong>2,2%</strong></div>
+      <div><span>Riksdagsspärren</span><strong>4,0%</strong></div>
     </div>
-    <dl class="hero-facts">
-      <div>
-        <dt>Valdag</dt>
-        <dd>13 september</dd>
-      </div>
-    </dl>
   </div>
+  <div class="hero-chart"><LiberalHistory /></div>
 </header>
 
 <main id="story" tabindex="-1">
-  <section class="party-intro" aria-labelledby="party-intro-title">
-    <div class="party-intro-copy" data-reveal>
-      <p class="section-index">Ett val med facit</p>
-      <h2 id="party-intro-title">Vi börjar 2022</h2>
-      <p>Varje punkt är ett mandat. Tillsammans vet vi exakt hur det gick. Nu låtsas vi att svaret fortfarande är okänt.</p>
+  <section class="duel prose-section" aria-labelledby="duel-title">
+    <div class="section-heading" data-reveal>
+      <p class="section-index">Två råd</p>
+      <h2 id="duel-title">Samma väljare får två olika besked</h2>
+      <p>Frågan gäller de väljare som helst vill ha ett blågult regeringsunderlag men som inte har L som förstahandsval.</p>
     </div>
-    <div class="party-intro-visual"><PartyMandates /></div>
+    <div class="duel-grid">
+      <article data-reveal>
+        <span class="speaker">Simona Mohamsson</span>
+        <h3>Hjälp L över spärren</h3>
+        <p>L-ledaren ber väljare som vill behålla det blågula samarbetet att lägga sin röst på Liberalerna.</p>
+        <a href={sources.mohamsson}>Aftonbladet, 26 augusti</a>
+      </article>
+      <article data-reveal>
+        <span class="speaker">Jimmie Åkesson</span>
+        <h3>Avstå om L ligger under 3,5</h3>
+        <p>SD-ledaren sätter en gräns tio dagar före valet. Om L fortfarande ligger lägre bör väljarna välja ett annat blågult parti.</p>
+        <a href={sources.akesson}>SVT, 23 augusti</a>
+      </article>
+    </div>
+    <p class="duel-question" data-reveal>Vad är det som händer vid 3,5?</p>
   </section>
 
-  <section class="map-opening prose-section" data-reveal aria-labelledby="map-title">
-    <p class="section-index">Experimentet</p>
-    <h2 id="map-title">Det borde väl räcka att fråga några?</h2>
+  <section class="experiment-intro prose-section" data-reveal aria-labelledby="experiment-title">
+    <p class="section-index">Räkneförsöket</p>
+    <h2 id="experiment-title">Vi flyttar röster från M till L</h2>
     <div class="body-copy">
-      <p>Vi tar ett valdistrikt och låter rösterna där tala för Sverige. Testet är förenklat, men vi har facit i hand.</p>
+      <p>Startpunkten är Indikator Opinions mätning från augusti. Blågula har tillsammans 46,6 procent och oppositionen 51,3. L ligger på 2,2.</p>
+      <p>Efter varje förflyttning räknar vi om riksdagens 349 mandat. Beräkningen visar mekaniken i valsystemet. Väljarnas faktiska rörelser kan förstås bli helt andra.</p>
     </div>
   </section>
 
-  <section class="map-act" aria-label="Scrollstyrd resa genom valresultatet 2022">
-    <ScrollyShell variant="overlay" onStepChange={(index) => mapStep = index} label="Ett experiment från hela Sverige till ett distrikt och tillbaka" status={mapStatus}>
-      {#snippet visual()}<ElectionMapJourney step={mapStep} />{/snippet}
+  <section class="seat-act" aria-label="Scrollstyrd simulering av stödröster till Liberalerna">
+    <ScrollyShell onStepChange={(index) => seatStep = index} label="Från 2,2 till 4,5 procent för Liberalerna" status={seatStatus}>
+      {#snippet visual()}<SeatCliff step={seatStep} />{/snippet}
 
-      <article class="map-step" data-step>
-        <p class="step-index">1 av 9 · Ny enhet</p>
-        <h3>Hela landet består av 6 264 valdistrikt</h3>
-        <p>Varje yta är ett valdistrikt i riksdagsvalet 2022. Tillsammans innehåller de svaret som vårt experiment ska försöka återskapa.</p>
+      <article class="seat-step" data-step>
+        <p class="step-index">Utgångsläget · 2,2%</p>
+        <h3>L får inga mandat</h3>
+        <p>När L hamnar under spärren används deras röster inte i den nationella mandatfördelningen. Blågula får 162 platser och oppositionen 187.</p>
       </article>
-
-      <article class="map-step" data-step>
-        <p class="step-index">2 av 9 · Hela resultatet</p>
-        <h3>Valet såg olika ut över landet</h3>
-        <p>S var störst i {districtWinnerCounts.S.toLocaleString("sv-SE")} distrikt, SD i {districtWinnerCounts.SD.toLocaleString("sv-SE")}, M i {districtWinnerCounts.M.toLocaleString("sv-SE")}, V i {districtWinnerCounts.V}, KD i {districtWinnerCounts.KD} och MP i {districtWinnerCounts.MP}. I {districtWinnerCounts.ties} distrikt delade två partier förstaplatsen.</p>
+      <article class="seat-step" data-step>
+        <p class="step-index">Åkessons gräns · 3,5%</p>
+        <h3>1,3 procentenheter har flyttats</h3>
+        <p>L är fortfarande utanför. Eftersom rösterna har lämnat M tappar blågula tre mandat jämfört med utgångsläget.</p>
       </article>
-
-      <article class="map-step map-reading-step" data-step>
-        <p class="step-index">3 av 9 · Vårt urval</p>
-        <h3>Vi frågar i Södra Djursholm</h3>
-        <p>Nu blir varje distrikt en punkt vars storlek följer antalet giltiga röster. Mark röstar inte. I Södra Djursholm avgavs 904 röster, varav 902 var giltiga. Vi jämför partifördelningen bland de giltiga rösterna med facit.</p>
+      <article class="seat-step" data-step>
+        <p class="step-index">Nära · 3,9%</p>
+        <h3>En tiondel återstår</h3>
+        <p>Alla L-röster står ännu utanför mandatfördelningen. I modellen får blågula 159 mandat och oppositionen 190.</p>
       </article>
-
-      <article class="map-step district-step surprise-step" data-step>
-        <p class="step-index">4 av 9 · Experimentets svar</p>
-        <h3>Vårt svar missar med 39,3 procentenheter</h3>
-        {@render districtResult(districts[0], true)}
-        <p>M fick 58,4 procent här men 19,1 procent i hela landet. Ett lokalt resultat blev ett dåligt svar på den nationella frågan.</p>
+      <article class="seat-step threshold-step" data-step>
+        <p class="step-index">Spärren · 4,0%</p>
+        <h3>L får 14 mandat</h3>
+        <p>Andra blågula partier blir samtidigt mindre. Nettot för hela sidan är därför sju nya mandat jämfört med läget vid 3,9.</p>
       </article>
-
-      {#each districts.slice(1) as district, index}
-        <article class="map-step district-step" data-step>
-          <p class="step-index">{index + 5} av 9 · Fler platser · {district.municipality}</p>
-          <h3>{district.short}</h3>
-          {@render districtResult(district)}
-          <p>{districtNotes[index]}</p>
-        </article>
-      {/each}
-
-      <article class="map-step conclusion-step" data-step>
-        <p class="step-index">8 av 9 · Hela landet igen</p>
-        <h3>Fyra lokala svar pekar åt olika håll</h3>
-        <p>Stoppen är medvetet valda som kontraster. De visar inte hur vanliga resultaten är. I ett sannolikhetsurval behöver människor över hela målpopulationen kunna dras med en känd sannolikhet.</p>
+      <article class="seat-step" data-step>
+        <p class="step-index">Lite över · 4,5%</p>
+        <h3>L växer, blocket står kvar</h3>
+        <p>L får 16 mandat. De extra rösterna kommer fortfarande från M, så den blågula summan ligger kvar på 166.</p>
       </article>
-
-      <article class="map-step scatter-step" data-step>
-        <p class="step-index">9 av 9 · Samma distrikt, ny position</p>
-        <h3>Utbildning möter valresultat</h3>
-        <p>Varje punkt är fortfarande samma valdistrikt. Vågrätt visas andelen med minst treårig eftergymnasial utbildning. Lodrätt visas röstandelen för distriktets största parti.</p>
+      <article class="seat-step conclusion-step" data-step>
+        <p class="step-index">Mandatläget</p>
+        <h3>Det fattas fortfarande tio</h3>
+        <p>Oppositionens ledning i mätningen är större än de sju mandat som ett räddat L tillför. Stödrösterna kan förbättra läget utan att ge egen majoritet.</p>
       </article>
     </ScrollyShell>
   </section>
 
-  <section class="gender-act" aria-labelledby="gender-title">
-    <div class="act-head" data-reveal>
-      <p class="section-index">Vilka som ingår spelar roll</p>
-      <h2 id="gender-title">Kvinnor och män har olika partisympatier</h2>
-      <p>I SCB:s mätning i maj skilde sig blandningen mellan könen. Det visar varför sammansättningen i ett urval spelar roll.</p>
-    </div>
-    <ScrollyShell onStepChange={(index) => genderStep = index} label="Partisympatins blandning bland kvinnor och män" status={genderStatus}>
-      {#snippet visual()}<GenderScene step={genderStep} />{/snippet}
-      <article class="gender-step" data-step>
-        <p class="step-index">1 av 2 · Två blandningar</p>
-        <h3>Hundra punkter på varje sida</h3>
-        <p>Varje punkt är ungefär en procentenhet. Samma partifärger, men inte samma proportioner.</p>
-      </article>
-      <article class="gender-step" data-step>
-        <p class="step-index">2 av 2 · De största skillnaderna</p>
-        <h3>S och SD drar åt varsitt håll</h3>
-        <p>S hade högre sympati bland kvinnor och SD bland män. Skillnader fanns också för M, V och MP. Om den ena gruppen blir överrepresenterad måste det hanteras i beräkningen.</p>
-      </article>
-    </ScrollyShell>
-  </section>
-
-  <section class="explanation-act" aria-labelledby="explanation-title">
-    <div class="act-head" data-reveal>
-      <p class="section-index">Förklaringen</p>
-      <h2 id="explanation-title">Så får några tusen representera alla andra</h2>
-      <p>Vi har sett att både plats och grupp kan flytta resultatet. SCB:s mätning i maj 2026 visar hur man försöker hantera det.</p>
-    </div>
-    <ScrollyShell onStepChange={(index) => explanationStep = index} label="Från målpopulation till viktad skattning i SCB:s partisympatiundersökning" status={explanationStatus}>
-      {#snippet visual()}<PointFlowEnding step={explanationStep} />{/snippet}
-      <article class="ending-step" data-step>
-        <p class="step-index">1 av 5 · Målpopulationen</p>
-        <h3>Börja med alla du vill säga något om</h3>
-        <p>Undersökningen gäller drygt åtta miljoner röstberättigade. Det är den grupp urvalet ska kunna representera.</p>
-      </article>
-      <article class="ending-step" data-step>
-        <p class="step-index">2 av 5 · Urvalet</p>
-        <h3>Dra från hela populationen</h3>
-        <p>SCB valde ut 9 260 personer. Med kända urvalssannolikheter går det att räkna från de utvalda tillbaka till helheten.</p>
-      </article>
-      <article class="ending-step" data-step>
-        <p class="step-index">3 av 5 · Bortfallet</p>
-        <h3>Hälften svarar inte</h3>
-        <p>4 542 svarade. Bortfallet har ökat över tid och skiljer sig mellan grupper. Det blir besvärligt om de som saknas hade svarat annorlunda.</p>
-      </article>
-      <article class="ending-step" data-step>
-        <p class="step-index">4 av 5 · Viktningen</p>
-        <h3>Vikta med det du redan vet</h3>
-        <p>SCB använder bland annat kön, ålder, region, utbildning, födelseland och partivalet 2022 för att justera kända skevheter.</p>
-      </article>
-      <article class="ending-step" data-step>
-        <p class="step-index">5 av 5 · Osäkerheten</p>
-        <h3>Det blir fortfarande inget facit</h3>
-        <p>Viktning kan inte avslöja vad de som saknas hade svarat. Dessutom har varje urval en statistisk osäkerhet som ska följa med resultatet.</p>
-      </article>
-    </ScrollyShell>
-  </section>
-
-  <section class="closing prose-section" data-reveal aria-labelledby="closing-title">
-    <p class="section-index">Valnatten</p>
-    <h2 id="closing-title">Blir det spännande ändå?</h2>
+  <section class="game-intro prose-section" data-reveal aria-labelledby="game-title">
+    <p class="section-index">Spelteorin</p>
+    <h2 id="game-title">Din bedömning handlar om de andra väljarna</h2>
     <div class="body-copy">
-      <p>Ja. Om flera bra mätningar pekar åt samma håll kan vi vara ganska trygga med riktningen. Men mätningarna visar läget när frågan ställdes, inte hur valresultatet måste bli.</p>
-      <p>När skillnaderna är små finns spänningen kvar. Den 13 september räknas röster i stället för svar.</p>
+      <p>En strategisk väljare försöker påverka det politiska utfallet och kan därför lämna sitt favoritparti. För en M-väljare kan en L-röst vara rimlig om den ökar chansen för ett önskat regeringsunderlag.</p>
+      <p>Problemet är att utfallet avgörs gemensamt. En person vet inte hur många andra som gör samma byte.</p>
+    </div>
+  </section>
+
+  <section class="game-act scrolly-act" aria-label="Scrollstyrd förklaring av taktikröstning som samordningsspel">
+    <ScrollyShell onStepChange={(index) => gameStep = index} label="Taktikröstning som samordningsspel" status={gameStatus}>
+      {#snippet visual()}<CoordinationGame step={gameStep} />{/snippet}
+
+      <article class="story-step" data-step>
+        <p class="step-index">Dagens avstånd</p>
+        <h3>Räddningen kräver en stor grupp</h3>
+        <p>Från 2,2 till 4 procent behövs omkring 117&nbsp;000 ytterligare väljare, räknat med antalet giltiga röster 2022. En enskild röst förändrar knappast oddsen.</p>
+      </article>
+      <article class="story-step" data-step>
+        <p class="step-index">Vid 3,5%</p>
+        <h3>Gruppen blir betydligt mindre</h3>
+        <p>Nu behövs omkring 32&nbsp;000 väljare. Fyraprocentsspärren fungerar lite som ett finansieringsmål, med skillnaden att rösterna inte återlämnas om målet missas.</p>
+      </article>
+      <article class="story-step" data-step>
+        <p class="step-index">Samordningsspelet</p>
+        <h3>Din röst får sitt värde tillsammans med andras</h3>
+        <p>Om tillräckligt många hjälper L kan gruppen vinna mandat åt hela sidan. Om för få gör det har de lämnat säkra partier för ett parti som ändå hamnar utanför.</p>
+      </article>
+      <article class="story-step" data-step>
+        <p class="step-index">Den gemensamma signalen</p>
+        <h3>Mätningen hjälper väljarna att hitta varandra</h3>
+        <p>Alla ser samma 3,5. Siffran kan få väljare att tro att räddningen är möjlig och därmed göra den mer möjlig. Forskningen kallar detta samordning genom opinionsmätningar.</p>
+      </article>
+      <article class="story-step" data-step>
+        <p class="step-index">Fripassageraren</p>
+        <h3>Det är bekvämt att låta andra ta risken</h3>
+        <p>En M-väljare kan hoppas att andra räddar L och själv stanna kvar. Om många gör samma kalkyl når L aldrig fram. Där ligger samordningsproblemet.</p>
+      </article>
+    </ScrollyShell>
+  </section>
+
+  <section class="preference-section prose-section" aria-labelledby="preference-title">
+    <div class="section-heading" data-reveal>
+      <p class="section-index">Vad räknas som en vinst?</p>
+      <h2 id="preference-title">Mandaten är bara ena halvan av kalkylen</h2>
+    </div>
+    <div class="body-copy" data-reveal>
+      <p>Väljare som vill ha samma statsminister kan ändå värdera partierna olika. Den som lämnar M för L hjälper samtidigt L att få större tyngd inom samarbetet. För en väljare som står långt från L i sakfrågorna kan den kostnaden väga tyngre än blockets mandatvinst.</p>
+      <p>Det syns också i forskningen. I experimentet från 2022 var M-väljare mer benägna att hjälpa L och KD än SD-väljare. Försäkringsröstandet var tydligast för KD, som länge haft en stabil plats i det borgerliga regeringsalternativet. L:s blocktillhörighet hade varit mer omstridd under mandatperioden.</p>
+      <p>Det finns alltså inget råd som passar alla blågula väljare. Kalkylen rymmer tre saker: chansen att L klarar spärren, värdet av de extra mandaten och priset för att stärka ett parti längre ned i den egna preferensordningen.</p>
+    </div>
+  </section>
+
+  <section class="donor-section" aria-labelledby="donor-title">
+    <div class="section-heading" data-reveal>
+      <p class="section-index">Varifrån kommer rösten?</p>
+      <h2 id="donor-title">Det spelar roll vilket parti som avstår</h2>
+      <p>Huvudräkningen tar röster från M. Samma förflyttning blir känsligare om den börjar hos ett annat småparti.</p>
+    </div>
+    <div class="donor-grid">
+      <article data-reveal>
+        <div class="donor-head"><span>Från M till L</span><strong>Stor marginal</strong></div>
+        <div class="party-balance">
+          <div style="--party:var(--m-color);--width:85.5%"><b>M</b><i></i><span>{fromM.shares.M.toLocaleString("sv-SE", { minimumFractionDigits: 1 })}%</span></div>
+          <div style="--party:var(--l-color);--width:20%"><b>L</b><i></i><span>4,0%</span></div>
+        </div>
+        <p>M ligger kvar långt över spärren.</p>
+      </article>
+      <article data-reveal>
+        <div class="donor-head"><span>Från KD till L</span><strong>Båda vid fyra</strong></div>
+        <div class="party-balance">
+          <div style="--party:var(--kd-color);--width:20%"><b>KD</b><i></i><span>{fromKD.shares.KD.toLocaleString("sv-SE", { minimumFractionDigits: 1 })}%</span></div>
+          <div style="--party:var(--l-color);--width:20%"><b>L</b><i></i><span>4,0%</span></div>
+        </div>
+        <p>Den förflyttningen placerar båda partierna på spärren.</p>
+      </article>
+      <article class="donor-warning" data-reveal>
+        <div class="donor-head"><span>Mer från KD</span><strong>KD hamnar utanför</strong></div>
+        <div class="party-balance">
+          <div style="--party:var(--kd-color);--width:17.5%"><b>KD</b><i></i><span>{overFromKD.shares.KD.toLocaleString("sv-SE", { minimumFractionDigits: 1 })}%</span></div>
+          <div style="--party:var(--l-color);--width:22.5%"><b>L</b><i></i><span>4,5%</span></div>
+        </div>
+        <p>L får sina mandat men KD förlorar sina. Blocket har flyttat risken mellan två partier.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="evidence-intro prose-section" data-reveal aria-labelledby="evidence-title">
+    <p class="section-index">Vad väljarna faktiskt gör</p>
+    <h2 id="evidence-title">Svenska val ger några ledtrådar</h2>
+    <div class="body-copy">
+      <p>Taktikröstning går att se i svenska valundersökningar. Det betyder inte att väljare alltid lyckas samordna sig eller att en viss opinionsnivå leder till ett bestämt resultat.</p>
+      <p>Tre resultat hjälper oss att bedöma Liberalernas läge.</p>
+    </div>
+  </section>
+
+  <section class="evidence-act scrolly-act" aria-label="Scrollstyrd genomgång av svensk forskning om strategisk röstning">
+    <ScrollyShell onStepChange={(index) => evidenceStep = index} label="Svensk forskning och Liberalernas chanser" status={evidenceStatus}>
+      {#snippet visual()}<EvidenceJourney step={evidenceStep} />{/snippet}
+
+      <article class="story-step" data-step>
+        <p class="step-index">Alla väljare · 2022</p>
+        <h3>Var sjätte valde bort sitt tydliga favoritparti</h3>
+        <p>Valforskningsprogrammets strikta mått ger 16 procent potentiellt strategiska röster. Med den klassiska definitionen blir andelen 20 procent.</p>
+      </article>
+      <article class="story-step" data-step>
+        <p class="step-index">L-väljarna · 2022</p>
+        <h3>Sex av tio bestämde sig sista veckan</h3>
+        <p>32 procent hade ett annat parti som förstahandsval. Bland de vanligaste strategiska flödena fanns M-väljare som till slut lade sin röst på L.</p>
+      </article>
+      <article class="story-step" data-step>
+        <p class="step-index">Ett svenskt experiment</p>
+        <h3>L fick mer stöd när mätningen visade 2,5</h3>
+        <p>Deltagarna såg L på 2,5, 4,0 eller 5,5 procent. Mönstret liknar försäkringsröstning, men L-grupperna var för små för att skillnaderna skulle bli statistiskt säkerställda. För KD var effekten tydligare.</p>
+      </article>
+      <article class="story-step" data-step>
+        <p class="step-index">Fyra sena mätningar</p>
+        <h3>Historiken lovar ingen slutspurt</h3>
+        <p>L ökade lite 2010. I valen 2014, 2018 och 2022 blev valresultatet lägre än den sena mätningen. Fyra val är få, men de ger inget historiskt stöd för en automatisk slutspurt.</p>
+      </article>
+      <article class="story-step" data-step>
+        <p class="step-index">Åkessons 3,5</p>
+        <h3>En hanterbar uppgift, fortfarande osäker</h3>
+        <p>Vid 3,5 behöver ungefär en halv procentenhet samordna sig. Dagens 2,2 kräver 1,8. Simuleringen förklarar skillnaden mellan nivåerna. Forskningen kan inte peka ut exakt var hoppet bör överges.</p>
+      </article>
+    </ScrollyShell>
+  </section>
+
+  <section class="chance-section prose-section" aria-labelledby="chance-title">
+    <div class="section-heading" data-reveal>
+      <p class="section-index">Chansen</p>
+      <h2 id="chance-title">Vad 2,2 procent faktiskt berättar</h2>
+    </div>
+    <div class="body-copy" data-reveal>
+      <p>Indikator uppskattar L till 2,2 procent. SVT/Verian har partiet på 1,9. Båda mätningarna beskriver stödet när intervjuerna gjordes. Valresultatet påverkas dessutom av mätfel, fortsatt kampanj, valdeltagande och väljare som bestämmer sig under de sista dagarna.</p>
+      <p>En sannolikhet för att L klarar spärren kräver antaganden om alla dessa delar. Fyra sena L-mätningar från tidigare val räcker inte för att skatta dem på ett trovärdigt sätt. Därför anger berättelsen ingen exakt procentsats.</p>
+      <p>Vi kan däremot jämföra uppgifternas storlek. Dagens nivå kräver omkring 117&nbsp;000 nya väljare. Vid 3,5 återstår ungefär 32&nbsp;000. Därför är det rimligt att bedöma nivåerna olika.</p>
+    </div>
+  </section>
+
+  <section class="closing" aria-labelledby="closing-title">
+    <div class="closing-inner" data-reveal>
+      <p class="section-index">Bedömningen</p>
+      <h2 id="closing-title">Vad kan en taktikröst åstadkomma?</h2>
+      <div class="closing-copy">
+        <p>Vid 2,2 procent behöver Liberalerna omkring 117&nbsp;000 ytterligare väljare. De måste lämna andra partier trots att L fortfarande kan missa spärren. De fyra senaste valen visar ingen slutspurt i den storleken.</p>
+        <p>Vid 3,5 återstår omkring 32&nbsp;000 väljare. Då ligger målet närmare, och en offentlig siffra kan hjälpa en större grupp att fatta samma beslut. Svenska valundersökningar visar att många L-väljare bestämmer sig sent och att strategiska partibyten förekommer.</p>
+        <p>Även en lyckad räddning har gränser. Röster från KD kan slå ut KD, och dagens blockskillnad är större än de sju mandat som L tillför när partiet passerar spärren.</p>
+      </div>
+      <div class="closing-grid">
+        <article><span>1</span><h3>Hur långt är det kvar?</h3><p>Avståndet avgör hur många väljare som måste samordna sig.</p></article>
+        <article><span>2</span><h3>Vilket parti lämnar de?</h3><p>Ett annat småparti kan hamna under spärren.</p></article>
+        <article><span>3</span><h3>Vad händer med majoriteten?</h3><p>Sju extra mandat hjälper bara om blockskillnaden är tillräckligt liten.</p></article>
+      </div>
+      <p class="final-line">Beräkningen visar varför 3,5 är en mer realistisk utgångspunkt än 2,2. Om de andra väljarna verkligen kommer att samordna sig får vi veta först när rösterna räknas.</p>
     </div>
   </section>
 
   <section class="method" aria-labelledby="method-title">
     <div>
       <p class="section-index">Metod och källor</p>
-      <h2 id="method-title" data-reveal>Vad siffrorna betyder</h2>
+      <h2 id="method-title">Så har vi räknat</h2>
       <ul>
-        <li><strong>Valet 2026.</strong> Valdagen är 13 september. Antalet 8 046 725 gäller röstberättigade till riksdagen på kvalifikationsdagen 14 augusti 2026. Rättelser fram till valdagen kan påverka den slutliga statistiken. <a href={sources.election2026}>Valmyndighetens rådata</a> och <a href={sources.election2026Press}>pressmeddelande om röstlängden</a>.</li>
-        <li><strong>Valet 2022 som experiment.</strong> Hela landets röstandelar var S 30,33, SD 20,54, M 19,10, V 6,75, C 6,71, KD 5,34, MP 5,08, L 4,61 och övriga 1,54 procent. Mandatfördelningen var S 107, SD 73, M 68, V 24, C 24, KD 19, MP 18 och L 16. Distriktsstoppen är redaktionellt valda kontraster, inte ett urval. <a href={sources.election2022Summary}>Valmyndighetens valresultat 2022</a>.</li>
-        <li><strong>Distriktskartan.</strong> Geometrin kommer från Valmyndighetens <a href={sources.election2022}>21 länsvisa GIS-filer</a>. Partandel, giltiga röster och valdeltagande räknas från myndighetens <a href={sources.election2022DistrictResults}>slutliga distriktsfil</a>. Samtliga 6 264 geometrier har matchats mot resultatfilen. Kartan använder Web Mercator. Först fylls distriktet med färgen för största parti, därefter blir varje distrikt en punkt vars yta följer antalet giltiga röster. Punktens läge är polygonens ytcentroid. Sexton distrikt hade delad förstaplats; där väljs kartfärgen deterministiskt efter alfabetisk partikod. Principen bakom skillnaden mellan landyta och väljare illustreras också i <a href={sources.cartogramPrinciple}>ArcGIS StoryMaps genomgång av valkartor och befolkning</a>.</li>
-        <li><strong>Karta till spridningsdiagram.</strong> Samma 6 264 distrikt behåller sin identitet i övergången. Vågrätt visas andelen röstberättigade med minst treårig eftergymnasial utbildning, <code>UTB_Lång_ / UTB_TOTutb</code>, från <a href={sources.scbDistrictTool}>SCB:s valanalysverktyg</a> och dess <a href={sources.districtProfiles}>ArcGIS-lager</a>. Lodrätt visas röstandelen för det största riksdagspartiet bland distriktets giltiga röster från Valmyndighetens distriktsfil. Diagrammet beskriver områden. Det visar inte hur en enskild person röstade eller att utbildning orsakar ett valresultat.</li>
-        <li><strong>SCB:s partisympati och bortfall.</strong> Värden och osäkerhetstal för kvinnor och män kommer från SCB:s tabell för maj 2026 och gäller bland dem som uppgav en partisympati. Undersökningen drog 9 260 röstberättigade och fick 4 542 svar, ett individbortfall på 51,0 procent. Bortfallet varierade mellan grupper, bland annat 62,4 procent bland 18–24-åringar och 43,8 procent bland 65–74-åringar. I skattningen använde SCB kön gånger ålder, region, utbildning, födelseland och partival 2022 som hjälpinformation. Måttet skiljer sig från frågan hur man skulle rösta om det vore val i dag. Slutfigurens ”drygt 8 miljoner” beskriver målpopulationens storleksordning vid mättillfället; Valmyndighetens exakta 8 046 725 gäller först kvalifikationsdagen i augusti. <a href={sources.scb2026}>SCB, maj 2026</a>. SCB beskriver också hur bortfallet har ökat över tid och hur viktning kompenserar för en del av skevheten i sina <a href={sources.scbFaq}>frågor och svar om PSU</a>.</li>
-        <li><strong>Sannolikhetsurval och paneler.</strong> Berättelsens designbaserade exempel kräver en känd urvalssannolikhet. Icke-sannolikhetsurval, som opt-in-paneler, kan också ge användbara och ibland jämförbara resultat. Då kan en vanlig urvalsfelmarginal inte beräknas på samma sätt; bedömningen vilar i stället på rekrytering, statistisk modellering, viktning och transparent metodredovisning. <a href={sources.aapor}>AAPOR:s metodöversikt</a>.</li>
+        <li><strong>Opinionsläget.</strong> Grundscenariot använder Indikator Opinions mätning för Ekot, insamlad 6–23 augusti 2026. L fick 2,2 procent, blågula 46,6 och oppositionen 51,3. De publicerade partisiffrorna summerar till 99,8 på grund av avrundning. I simuleringen läggs resterande 0,2 på Övriga. <a href={sources.indicator}>Sveriges Radio</a> och <a href={sources.indicatorMethod}>Indikators metod</a>.</li>
+        <li><strong>Mandatsimuleringen.</strong> Mandaten fördelas nationellt med riksdagsspärren på 4 procent och den jämkade uddatalsmetoden, först 1,2 och sedan 3, 5, 7 och vidare. Modellen återskapar den officiella totalfördelningen 2022. Tolvprocentsspärren för fasta mandat i en valkrets modelleras inte eftersom scenarierna gäller nationellt L-stöd. <a href={sources.electionMethod}>Valmyndighetens regler</a> och <a href={sources.election2022}>valresultatet 2022</a>.</li>
+        <li><strong>Stödrösterna.</strong> I huvudscenariot flyttas röster från M till L medan det blågula röstetalet hålls konstant. Donatorexemplet visar vad som händer om rösterna i stället kommer från KD. Detta är ett tankeexperiment med fasta övriga partier.</li>
+        <li><strong>Antalet röster.</strong> 32&nbsp;000 och 117&nbsp;000 är avrundade storleksordningar baserade på 6&nbsp;479&nbsp;401 giltiga röster i riksdagsvalet 2022. Antalet giltiga röster 2026 blir ett annat.</li>
+        <li><strong>Strategisk röstning.</strong> Uppgifterna om 16 och 20 procent, L-väljarnas andra förstahandsval och väljarflödet M till L kommer från kapitel 26 i <a href={sources.strategicVoting2022}>Väljarna och valet 2022</a>. Sexton procent följer författarnas striktare definition och ska beskrivas som potentiellt strategiska röster.</li>
+        <li><strong>L-väljarnas beslut.</strong> Uppgiften att 60 procent bestämde sig sista veckan kommer från Valforskningsprogrammets partirapport. Skattningen bygger på 364–367 svar och är viktad mot partival och validerat valdeltagande. <a href={sources.liberalVoters2022}>Valet 2022: Liberalerna</a>.</li>
+        <li><strong>Surveyexperimentet.</strong> 3&nbsp;259 deltagare lottades till mätningar där L, KD eller MP visades på 2,5, 4,0 eller 5,5 procent. För L var skillnaderna mellan nivåerna inte statistiskt säkerställda. Den tydligaste försäkringseffekten gällde KD. <a href={sources.insuranceVoting}>Insurance Voting in the Centre</a>.</li>
+        <li><strong>Spelteorin.</strong> Samordningsförklaringen bygger på forskning om strategisk röstning i proportionella valsystem med koalitioner, spärrar och opinionsmätningar. <a href={sources.coordinationStudy}>Blais, Erisen och Rheault</a> samt <a href={sources.pollsAndCoalitions}>Herrmann</a>.</li>
+        <li><strong>Historiken.</strong> Valresultaten 1948–2022 kommer från SCB och följer Folkpartiet/Liberalerna. Punkten för 2026 är en mätning. <a href={sources.scbHistory}>SCB:s historiska valstatistik</a>.</li>
+        <li><strong>Mätning mot val.</strong> Punkterna nära valen 2010–2022 är hämtade ur SVT/Verians historiska serie och ligger 8–18 dagar före respektive val. Fyra observationer används för att ge historisk orientering, inte för att räkna fram en sannolikhet. <a href={sources.svtHistory}>SVT:s Väljarbarometer</a>.</li>
+        <li><strong>Majoriteten.</strong> Berättelsen räknar en egen blågul riksdagsmajoritet. Regeringsbildning avgörs också av vilka partier som tolererar en statsminister.</li>
       </ul>
     </div>
   </section>
 </main>
 
 <footer>
-  <p>Om opinionsundersökningar inför riksdagsvalet 2026.</p>
+  <p>Om taktikröstning inför riksdagsvalet 2026.</p>
   <a href="https://plainx.dev/">Fler berättelser på (<i>x</i>)plain</a>
 </footer>

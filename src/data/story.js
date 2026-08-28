@@ -1,102 +1,153 @@
-export const districtWinnerCounts = { S: 4341, SD: 1048, M: 808, V: 46, KD: 3, MP: 2, ties: 16 };
-
-export const national2022 = {
-  M: 19.10,
-  C: 6.71,
-  L: 4.61,
-  KD: 5.34,
-  MP: 5.08,
-  S: 30.33,
-  V: 6.75,
-  SD: 20.54,
-  Övr: 1.54,
+export const colors = {
+  M: "#2f6fb2",
+  C: "#4f8a63",
+  L: "#3157c8",
+  KD: "#5862a6",
+  MP: "#27836d",
+  S: "#d34c5d",
+  V: "#a43d77",
+  SD: "#d3a62c",
+  "Övr": "#8a93a5",
 };
 
-export const parties = [
-  { code: "M", name: "Moderaterna", color: "#3378d4", seats2022: 68 },
-  { code: "C", name: "Centerpartiet", color: "#4a8d57", seats2022: 24 },
-  { code: "L", name: "Liberalerna", color: "#4f9fc3", seats2022: 16 },
-  { code: "KD", name: "Kristdemokraterna", color: "#5962a7", seats2022: 19 },
-  { code: "MP", name: "Miljöpartiet", color: "#2f8f70", seats2022: 18 },
-  { code: "S", name: "Socialdemokraterna", color: "#d84b5d", seats2022: 107 },
-  { code: "V", name: "Vänsterpartiet", color: "#a93f78", seats2022: 24 },
-  { code: "SD", name: "Sverigedemokraterna", color: "#d0a52a", seats2022: 73 },
-  { code: "Övr", name: "Övriga", color: "#8f999f" },
+export const partyNames = {
+  M: "Moderaterna",
+  C: "Centerpartiet",
+  L: "Liberalerna",
+  KD: "Kristdemokraterna",
+  MP: "Miljöpartiet",
+  S: "Socialdemokraterna",
+  V: "Vänsterpartiet",
+  SD: "Sverigedemokraterna",
+  "Övr": "Övriga",
+};
+
+export const parties = Object.keys(partyNames).map((code) => ({
+  code,
+  name: partyNames[code],
+  color: colors[code],
+}));
+
+// Indikator Opinion, 6–23 augusti 2026. De publicerade, avrundade
+// partisiffrorna summerar till 99,8. Resterande 0,2 har lagts på Övriga så
+// att simuleringen arbetar med exakt 100 procent.
+export const indicator2026 = {
+  S: 31.3,
+  SD: 19.7,
+  M: 18.9,
+  V: 7.6,
+  MP: 6.5,
+  C: 5.9,
+  KD: 5.8,
+  L: 2.2,
+  "Övr": 2.1,
+};
+
+export const blueYellow = new Set(["M", "KD", "L", "SD"]);
+export const opposition = new Set(["S", "V", "MP", "C"]);
+
+const allocationOrder = ["S", "SD", "M", "V", "MP", "C", "KD", "L", "Övr"];
+
+export function allocateSeats(shares, seats = 349) {
+  const total = Object.values(shares).reduce((sum, value) => sum + value, 0);
+  const eligible = allocationOrder.filter((code) => (shares[code] ?? 0) / total >= 0.04);
+  const result = Object.fromEntries(allocationOrder.map((code) => [code, 0]));
+
+  for (let seat = 0; seat < seats; seat += 1) {
+    let winner = eligible[0];
+    let best = -Infinity;
+    for (const code of eligible) {
+      const divisor = result[code] === 0 ? 1.2 : result[code] * 2 + 1;
+      const quotient = shares[code] / divisor;
+      if (quotient > best) {
+        best = quotient;
+        winner = code;
+      }
+    }
+    result[winner] += 1;
+  }
+  return result;
+}
+
+export function scenarioForL(liberalShare, donor = "M") {
+  const shares = { ...indicator2026 };
+  const transfer = liberalShare - indicator2026.L;
+  shares.L = liberalShare;
+  shares[donor] -= transfer;
+  const seats = allocateSeats(shares);
+  const blueSeats = [...blueYellow].reduce((sum, code) => sum + seats[code], 0);
+  const oppositionSeats = [...opposition].reduce((sum, code) => sum + seats[code], 0);
+  return { liberalShare, donor, transfer, shares, seats, blueSeats, oppositionSeats };
+}
+
+export const seatScenarios = [2.2, 3.5, 3.9, 4.0, 4.5].map((share) => scenarioForL(share));
+
+export const liberalHistory = [
+  { year: 1948, value: 22.8 },
+  { year: 1952, value: 24.4 },
+  { year: 1956, value: 23.8 },
+  { year: 1958, value: 18.2 },
+  { year: 1960, value: 17.5 },
+  { year: 1964, value: 17.0 },
+  { year: 1968, value: 14.3 },
+  { year: 1970, value: 16.2 },
+  { year: 1973, value: 9.4 },
+  { year: 1976, value: 11.1 },
+  { year: 1979, value: 10.6 },
+  { year: 1982, value: 5.9 },
+  { year: 1985, value: 14.2 },
+  { year: 1988, value: 12.2 },
+  { year: 1991, value: 9.1 },
+  { year: 1994, value: 7.2 },
+  { year: 1998, value: 4.7 },
+  { year: 2002, value: 13.4 },
+  { year: 2006, value: 7.5 },
+  { year: 2010, value: 7.1 },
+  { year: 2014, value: 5.4 },
+  { year: 2018, value: 5.5 },
+  { year: 2022, value: 4.6 },
+  { year: 2026, value: 2.2, poll: true },
 ];
 
-export const districts = [
-  {
-    id: "01620116",
-    short: "Södra Djursholm",
-    municipality: "Danderyd",
-    position: [18.04, 59.40],
-    eligible: 1034,
-    voters: 904,
-    validVotes: 902,
-    turnout: 87.4,
-    profile: { young: 20.2, older: 26.7, longEducation: 54.8 },
-    result: { M: 58.4, C: 6.8, L: 9.9, KD: 8.2, MP: 2.1, S: 3.3, V: 1.1, SD: 9.8, Övr: 0.4 },
-  },
-  {
-    id: "20810124",
-    short: "Tjärna Allé",
-    municipality: "Borlänge",
-    position: [15.39, 60.49],
-    eligible: 1058,
-    voters: 625,
-    validVotes: 618,
-    turnout: 59.1,
-    profile: { young: 32.0, older: 15.7, longEducation: 5.3 },
-    result: { M: 3.4, C: 1.6, L: 0.5, KD: 1.0, MP: 7.6, S: 68.0, V: 8.9, SD: 7.0, Övr: 2.1 },
-  },
-  {
-    id: "12750103",
-    short: "Oderljunga",
-    municipality: "Perstorp",
-    position: [13.34, 56.20],
-    eligible: 785,
-    voters: 622,
-    validVotes: 619,
-    turnout: 79.2,
-    profile: { young: 11.3, older: 30.2, longEducation: 12.0 },
-    result: { M: 13.6, C: 6.3, L: 1.1, KD: 6.8, MP: 3.1, S: 14.4, V: 1.3, SD: 53.0, Övr: 0.5 },
-  },
-  {
-    id: "12800222",
-    short: "Möllevångstorget S",
-    municipality: "Malmö",
-    position: [13.00, 55.59],
-    eligible: 1197,
-    voters: 856,
-    validVotes: 850,
-    turnout: 71.5,
-    profile: { young: 26.9, older: 7.8, longEducation: 40.1 },
-    result: { M: 3.8, C: 2.9, L: 2.7, KD: 0.5, MP: 16.9, S: 19.8, V: 44.6, SD: 6.9, Övr: 1.9 },
-  },
+export const pollHistory = [
+  { year: 2010, days: 18, poll: 6.75, result: 7.06 },
+  { year: 2014, days: 13, poll: 8.43, result: 5.42 },
+  { year: 2018, days: 8, poll: 6.0, result: 5.49 },
+  { year: 2022, days: 10, poll: 5.6, result: 4.61 },
 ];
 
-export const genderParties = [
-  { code: "M", women: 16.0, womenMargin: 1.5, men: 20.1, menMargin: 1.6, significant: true },
-  { code: "C", women: 7.0, womenMargin: 1.1, men: 5.8, menMargin: 1.0, significant: false },
-  { code: "L", women: 2.2, womenMargin: 0.7, men: 2.4, menMargin: 0.6, significant: false },
-  { code: "KD", women: 4.1, womenMargin: 0.9, men: 4.3, menMargin: 0.9, significant: false },
-  { code: "MP", women: 8.5, womenMargin: 1.1, men: 4.1, menMargin: 0.9, significant: true },
-  { code: "S", women: 38.4, womenMargin: 2.1, men: 28.7, menMargin: 1.9, significant: true },
-  { code: "V", women: 10.7, womenMargin: 1.3, men: 6.8, menMargin: 1.2, significant: true },
-  { code: "SD", women: 12.2, womenMargin: 1.6, men: 24.6, menMargin: 1.8, significant: true },
+export const strategicVoting2022 = {
+  strictAllVoters: 16,
+  broadAllVoters: 20,
+  liberalVotersOtherFirstChoice: 32,
+  liberalVotersDecidedLastWeek: 60,
+  potentialStrategicFlowMtoL: 5.5,
+};
+
+export const insuranceExperiment = [
+  { shownPoll: 2.5, liberalVote: 6.78 },
+  { shownPoll: 4.0, liberalVote: 4.80 },
+  { shownPoll: 5.5, liberalVote: 4.93 },
+];
+
+export const thresholdDistances = [
+  { from: 2.2, swing: 1.8, voters: 117000 },
+  { from: 3.5, swing: 0.5, voters: 32000 },
 ];
 
 export const sources = {
-  election2026: "https://www.val.se/valresultat-och-statistik/statistik-och-data/radata-val-2026",
-  election2026Press: "https://www.val.se/servicelankar/servicelankar/pressrum/nyheter--pressmeddelanden/pressmeddelande-nya/2026-08-18-forsta-gangen-over-8-miljoner-valjare-i-riksdagsvalet",
-  election2022: "https://www.val.se/valresultat-och-statistik/statistik-och-data/radata-fran-val-2002-2022",
-  election2022Summary: "https://www.val.se/valresultat-och-statistik/riksdags--region--och-kommunval/valresultat-2022",
-  election2022DistrictResults: "https://www.val.se/download/18.162047b519a91d0533118f4b/1764336897948/Roster-per-distrikt-slutligt-antal-roster-inklusive-totalt-valdeltagande-riksdagsvalet-2022.xlsx",
-  districtProfiles: "https://services8.arcgis.com/9CUL84k8apjo6IDh/ArcGIS/rest/services/Valdistrikt_SocEk_ValResult_2022/FeatureServer/0",
-  scbDistrictTool: "https://www.scb.se/pressmeddelande/analysera-riksdagsvalet-med-scbs-nya-verktyg/?menu=open",
-  scb2026: "https://www.scb.se/contentassets/ce8e9149498a40ac99d5a3b07a0f5040/me0201_2026m05_br_me60br2601.pdf",
-  scbFaq: "https://www.scb.se/hitta-statistik/statistik-efter-amne/demokrati/partisympatier/partisympatiundersokningen-psu/produktrelaterat/Fordjupad-information/fragor-och-svar-om-partisympatiundersokningen-psu/",
-  cartogramPrinciple: "https://storymaps.arcgis.com/stories/0e636a652d44484b9457f953994b212b",
-  ruralResearch: "https://journals.lub.lu.se/st/article/view/27485",
-  aapor: "https://aapor.org/wp-content/uploads/2022/12/Sampling-Methods-for-Political-Polling-508.pdf",
+  scbHistory: "https://www.scb.se/hitta-statistik/statistik-efter-amne/demokrati/allmanna-val/allmanna-val-valresultat/pong/tabell-och-diagram/historisk-valstatistik/historisk-statistik-over-valaren-19102022.-procentuell-fordelning-av-giltiga-valsedlar-efter-parti-och-typ-av-val",
+  indicator: "https://www.sverigesradio.se/artikel/tido-partierna-knappar-in-pa-oppositionens-ledning",
+  indicatorMethod: "https://www.indikator.org/opinion-sr/",
+  svtPoll: "https://www.svt.se/nyheter/inrikes/kristersson-pressas-ny-matning-visar-stort-gap",
+  svtHistory: "https://www.svt.se/special/valjarbarometern/",
+  akesson: "https://www.svt.se/nyheter/inrikes/akessons-skarpa-grans-for-l-tio-dagar",
+  mohamsson: "https://www.aftonbladet.se/nyheter/a/e7yAoQ/mohamssons-vadjan-ber-om-stodroster",
+  electionMethod: "https://www.val.se/det-svenska-valsystemet/rostrakning-och-mandatfordelning/sa-fordelas-mandaten",
+  election2022: "https://www.val.se/valresultat-och-statistik/riksdags--region--och-kommunval/valresultat-2022",
+  insuranceVoting: "https://research.chalmers.se/publication/542435/file/542435_Fulltext.pdf",
+  strategicVoting2022: "https://www.gu.se/sites/default/files/2024-05/VoV_kap26.pdf",
+  liberalVoters2022: "https://www.gu.se/sites/default/files/2025-09/R2025_4_Liberalerna.pdf",
+  coordinationStudy: "https://journals.sagepub.com/doi/10.1177/1065912913520573",
+  pollsAndCoalitions: "https://journals.sagepub.com/doi/10.1177/0951629813505722",
 };
