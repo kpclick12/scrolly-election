@@ -13,6 +13,7 @@
   let donorStep = $state(0);
   let evidenceStep = $state(0);
   let progress = $state(0);
+  let introEngaged = $state(false);
 
   const partyMarks = {
     L: `${import.meta.env.BASE_URL}parties/liberalerna-mark.png`,
@@ -75,6 +76,7 @@
       ticking = false;
       const max = document.documentElement.scrollHeight - window.innerHeight;
       progress = max > 0 ? Math.min(1, window.scrollY / max) : 0;
+      if (window.scrollY > 18) introEngaged = true;
     };
     const requestUpdate = () => {
       if (ticking) return;
@@ -96,11 +98,11 @@
 <a class="skip-link" href="#story" onclick={skipToStory}>Hoppa till berättelsen</a>
 <div class="progress" aria-hidden="true"><i style={`transform:scaleX(${progress})`}></i></div>
 
-<header class="hero">
+<header class="hero" class:intro-engaged={introEngaged}>
   <div class="hero-copy">
     <p class="eyebrow">Riksdagsvalet 2026</p>
     <h1>Vad är en taktikröst på Liberalerna värd?</h1>
-    <p class="standfirst">Liberalerna har haft en tydlig trend nedåt under lång tid. I den senaste mätningen får partiet <strong class="current-number">2,0 procent</strong>, klart under riksdagsspärren på <strong class="threshold-number">4,0 procent</strong>. Från de andra Tidöpartierna kommer två olika råd.</p>
+    <p class="standfirst">Liberalerna har haft en tydlig trend nedåt under lång tid. I den senaste mätningen får partiet <strong class="current-number number-mark">2,0 procent</strong>, klart under riksdagsspärren på <strong class="threshold-number number-mark">4,0 procent</strong>. Från de andra Tidöpartierna kommer två olika råd.</p>
     <div class="poll-strip" aria-label="Tre aktuella mätningar av Liberalernas stöd">
       {#each recentLPolls as poll}
         <div class:current={poll.current}>
@@ -111,7 +113,7 @@
       <p>Tre mätningar samma vecka. Alla placerar L tydligt under spärren.</p>
     </div>
   </div>
-  <div class="hero-chart"><LiberalHistory /></div>
+  <div class="hero-chart"><LiberalHistory active={introEngaged} /></div>
 </header>
 
 <main id="story" tabindex="-1">
