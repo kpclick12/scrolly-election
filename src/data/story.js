@@ -28,22 +28,38 @@ export const parties = Object.keys(partyNames).map((code) => ({
   color: colors[code],
 }));
 
-// Indikator Opinion, 6–23 augusti 2026. De publicerade, avrundade
-// partisiffrorna summerar till 99,8. Resterande 0,2 har lagts på Övriga så
-// att simuleringen arbetar med exakt 100 procent.
-export const indicator2026 = {
-  S: 31.3,
-  SD: 19.7,
-  M: 18.9,
-  V: 7.6,
-  MP: 6.5,
-  C: 5.9,
-  KD: 5.8,
-  L: 2.2,
-  "Övr": 2.1,
+// Demoskop, publicerad 27 augusti 2026. Fältarbete 13–24 augusti,
+// 2 117 webbintervjuer i Iniziopanelen. De redovisade partisiffrorna
+// summerar till exakt 100 procent.
+export const pollSnapshot = {
+  institute: "Demoskop",
+  published: "27 augusti 2026",
+  fieldwork: "13–24 augusti 2026",
+  interviews: 2117,
 };
 
-export const blueYellow = new Set(["M", "KD", "L", "SD"]);
+export const demoskop2026 = {
+  S: 30.4,
+  SD: 18.3,
+  M: 17.2,
+  V: 6.8,
+  MP: 6.8,
+  C: 7.7,
+  KD: 8.5,
+  L: 2.0,
+  "Övr": 2.3,
+};
+
+export const recentLPolls = [
+  { institute: "Demoskop", published: "27 aug", value: 2.0, current: true },
+  { institute: "Ipsos", published: "25 aug", value: 2.3 },
+  { institute: "Indikator", published: "23 aug", value: 2.2 },
+];
+
+export const validVotes2022 = 6477970;
+export const currentGapVoters = Math.round((4 - demoskop2026.L) / 100 * validVotes2022 / 1000) * 1000;
+
+export const tidoParties = new Set(["M", "KD", "L", "SD"]);
 export const opposition = new Set(["S", "V", "MP", "C"]);
 
 const allocationOrder = ["S", "SD", "M", "V", "MP", "C", "KD", "L", "Övr"];
@@ -70,17 +86,41 @@ export function allocateSeats(shares, seats = 349) {
 }
 
 export function scenarioForL(liberalShare, donor = "M") {
-  const shares = { ...indicator2026 };
-  const transfer = liberalShare - indicator2026.L;
+  const shares = { ...demoskop2026 };
+  const transfer = liberalShare - demoskop2026.L;
   shares.L = liberalShare;
   shares[donor] -= transfer;
   const seats = allocateSeats(shares);
-  const blueSeats = [...blueYellow].reduce((sum, code) => sum + seats[code], 0);
+  const tidoSeats = [...tidoParties].reduce((sum, code) => sum + seats[code], 0);
   const oppositionSeats = [...opposition].reduce((sum, code) => sum + seats[code], 0);
-  return { liberalShare, donor, transfer, shares, seats, blueSeats, oppositionSeats };
+  const tidoVoteShare = [...tidoParties].reduce((sum, code) => sum + shares[code], 0);
+  return { liberalShare, donor, transfer, shares, seats, tidoSeats, oppositionSeats, tidoVoteShare, hypothetical: false };
 }
 
-export const seatScenarios = [2.2, 3.5, 3.9, 4.0, 4.5].map((share) => scenarioForL(share));
+// I det hypotetiskt jämna valet flyttas först 4,1 procentenheter från S till M.
+// Tidöpartierna har då 50,1 procent i båda lägena. Därefter jämförs samma interna
+// fördelning precis under och precis på L-spärren.
+export function hypotheticalScenarioForL(liberalShare) {
+  const shares = { ...demoskop2026 };
+  shares.S -= 4.1;
+  shares.M += 4.1;
+  const transfer = liberalShare - demoskop2026.L;
+  shares.L = liberalShare;
+  shares.M -= transfer;
+  const seats = allocateSeats(shares);
+  const tidoSeats = [...tidoParties].reduce((sum, code) => sum + seats[code], 0);
+  const oppositionSeats = [...opposition].reduce((sum, code) => sum + seats[code], 0);
+  const tidoVoteShare = [...tidoParties].reduce((sum, code) => sum + shares[code], 0);
+  return { liberalShare, donor: "M", transfer, shares, seats, tidoSeats, oppositionSeats, tidoVoteShare, hypothetical: true };
+}
+
+export const seatScenarios = [
+  scenarioForL(2.0),
+  scenarioForL(3.9),
+  scenarioForL(4.0),
+  hypotheticalScenarioForL(3.9),
+  hypotheticalScenarioForL(4.0),
+];
 
 export const liberalHistory = [
   { year: 1948, value: 22.8 },
@@ -106,7 +146,7 @@ export const liberalHistory = [
   { year: 2014, value: 5.4 },
   { year: 2018, value: 5.5 },
   { year: 2022, value: 4.6 },
-  { year: 2026, value: 2.2, poll: true },
+  { year: 2026, value: 2.0, poll: true },
 ];
 
 export const pollHistory = [
@@ -130,15 +170,13 @@ export const insuranceExperiment = [
   { shownPoll: 5.5, liberalVote: 4.93 },
 ];
 
-export const thresholdDistances = [
-  { from: 2.2, swing: 1.8, voters: 117000 },
-  { from: 3.5, swing: 0.5, voters: 32000 },
-];
-
 export const sources = {
   scbHistory: "https://www.scb.se/hitta-statistik/statistik-efter-amne/demokrati/allmanna-val/allmanna-val-valresultat/pong/tabell-och-diagram/historisk-valstatistik/historisk-statistik-over-valaren-19102022.-procentuell-fordelning-av-giltiga-valsedlar-efter-parti-och-typ-av-val",
   indicator: "https://www.sverigesradio.se/artikel/tido-partierna-knappar-in-pa-oppositionens-ledning",
   indicatorMethod: "https://www.indikator.org/opinion-sr/",
+  demoskop: "https://demoskop.se/extra-valjarbarometer-augusti-2026/",
+  ipsos: "https://www.svd.se/a/0p33lG/valet-2026-sverige-live-senaste-nytt?pinnedEntry=76534",
+  pollMisses: "https://www.aftonbladet.se/nyheter/a/XMpdEB/partierna-som-opinionsmatningar-brukar-missa",
   svtPoll: "https://www.svt.se/nyheter/inrikes/kristersson-pressas-ny-matning-visar-stort-gap",
   svtHistory: "https://www.svt.se/special/valjarbarometern/",
   akesson: "https://www.svt.se/nyheter/inrikes/akessons-skarpa-grans-for-l-tio-dagar",

@@ -24,7 +24,7 @@
       if (!visible) return;
       const mobile = window.matchMedia("(max-width: 820px)").matches;
       const veryNarrow = window.matchMedia("(max-width: 360px)").matches;
-      const targetRatio = mobile ? (variant === "overlay" ? (veryNarrow ? 0.82 : 0.76) : (veryNarrow ? 0.76 : 0.72)) : 0.52;
+      const targetRatio = mobile ? (variant === "overlay" ? (veryNarrow ? 0.84 : 0.80) : (veryNarrow ? 0.84 : 0.82)) : 0.52;
       const target = window.innerHeight * targetRatio;
       let closest = 0;
       let distance = Infinity;

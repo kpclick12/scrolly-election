@@ -62,12 +62,15 @@ for (const viewport of viewports) {
     seats: document.querySelectorAll(".seat-act svg circle").length,
     historyPoints: document.querySelectorAll(".hero-chart .history-point").length,
     gameDots: document.querySelectorAll(".game-act .dot-field > i").length,
+    partyMarks: document.querySelectorAll(".duel-grid .party-mark").length,
+    brokenImages: [...document.images].filter((image) => !image.complete || image.naturalWidth === 0).map((image) => image.currentSrc || image.src),
+    donorRows: document.querySelectorAll(".donor-act .donor-row").length,
     experimentColumns: document.querySelectorAll(".evidence-act .experiment-column").length,
     pollRows: document.querySelectorAll(".evidence-act .poll-wrap .year").length,
     title: document.querySelector("h1")?.textContent.trim().replace(/\s+/g, " "),
     documentTitle: document.title,
   }));
-  if (semantics.language !== "sv" || semantics.h1 !== 1 || semantics.scrollys !== 3 || semantics.steps !== 16 || semantics.sourceLinks < 10 || semantics.mainTabIndex !== "-1" || semantics.seats !== 349 || semantics.historyPoints < 20 || semantics.gameDots !== 100 || semantics.experimentColumns !== 3 || semantics.pollRows !== 4 || semantics.title !== "Vad är en taktikröst på Liberalerna värd?" || semantics.documentTitle !== semantics.title) problems.push(`STRUCTURE [${viewport.name}]: ${JSON.stringify(semantics)}`);
+  if (semantics.language !== "sv" || semantics.h1 !== 1 || semantics.scrollys !== 4 || semantics.steps !== 18 || semantics.sourceLinks < 10 || semantics.mainTabIndex !== "-1" || semantics.seats !== 349 || semantics.historyPoints < 20 || semantics.gameDots !== 100 || semantics.partyMarks !== 2 || semantics.brokenImages.length || semantics.donorRows !== 4 || semantics.experimentColumns !== 3 || semantics.pollRows !== 4 || semantics.title !== "Vad är en taktikröst på Liberalerna värd?" || semantics.documentTitle !== semantics.title) problems.push(`STRUCTURE [${viewport.name}]: ${JSON.stringify(semantics)}`);
 
   const overflow = await page.evaluate(() => {
     const offenders = [];
@@ -83,15 +86,14 @@ for (const viewport of viewports) {
 
   const seatSteps = await page.locator(".seat-act [data-step]").all();
   const expected = [
-    ["2,2", "162", "187"],
-    ["3,5", "159", "190"],
-    ["3,9", "159", "190"],
-    ["4,0", "166", "183"],
-    ["4,5", "166", "183"],
-    ["4,0", "166", "183"],
+    ["2,0", "161", "188"],
+    ["3,9", "157", "192"],
+    ["4,0", "164", "185"],
+    ["3,9", "172", "177"],
+    ["4,0", "179", "170"],
   ];
   for (const [index, step] of seatSteps.entries()) {
-    const ratio = viewport.width <= 820 ? (viewport.width <= 360 ? 0.76 : 0.72) : 0.52;
+    const ratio = viewport.width <= 820 ? (viewport.width <= 360 ? 0.84 : 0.82) : 0.52;
     await placeStepAtTrigger(page, step, ratio);
     await page.waitForTimeout(viewport.reducedMotion === "reduce" ? 80 : 760);
     if (!(await step.evaluate((node) => node.classList.contains("is-active")))) problems.push(`SCROLL [${viewport.name}]: step ${index + 1} did not activate`);
@@ -100,19 +102,28 @@ for (const viewport of viewports) {
     if (["desktop", "phone", "phone-small"].includes(viewport.name)) await page.screenshot({ path: `${output}/${viewport.name}-seat-${index + 1}.png` });
   }
 
-  for (const [actName, selector] of [["game", ".game-act"], ["evidence", ".evidence-act"]]) {
+  for (const [actName, selector] of [["game", ".game-act"], ["donor", ".donor-act"], ["evidence", ".evidence-act"]]) {
     const actSteps = await page.locator(`${selector} [data-step]`).all();
+    const donorExpected = [
+      ["15,2", "18,3", "8,5", "4,0"],
+      ["17,2", "16,3", "8,5", "4,0"],
+      ["17,2", "18,3", "6,5", "4,0"],
+    ];
     for (const [index, step] of actSteps.entries()) {
-      const ratio = viewport.width <= 820 ? (viewport.width <= 360 ? 0.76 : 0.72) : 0.52;
+      const ratio = viewport.width <= 820 ? (viewport.width <= 360 ? 0.84 : 0.82) : 0.52;
       await placeStepAtTrigger(page, step, ratio);
       await page.waitForTimeout(viewport.reducedMotion === "reduce" ? 80 : 620);
       if (!(await step.evaluate((node) => node.classList.contains("is-active")))) problems.push(`SCROLL [${viewport.name}]: ${actName} step ${index + 1} did not activate`);
+      if (actName === "donor") {
+        const visual = await page.locator(".donor-act figure").innerText();
+        if (!donorExpected[index].every((value) => visual.includes(value))) problems.push(`DONOR SCENARIO [${viewport.name}] ${index + 1}: ${visual.replace(/\s+/g, " ")}`);
+      }
       if (["desktop", "phone", "phone-small"].includes(viewport.name)) await page.screenshot({ path: `${output}/${viewport.name}-${actName}-${index + 1}.png` });
     }
   }
 
-  const storyText = await page.locator("main").innerText();
-  for (const required of ["≈ 117 000", "≈ 32 000", "Var sjätte valde bort sitt tydliga favoritparti", "Sex av tio bestämde sig sista veckan", "3,5 förändrar uppgiften", "Beräkningen visar varför 3,5 är en mer realistisk utgångspunkt än 2,2"]) {
+  const storyText = (await page.locator("main").textContent()).replace(/\s+/g, " ");
+  for (const required of ["130 000", "32 000", "KD har större marginal", "Hypotetiskt jämnt val", "6 477 970", "Var sjätte valde bort sitt tydliga förstahandsval", "Många kom sent och föredrog ett annat parti", "Det beror också på partiet", "En röstmajoritet blir ingen mandatmajoritet", "lägga kalkylen åt sidan"]) {
     if (!storyText.includes(required)) problems.push(`COPY [${viewport.name}]: missing ${required}`);
   }
 
@@ -120,6 +131,12 @@ for (const viewport of viewports) {
     for (const element of document.querySelectorAll(".skip-link, .progress")) element.style.visibility = "hidden";
   });
   await page.locator(".hero").screenshot({ path: `${output}/${viewport.name}-hero.png` });
+  await page.locator(".duel").scrollIntoViewIfNeeded();
+  await page.waitForTimeout(viewport.reducedMotion === "reduce" ? 50 : 500);
+  await page.locator(".duel").screenshot({ path: `${output}/${viewport.name}-duel.png` });
+  await page.locator(".preference-section").scrollIntoViewIfNeeded();
+  await page.waitForTimeout(viewport.reducedMotion === "reduce" ? 50 : 500);
+  await page.locator(".preference-section").screenshot({ path: `${output}/${viewport.name}-preference.png` });
   await page.locator(".closing").scrollIntoViewIfNeeded();
   await page.waitForTimeout(viewport.reducedMotion === "reduce" ? 50 : 500);
   await page.locator(".closing").screenshot({ path: `${output}/${viewport.name}-closing.png` });
@@ -142,5 +159,5 @@ if (problems.length) {
   console.error(problems.join("\n"));
   process.exitCode = 1;
 } else {
-  console.log(`Checks passed: 16 story steps in three acts, seven viewports, 71-width sweep, 349 seats, no overflow, focus and reduced motion. Screenshots: ${output}`);
+  console.log(`Checks passed: 18 story steps in four acts, seven viewports, 71-width sweep, 349 seats, no overflow, focus and reduced motion. Screenshots: ${output}`);
 }

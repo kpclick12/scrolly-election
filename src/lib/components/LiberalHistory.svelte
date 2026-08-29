@@ -13,7 +13,7 @@
 <figure>
   <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-labelledby="history-title history-desc">
     <title id="history-title">Liberalernas stöd i riksdagsval sedan 1948</title>
-    <desc id="history-desc">Folkpartiet fick 22,8 procent 1948. Liberalerna fick 4,6 procent 2022 och ligger på 2,2 procent i Indikator Opinions mätning i augusti 2026.</desc>
+    <desc id="history-desc">Folkpartiet fick 22,8 procent 1948. Liberalerna fick 4,6 procent 2022 och ligger på 2,0 procent i Demoskops mätning publicerad den 27 augusti 2026.</desc>
 
     <line class="threshold" x1={margin.left} x2={width - margin.right} y1={y(4)} y2={y(4)} />
     <text class="threshold-label" x={margin.left} y={y(4) - 8}>4-procentsspärren</text>
@@ -37,7 +37,7 @@
       </g>
     {/each}
   </svg>
-  <figcaption>Folkpartiet till 2015, därefter Liberalerna. Riksdagsval 1948–2022 och Indikator Opinion i augusti 2026.</figcaption>
+  <figcaption>Folkpartiet till 2015, därefter Liberalerna. Riksdagsval 1948–2022 och Demoskop den 27 augusti 2026.</figcaption>
 </figure>
 
 <style>
@@ -60,9 +60,10 @@
   }
 
   @media (prefers-reduced-motion:no-preference) {
-    .history-line { stroke-dasharray:1200; stroke-dashoffset:1200; animation:draw 1.35s .22s both ease-out; }
-    .history-point, .label { opacity:0; animation:appear .35s 1.1s both ease-out; }
-    .history-point.poll, .label.current { animation-delay:1.35s; }
+    .threshold,.threshold-label { opacity:0; animation:appear .25s .62s both ease-out; }
+    .history-line { stroke-dasharray:1200; stroke-dashoffset:1200; animation:draw .9s .14s both ease-out; }
+    .history-point, .label { opacity:0; animation:appear .25s .68s both ease-out; }
+    .history-point.poll, .label.current { animation-delay:.88s; }
     @keyframes draw { to { stroke-dashoffset:0; } }
     @keyframes appear { to { opacity:1; } }
   }

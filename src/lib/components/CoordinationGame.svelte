@@ -2,14 +2,14 @@
   let { step = 0 } = $props();
 
   const dots = Array.from({ length: 100 }, (_, index) => index);
-  const shownSupport = $derived(step === 0 ? 2.2 : 3.5);
+  const shownSupport = $derived(step === 0 ? 2.0 : 3.5);
   const filledDots = $derived(Math.round(shownSupport / 5 * 100));
   const status = $derived([
-    "Liberalerna har 2,2 procent. För att nå spärren saknas omkring 117 000 röster, räknat med valdeltagandet 2022.",
+    "Liberalerna har 2,0 procent. För att nå spärren saknas omkring 130 000 röster, räknat med valdeltagandet 2022.",
     "Vid 3,5 procent saknas omkring 32 000 röster till spärren.",
     "Utfallet av en strategisk röst beror både på det egna valet och på om tillräckligt många andra väljare hjälper Liberalerna.",
     "En opinionsmätning ger väljarna en gemensam signal om hur många som kan tänkas hjälpa Liberalerna.",
-    "Den enskilt bekväma utvägen är att låta andra ta risken. Om många resonerar så misslyckas samordningen.",
+    "Den som stannar kvar förlitar sig på att andra byter. Om många gör samma bedömning misslyckas samordningen.",
   ][step]);
 </script>
 
@@ -29,7 +29,7 @@
     </div>
     <div class="distance">
       <span>För att nå 4 procent behövs</span>
-      <strong>{step === 0 ? "≈ 117 000" : "≈ 32 000"}</strong>
+      <strong>{step === 0 ? "≈ 130 000" : "≈ 32 000"}</strong>
       <small>ytterligare väljare, beräknat med antalet giltiga röster 2022</small>
     </div>
   </div>
@@ -37,26 +37,26 @@
   <div class="frame matrix" class:is-active={step === 2 || step === 4} class:free-rider={step === 4} aria-hidden={step !== 2 && step !== 4}>
     <header>
       <p>Ett samordningsspel</p>
-      <strong>Du väljer. Andra väljer.</strong>
+      <strong>Din röst räcker inte ensam</strong>
     </header>
     <div class="matrix-grid">
       <div class="empty"></div>
-      <div class="column-head">Tillräckligt många hjälper L</div>
-      <div class="column-head">För få hjälper L</div>
-      <div class="row-head">Du väljer L</div>
+      <div class="column-head helps">Tillräckligt många hjälper L</div>
+      <div class="column-head too-few">För få hjälper L</div>
+      <div class="row-head row-choice">Du väljer L</div>
       <div class="cell joint"><b>L passerar</b><span>Din röst bidrar till räddningen.</span></div>
       <div class="cell risk"><b>L missar</b><span>Rösten deltar inte i den nationella mandatfördelningen.</span></div>
-      <div class="row-head">Du stannar</div>
-      <div class="cell ride"><b>Andra tar risken</b><span>L passerar utan din hjälp.</span></div>
+      <div class="row-head row-stay">Du stannar</div>
+      <div class="cell ride"><b>Andra byter</b><span>L passerar utan din hjälp.</span></div>
       <div class="cell safe"><b>L faller ur</b><span>Din röst ligger kvar hos ditt förstahandsval.</span></div>
     </div>
-    <p class="matrix-note">{step === 4 ? "Den bekväma rutan fungerar bara så länge tillräckligt många andra lämnar den." : "Din bästa handling beror på vad du tror att de andra väljarna kommer att göra."}</p>
+    <p class="matrix-note">{step === 4 ? "Det utfallet kräver att tillräckligt många andra byter." : "Din bästa handling beror på vad du tror att de andra väljarna kommer att göra."}</p>
   </div>
 
   <div class="frame signal" class:is-active={step === 3} aria-hidden={step !== 3}>
     <header>
       <p>Opinionsmätningen</p>
-      <strong>En siffra som alla ser</strong>
+      <strong>Alla ser samma mätning</strong>
     </header>
     <div class="signal-stage" aria-hidden="true">
       <div class="poll-card"><span>L</span><b>3,5%</b><small>tio dagar kvar</small></div>
@@ -85,22 +85,25 @@
   .dot-field i.filled { background:var(--accent); }
   .dot-field i.threshold { outline:2px solid var(--teal); outline-offset:3px; }
   .funding-scale { display:flex; justify-content:space-between; margin-top:14px; color:var(--muted); font-size:10px; }
-  .funding-scale b { color:var(--teal); }
+  .funding-scale b { color:var(--teal-text); }
   .distance { margin-top:auto; padding-top:24px; border-top:1px solid var(--rule-strong); }
   .distance span,.distance small { display:block; color:var(--muted); font-size:13px; line-height:1.45; }
   .distance strong { display:block; margin:4px 0 6px; color:var(--ink); font-family:var(--display); font-size:clamp(35px,5vw,54px); line-height:1; letter-spacing:-.04em; }
-  .matrix-grid { display:grid; grid-template-columns:120px repeat(2,minmax(0,1fr)); margin-top:clamp(28px,5vh,48px); border:1px solid var(--rule-strong); }
-  .matrix-grid > div { min-width:0; padding:15px 16px; border-right:1px solid var(--rule); border-bottom:1px solid var(--rule); }
+  .matrix-grid { display:grid; grid-template-columns:120px repeat(2,minmax(0,1fr)); margin-top:clamp(28px,5vh,48px); border:1px solid var(--rule-strong); transition:transform .62s cubic-bezier(.22,.72,.22,1); }
+  .matrix-grid > div { min-width:0; padding:15px 16px; border-right:1px solid var(--rule); border-bottom:1px solid var(--rule); transition:opacity .4s ease; }
   .matrix-grid > div:nth-child(3n) { border-right:0; }
   .matrix-grid > div:nth-last-child(-n+3) { border-bottom:0; }
   .empty { background:var(--paper-alt); }
   .column-head,.row-head { display:flex; align-items:center; color:var(--muted); background:var(--paper-alt); font-size:12px; font-weight:750; line-height:1.35; }
-  .cell { min-height:118px; background:white; transition:background .35s ease,box-shadow .35s ease; }
+  .cell { min-height:118px; background:white; transition:background .35s ease,box-shadow .35s ease,opacity .4s ease; }
   .cell b,.cell span { display:block; }
   .cell b { font-size:16px; }
   .cell span { margin-top:8px; color:var(--muted); font-size:13px; line-height:1.45; }
   .matrix:not(.free-rider) .joint { background:var(--accent-soft); box-shadow:inset 0 0 0 2px var(--accent); }
   .matrix:not(.free-rider) .risk { background:#f6f0f5; }
+  .matrix.free-rider .matrix-grid { transform:scale(1.17); transform-origin:42% 76%; }
+  .matrix.free-rider .matrix-grid > div { background:#f2f4f8; }
+  .matrix.free-rider .matrix-grid .ride,.matrix.free-rider .matrix-grid .helps,.matrix.free-rider .matrix-grid .row-stay { background:white; }
   .matrix.free-rider .ride { background:#e3f2f2; box-shadow:inset 0 0 0 2px var(--teal); }
   .matrix-note { margin:auto 0 0; padding-top:20px; color:var(--muted); font-size:15px; line-height:1.55; }
   .signal-stage { position:relative; min-height:330px; flex:1; display:grid; place-items:center; }
@@ -131,6 +134,7 @@
     .cell b { font-size:11px; }
     .cell span { margin-top:4px; font-size:8px; line-height:1.35; }
     .matrix-note { padding-top:10px; font-size:9px; }
+    .matrix.free-rider .matrix-grid { transform:scale(1.055); }
     .signal-stage { min-height:250px; }
     .poll-card { width:125px; height:125px; box-shadow:0 0 0 12px var(--accent-soft); }
     .poll-card b { font-size:34px; }
@@ -140,6 +144,7 @@
   }
 
   @media (prefers-reduced-motion:reduce) {
-    .frame,.dot-field i,.signal-stage > i { transition:none; }
+    .frame,.dot-field i,.signal-stage > i,.matrix-grid,.matrix-grid > div { transition:none; }
+    .matrix.free-rider .matrix-grid { transform:none; }
   }
 </style>

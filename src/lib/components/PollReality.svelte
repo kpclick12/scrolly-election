@@ -4,11 +4,11 @@
   const min = 4;
   const max = 9;
   const width = 760;
-  const height = 300;
-  const left = 112;
+  const height = 340;
+  const left = 120;
   const right = 44;
   const x = (value) => left + (value - min) / (max - min) * (width - left - right);
-  const y = (index) => 62 + index * 58;
+  const y = (index) => 68 + index * 68;
   const format = (value) => value.toLocaleString("sv-SE", { minimumFractionDigits: 1, maximumFractionDigits: 2 });
 </script>
 
@@ -42,7 +42,7 @@
 
 <style>
   figure { margin:0; padding:clamp(20px,3vw,30px); background:var(--surface); border:1px solid var(--rule-strong); }
-  .legend { display:flex; justify-content:flex-end; gap:20px; color:var(--muted); font-size:12px; }
+  .legend { display:flex; justify-content:flex-end; gap:22px; color:var(--muted); font-size:14px; }
   .legend span { display:flex; align-items:center; gap:6px; }
   .legend i { width:9px; height:9px; border-radius:50%; }
   .poll-dot { background:var(--point-dim); border:1px solid var(--muted); }
@@ -50,16 +50,16 @@
   svg { display:block; width:100%; height:auto; }
   .grid { stroke:var(--rule); stroke-width:1; }
   .threshold { stroke:var(--ink); stroke-width:1.4; }
-  .threshold-label { fill:var(--ink); font:700 12px var(--sans); }
-  .tick { fill:var(--muted); font:12px var(--sans); }
-  .year { fill:var(--ink); font:750 18px var(--sans); }
-  .days { fill:var(--muted); font:11px var(--sans); }
+  .threshold-label { fill:var(--ink); font:700 13px var(--sans); }
+  .tick { fill:var(--muted); font:13px var(--sans); }
+  .year { fill:var(--ink); font:750 20px var(--sans); }
+  .days { fill:var(--muted); font:12px var(--sans); }
   .connector { stroke:var(--rule-strong); stroke-width:2; }
   .poll-point { fill:var(--paper); stroke:var(--muted); stroke-width:1.5; }
   .result-point { fill:var(--accent); stroke:white; stroke-width:1.5; }
-  .value { fill:var(--muted); font:700 12px var(--sans); font-variant-numeric:tabular-nums; }
+  .value { fill:var(--muted); font:700 13px var(--sans); font-variant-numeric:tabular-nums; }
   .result-value { fill:var(--accent-dark); }
-  figcaption { max-width:760px; margin:14px 0 0; color:var(--muted); font-size:13px; line-height:1.5; }
+  figcaption { max-width:760px; margin:14px 0 0; color:var(--muted); font-size:14px; line-height:1.5; }
 
   @media (max-width:620px) {
     figure { padding:15px 12px; }
