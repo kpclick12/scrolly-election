@@ -1,4 +1,6 @@
 <script>
+  import { supportVoteThresholds } from "../../data/story.js";
+
   let { step = 0 } = $props();
 
   const dots = Array.from({ length: 100 }, (_, index) => index);
@@ -8,7 +10,7 @@
     "Liberalerna har 2,0 procent. För att nå spärren saknas omkring 130 000 röster, räknat med valdeltagandet 2022.",
     "Vid 3,5 procent saknas omkring 32 000 röster till spärren.",
     "Utfallet av en strategisk röst beror både på det egna valet och på om tillräckligt många andra väljare hjälper Liberalerna.",
-    "En opinionsmätning ger väljarna en gemensam signal om hur många som kan tänkas hjälpa Liberalerna.",
+    "I DN och Ipsos undersökning var medianen 3,0 procent för när en stödröst känns bortkastad och 3,5 procent för när väljaren vågar stödrösta. Det är självrapporterade gränser, inte en prognos.",
     "Den som stannar kvar förlitar sig på att andra byter. Om många gör samma bedömning misslyckas samordningen.",
   ][step]);
 </script>
@@ -55,19 +57,21 @@
 
   <div class="frame signal" class:is-active={step === 3} aria-hidden={step !== 3}>
     <header>
-      <p>Opinionsmätningen</p>
-      <strong>Alla ser samma mätning</strong>
+      <p>DN/Ipsos · 29 augusti</p>
+      <strong>Mätningen ändrar kalkylen</strong>
     </header>
-    <div class="signal-stage" aria-hidden="true">
-      <div class="poll-card"><span>L</span><b>3,5%</b><small>tio dagar kvar</small></div>
-      {#each Array.from({ length: 12 }) as _, index}
-        <i style={`--angle:${index * 30}deg;--delay:${index * .025}s`}></i>
-      {/each}
+    <div class="signal-axis" aria-hidden="true">
+      <i></i>
+      <div class="signal-point current" style="--position:0%"><b>2,0%</b><span>L i Demoskop</span></div>
+      <div class="signal-point waste" style="--position:50%"><b>{supportVoteThresholds.wasteMedian.toLocaleString("sv-SE", { minimumFractionDigits: 1 })}%</b><span>stödrösten känns bortkastad</span></div>
+      <div class="signal-point dare" style="--position:75%"><b>{supportVoteThresholds.dareMedian.toLocaleString("sv-SE", { minimumFractionDigits: 1 })}%</b><span>vågar stödrösta</span></div>
+      <div class="signal-point threshold" style="--position:100%"><b>4,0%</b><span>riksdagsspärren</span></div>
     </div>
-    <div class="signal-copy">
-      <span>En offentlig mätning ger väljarna samma utgångspunkt</span>
-      <div><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="signal-findings">
+      <p><strong>3,0 procent</strong><span>Medianen för när en stödröst upplevs som bortkastad.</span></p>
+      <p><strong>3,5 procent</strong><span>Medianen för när väljaren säger att den vågar stödrösta.</span></p>
     </div>
+    <p class="signal-note">Svar på hypotetiska frågor. De visar hur väljarna resonerar, inte hur de kommer att rösta.</p>
   </div>
   <p class="sr-only">{status}</p>
 </figure>
@@ -106,15 +110,28 @@
   .matrix.free-rider .matrix-grid .ride,.matrix.free-rider .matrix-grid .helps,.matrix.free-rider .matrix-grid .row-stay { background:white; }
   .matrix.free-rider .ride { background:#e3f2f2; box-shadow:inset 0 0 0 2px var(--teal); }
   .matrix-note { margin:auto 0 0; padding-top:20px; color:var(--muted); font-size:15px; line-height:1.55; }
-  .signal-stage { position:relative; min-height:330px; flex:1; display:grid; place-items:center; }
-  .poll-card { position:relative; z-index:2; display:grid; place-items:center; width:180px; height:180px; border-radius:50%; color:white; background:var(--accent); box-shadow:0 0 0 18px var(--accent-soft); }
-  .poll-card span,.poll-card small { font-size:11px; font-weight:750; }
-  .poll-card b { font-family:var(--display); font-size:48px; line-height:1; letter-spacing:-.05em; }
-  .signal-stage > i { position:absolute; left:50%; top:50%; width:16px; height:16px; margin:-8px; border-radius:50%; background:var(--teal); transform:rotate(var(--angle)) translateX(clamp(125px,18vw,195px)); transition:transform .55s var(--delay) ease; }
-  .signal-copy { padding-top:18px; border-top:1px solid var(--rule-strong); }
-  .signal-copy > span { color:var(--muted); font-size:14px; }
-  .signal-copy > div { display:flex; gap:7px; margin-top:12px; }
-  .signal-copy i { width:11px; height:11px; border-radius:50%; background:var(--accent); }
+  .signal-axis { position:relative; height:185px; margin:clamp(70px,11vh,110px) 28px 0; }
+  .signal-axis > i { position:absolute; left:0; right:0; top:52px; height:3px; background:linear-gradient(90deg,var(--accent),var(--teal)); transform:scaleX(0); transform-origin:left; transition:transform .85s .08s cubic-bezier(.22,.72,.22,1); }
+  .signal.is-active .signal-axis > i { transform:scaleX(1); }
+  .signal-point { position:absolute; left:var(--position); top:41px; width:22px; height:22px; border:4px solid white; border-radius:50%; background:var(--accent); box-shadow:0 0 0 2px var(--accent); opacity:0; transform:translate(-50%,8px); transition:opacity .24s .12s ease,transform .34s .12s cubic-bezier(.22,.72,.22,1); }
+  .signal.is-active .signal-point { opacity:1; transform:translate(-50%,0); }
+  .signal-point b,.signal-point span { position:absolute; left:50%; width:155px; text-align:center; transform:translateX(-50%); }
+  .signal-point b { bottom:29px; color:var(--ink); font-family:var(--display); font-size:27px; letter-spacing:-.035em; }
+  .signal-point span { top:31px; color:var(--muted); font-size:11px; line-height:1.3; }
+  .signal-point.current { transform:translate(0,8px); }
+  .signal.is-active .signal-point.current { transform:none; }
+  .signal-point.current b,.signal-point.current span { left:0; text-align:left; transform:none; }
+  .signal-point.threshold { background:var(--teal); box-shadow:0 0 0 2px var(--teal); transform:translate(-100%,8px); }
+  .signal.is-active .signal-point.threshold { transform:translateX(-100%); }
+  .signal-point.threshold b,.signal-point.threshold span { left:auto; right:0; text-align:right; transform:none; }
+  .signal-point.waste { background:var(--violet); box-shadow:0 0 0 2px var(--violet),0 0 0 9px rgba(112,88,189,.12); transition-delay:.2s; }
+  .signal-point.dare { background:#d3a62c; box-shadow:0 0 0 2px #9b7615,0 0 0 9px rgba(211,166,44,.13); transition-delay:.28s; }
+  .signal-findings { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1px; margin-top:auto; background:var(--rule-strong); border-block:1px solid var(--rule-strong); }
+  .signal-findings p { margin:0; padding:19px 20px; background:white; }
+  .signal-findings strong,.signal-findings span { display:block; }
+  .signal-findings strong { color:var(--ink); font-family:var(--display); font-size:22px; }
+  .signal-findings span { margin-top:5px; color:var(--muted); font-size:13px; line-height:1.4; }
+  .signal-note { margin:15px 0 0; color:var(--muted); font-size:12px; line-height:1.45; }
 
   @media (max-width:820px) {
     figure { min-height:0; height:100%; border:0; }
@@ -135,16 +152,22 @@
     .cell span { margin-top:4px; font-size:8px; line-height:1.35; }
     .matrix-note { padding-top:10px; font-size:9px; }
     .matrix.free-rider .matrix-grid { transform:scale(1.055); }
-    .signal-stage { min-height:250px; }
-    .poll-card { width:125px; height:125px; box-shadow:0 0 0 12px var(--accent-soft); }
-    .poll-card b { font-size:34px; }
-    .signal-stage > i { width:11px; height:11px; margin:-5.5px; transform:rotate(var(--angle)) translateX(105px); }
-    .signal-copy { padding-top:10px; }
-    .signal-copy > span { font-size:9px; }
+    .signal-axis { height:148px; margin:39px 8px 0; }
+    .signal-axis > i { top:42px; height:2px; }
+    .signal-point { top:34px; width:17px; height:17px; border-width:3px; }
+    .signal-point b { bottom:22px; font-size:18px; }
+    .signal-point span { top:24px; width:78px; font-size:7px; }
+    .signal-point.waste b,.signal-point.threshold b { top:27px; bottom:auto; }
+    .signal-point.waste span,.signal-point.threshold span { top:49px; }
+    .signal-findings,.signal-note { display:none; }
   }
 
   @media (prefers-reduced-motion:reduce) {
-    .frame,.dot-field i,.signal-stage > i,.matrix-grid,.matrix-grid > div { transition:none; }
+    .frame,.dot-field i,.signal-axis > i,.signal-point,.matrix-grid,.matrix-grid > div { transition:none; }
     .matrix.free-rider .matrix-grid { transform:none; }
+    .signal-axis > i { transform:none; }
+    .signal-point,.signal-point.current,.signal-point.threshold { opacity:1; transform:translateX(-50%); }
+    .signal-point.current { transform:none; }
+    .signal-point.threshold { transform:translateX(-100%); }
   }
 </style>

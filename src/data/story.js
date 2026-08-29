@@ -170,6 +170,15 @@ export const insuranceExperiment = [
   { shownPoll: 5.5, liberalVote: 4.93 },
 ];
 
+export const supportVoteThresholds = {
+  wasteMedian: 3.0,
+  dareMedian: 3.5,
+  wasteMean: 2.9,
+  dareMean: 3.6,
+  interviews: 1461,
+  fieldwork: "11–23 augusti 2026",
+};
+
 export const sources = {
   scbHistory: "https://www.scb.se/hitta-statistik/statistik-efter-amne/demokrati/allmanna-val/allmanna-val-valresultat/pong/tabell-och-diagram/historisk-valstatistik/historisk-statistik-over-valaren-19102022.-procentuell-fordelning-av-giltiga-valsedlar-efter-parti-och-typ-av-val",
   indicator: "https://www.sverigesradio.se/artikel/tido-partierna-knappar-in-pa-oppositionens-ledning",
@@ -188,4 +197,5 @@ export const sources = {
   liberalVoters2022: "https://www.gu.se/sites/default/files/2025-09/R2025_4_Liberalerna.pdf",
   coordinationStudy: "https://journals.sagepub.com/doi/10.1177/1065912913520573",
   pollsAndCoalitions: "https://journals.sagepub.com/doi/10.1177/0951629813505722",
+  dnSupportVoting: "https://www.dn.se/sverige/har-gar-gransen-da-dumpar-stodrostarna-mohamsson/",
 };

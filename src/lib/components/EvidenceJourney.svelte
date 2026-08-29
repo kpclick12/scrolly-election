@@ -8,7 +8,7 @@
     "Bland Liberalernas väljare 2022 föredrog 32 procent ett annat parti och 60 procent bestämde sitt partival under sista veckan. Flödet från M till L stod för 5,5 procent av de potentiellt strategiska rösterna.",
     "I ett svenskt experiment fick Liberalerna 6,78 procents stöd när en mätning visade 2,5 procent, 4,8 när den visade 4 och 4,93 när den visade 5,5. Skillnaderna var inte statistiskt säkerställda.",
     "Inför valen 2010 till 2022 ökade Liberalerna bara 2010 från den sena mätningen till valresultatet. I de tre senare valen minskade stödet.",
-    "Statsvetaren Annika Fredén har sett stödröster till etablerade koalitionspartier redan vid 2,5 procent och nämner Kristdemokraterna som exempel.",
+    "Statsvetaren Annika Fredén har sett stödröster till etablerade koalitionspartier redan vid 2,5 procent och nämner Kristdemokraterna. I DN och Ipsos undersökning var medianen 3,5 procent för när väljare säger att de vågar stödrösta.",
   ][step]);
 </script>
 
@@ -55,14 +55,14 @@
       <i></i>
       <div class="level current" style="--position:0%"><b>2,0%</b><span>L i Demoskop</span></div>
       <div class="level observed" style="--position:25%"><b>2,5%</b><span>Fredéns KD-exempel</span></div>
-      <div class="level advice" style="--position:75%"><b>3,5%</b><span>Åkessons råd</span></div>
+      <div class="level advice" style="--position:75%"><b>3,5%</b><span>DN/Ipsos median</span></div>
       <div class="level threshold" style="--position:100%"><b>4,0%</b><span>Riksdagsspärren</span></div>
     </div>
     <div class="level-notes">
       <p><strong>Fredén om KD.</strong> Ett etablerat koalitionsparti kan få stödröster redan vid 2,5 procent.</p>
-      <p><strong>Experimentet.</strong> Effekten var tydligare för KD. Resultatet för L var statistiskt osäkert.</p>
+      <p><strong>DN/Ipsos.</strong> Medianen var 3,0 för ”bortkastad” och 3,5 för att våga stödrösta.</p>
     </div>
-    <p class="finding">3,5 är en bedömning bland andra. Vi vet inte vid vilken nivå stödrösterna till L börjar komma.</p>
+    <p class="finding">Det är olika slags mått. Det ena bygger på tidigare beteende, det andra på hypotetiska frågor. Inget av dem ger en säker gräns för L.</p>
   </div>
   <p class="sr-only">{status}</p>
 </figure>

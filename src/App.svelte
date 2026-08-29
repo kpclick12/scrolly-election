@@ -32,7 +32,7 @@
     "Från 2,0 procent saknas omkring 130 000 väljare till spärren.",
     "Från 3,5 procent saknas omkring 32 000 väljare till spärren.",
     "Utfallet beror på både det egna valet och vad andra väljare gör.",
-    "Opinionsmätningen blir en gemensam signal som kan hjälpa väljarna att samordna sig.",
+    "I DN och Ipsos undersökning var medianen 3,0 procent för när en stödröst känns bortkastad och 3,5 procent för när väljaren vågar stödrösta.",
     "Den som stannar kvar förlitar sig på att andra byter. Om många gör samma bedömning faller samordningen.",
   ][gameStep]);
 
@@ -219,7 +219,7 @@
       <article class="story-step" data-step>
         <p class="step-index">Den gemensamma signalen</p>
         <h3>Mätningen hjälper väljarna att hitta varandra</h3>
-        <p>Om fler tror att L klarar spärren kan fler också välja att stödrösta. Mätningen kan alltså påverka det resultat den försöker mäta.</p>
+        <p>I DN/Ipsos nya undersökning var medianen 3,0 procent för när en stödröst känns bortkastad och 3,5 för när väljaren vågar stödrösta. När L närmar sig spärren kan fler alltså bli beredda att hjälpa partiet.</p>
       </article>
       <article class="story-step" data-step>
         <p class="step-index">Samordningsproblemet</p>
@@ -296,9 +296,9 @@
         <p>L ökade lite 2010. I valen 2014, 2018 och 2022 blev valresultatet lägre än den sena mätningen. De fyra observationerna ger orientering, men räcker inte för att räkna fram en sannolikhet.</p>
       </article>
       <article class="story-step" data-step>
-        <p class="step-index">2,5 eller 3,5?</p>
-        <h3>Det beror också på vilket parti det gäller</h3>
-        <p>Statsvetaren Annika Fredén säger att väljare har stödröstat på etablerade koalitionspartier redan vid 2,5 procent. Hon tar KD som exempel. I det svenska experimentet var effekten också tydligare för KD än för L. Åkessons 3,5 är hans bedömning. Forskningen pekar inte ut någon sådan gräns för L.</p>
+        <p class="step-index">2,5, 3,0 eller 3,5?</p>
+        <h3>Gränsen beror på vad vi mäter</h3>
+        <p>Statsvetaren Annika Fredén har sett stödröster till etablerade koalitionspartier redan vid 2,5 procent och nämner KD. DN/Ipsos mäter i stället vad väljare säger nu: medianen blev 3,0 för ”bortkastad” och 3,5 för att våga stödrösta. Inget av måtten ger en säker gräns för L.</p>
       </article>
     </ScrollyShell>
   </section>
@@ -334,6 +334,7 @@
         <li><strong>L-väljarnas beslut.</strong> Uppgiften att 60 procent bestämde sig sista veckan kommer från Valforskningsprogrammets partirapport. Skattningen bygger på 364–367 svar och är viktad mot partival och validerat valdeltagande. <a href={sources.liberalVoters2022}>Valet 2022: Liberalerna</a>.</li>
         <li><strong>Surveyexperimentet.</strong> 3&nbsp;259 deltagare lottades till mätningar där L, KD eller MP visades på 2,5, 4,0 eller 5,5 procent. För L var skillnaderna mellan nivåerna inte statistiskt säkerställda. Den tydligaste försäkringseffekten gällde KD. <a href={sources.insuranceVoting}>Insurance Voting in the Centre</a>.</li>
         <li><strong>2,5-procentsexemplet.</strong> Statsvetaren Annika Fredén beskriver hur ett etablerat koalitionsparti kan få stödröster även från 2,5 procent och nämner KD som exempel. Observationen gäller inte specifikt L. <a href={sources.pollMisses}>Aftonbladet/TT</a>.</li>
+        <li><strong>Väljarnas upplevda gränser.</strong> I DN/Ipsos undersökning var medianen 3,0 procent för när en stödröst känns bortkastad och 3,5 procent för när väljaren vågar stödrösta. Medelvärdena var 2,9 respektive 3,6. Ipsos intervjuade 1&nbsp;461 röstberättigade den 11–23 augusti. Svaren gäller hypotetiska frågor och är ingen prognos för L:s valresultat. <a href={sources.dnSupportVoting}>DN/Ipsos</a>.</li>
         <li><strong>Spelteorin.</strong> Samordningsförklaringen bygger på forskning om strategisk röstning i proportionella valsystem med koalitioner, spärrar och opinionsmätningar. <a href={sources.coordinationStudy}>Blais, Erisen och Rheault</a> samt <a href={sources.pollsAndCoalitions}>Herrmann</a>.</li>
         <li><strong>Historiken.</strong> Valresultaten 1948–2022 kommer från SCB och följer Folkpartiet/Liberalerna. Punkten för 2026 är en mätning. <a href={sources.scbHistory}>SCB:s historiska valstatistik</a>.</li>
         <li><strong>Mätning mot val.</strong> Punkterna nära valen 2010–2022 är hämtade ur SVT/Verians historiska serie och ligger 8–18 dagar före respektive val. Fyra observationer används för att ge historisk orientering, inte för att räkna fram en sannolikhet. <a href={sources.svtHistory}>SVT:s Väljarbarometer</a>.</li>
