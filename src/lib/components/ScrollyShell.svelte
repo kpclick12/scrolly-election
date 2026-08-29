@@ -1,7 +1,7 @@
 <script>
   import { onMount } from "svelte";
 
-  let { visual, children, onStepChange = () => {}, label = "Berättelsesteg", status = "", variant = "split" } = $props();
+  let { visual, children, onStepChange = () => {}, label = "Berättelsesteg", status = "", variant = "split", mobileTargetRatio = null } = $props();
   let container;
   let active = -1;
 
@@ -24,7 +24,8 @@
       if (!visible) return;
       const mobile = window.matchMedia("(max-width: 820px)").matches;
       const veryNarrow = window.matchMedia("(max-width: 360px)").matches;
-      const targetRatio = mobile ? (variant === "overlay" ? (veryNarrow ? 0.84 : 0.80) : (veryNarrow ? 0.84 : 0.82)) : 0.52;
+      const defaultMobileRatio = variant === "overlay" ? (veryNarrow ? 0.84 : 0.80) : (veryNarrow ? 0.84 : 0.82);
+      const targetRatio = mobile ? (mobileTargetRatio ?? defaultMobileRatio) : 0.52;
       const target = window.innerHeight * targetRatio;
       let closest = 0;
       let distance = Infinity;

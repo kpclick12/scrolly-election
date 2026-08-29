@@ -114,6 +114,8 @@ h1,h2,h3 { font-family:var(--display); }
 .step-index { margin:0 0 10px; color:var(--accent-dark); font-size:12px; font-weight:750; }
 .seat-step h3,.story-step h3 { margin:0; font-size:clamp(29px,3vw,40px); font-weight:760; line-height:1.02; letter-spacing:-.035em; }
 .seat-step > p:last-child,.story-step > p:last-child { margin:14px 0 0; color:var(--muted); font-size:17px; line-height:1.58; }
+.seat-step > p.scenario-detail { margin:14px 0 0; color:var(--muted); font-size:17px; line-height:1.58; }
+.seat-step > p.scenario-reading { margin:15px 0 0; padding-top:12px; color:var(--ink); border-top:1px solid var(--rule); font-size:15px; font-weight:680; line-height:1.46; }
 .threshold-step { border-left-color:var(--teal); }
 .conclusion-step { border-left-color:var(--violet); }
 
@@ -191,7 +193,8 @@ footer p { margin:0; }
   .motion-ready .seat-step,.motion-ready .story-step { opacity:0; }
   .motion-ready .seat-step.is-active,.motion-ready .story-step.is-active { opacity:1; }
   .seat-step h3,.story-step h3 { font-size:28px; }
-  .seat-step > p:last-child,.story-step > p:last-child { font-size:14px; }
+  .seat-step > p:last-child,.seat-step > p.scenario-detail,.story-step > p:last-child { font-size:14px; }
+  .seat-step > p.scenario-reading { font-size:13px; }
   .coordination { display:block; }
   .rescue-math { margin-top:40px; }
   .coordination-copy { margin-top:30px; padding-top:0; }

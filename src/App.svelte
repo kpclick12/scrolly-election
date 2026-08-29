@@ -21,11 +21,11 @@
   };
 
   const seatStatus = $derived([
-    "Med Liberalernas stöd på 2,0 procent får de inga mandat. Tidöpartierna får 161 mandat och oppositionen 188.",
-    "Vid 3,9 procent får Liberalerna fortfarande inga mandat. Tidöpartierna får 157 mandat och oppositionen 192.",
-    "Vid 4,0 procent får Liberalerna 14 mandat. Tidöpartierna får 164 mandat och oppositionen 185.",
-    "I ett hypotetiskt jämnt val får Tidöpartierna 50,1 procent av rösterna men bara 172 mandat när Liberalerna ligger på 3,9.",
-    "I samma hypotetiska val får Tidöpartierna 179 mandat när Liberalerna når 4,0 procent.",
+    "Med Liberalernas stöd på 2,0 procent får de inga mandat. Tidöpartierna får 161 mandat och oppositionen 188. Liberalernas röster påverkar inte mandatfördelningen.",
+    "Vid 3,9 procent får Liberalerna fortfarande inga mandat. Röster har lämnat Moderaterna utan att rädda Liberalerna, och Tidöpartierna får fyra mandat färre än från början.",
+    "Vid 4,0 procent får Liberalerna 14 mandat. Stödrösten räddar partiet, men Tidöpartiernas 164 mandat räcker inte till egen majoritet.",
+    "I ett hypotetiskt jämnt val får Tidöpartierna 50,1 procent av rösterna men bara 172 mandat när Liberalerna ligger på 3,9. En röstmajoritet blir ingen mandatmajoritet.",
+    "I samma hypotetiska val får Tidöpartierna 179 mandat när Liberalerna når 4,0 procent. När Liberalerna passerar spärren avgör stödrösterna majoriteten.",
   ][seatStep]);
 
   const gameStatus = $derived([
@@ -152,33 +152,38 @@
   </section>
 
   <section class="seat-act" aria-label="Scrollstyrd simulering av stödröster till Liberalerna">
-    <ScrollyShell onStepChange={(index) => seatStep = index} label="Fem möjliga utfall för en stödröst på Liberalerna" status={seatStatus}>
+    <ScrollyShell onStepChange={(index) => seatStep = index} label="Fem möjliga utfall för en stödröst på Liberalerna" status={seatStatus} mobileTargetRatio={0.68}>
       {#snippet visual()}<SeatCliff step={seatStep} />{/snippet}
 
       <article class="seat-step" data-step>
         <p class="step-index">Dagens mätning · ingen stödröst</p>
         <h3>L hamnar utanför</h3>
-        <p>På 2,0 procent får L inga mandat i modellen. Tidöpartierna får 161 platser och oppositionen 188.</p>
+        <p class="scenario-detail">På 2,0 procent får L inga mandat i modellen. Tidöpartierna får 161 platser och oppositionen 188.</p>
+        <p class="scenario-reading">L:s röster påverkar inte mandatfördelningen, och Tidöpartierna är långt från egen majoritet.</p>
       </article>
       <article class="seat-step" data-step>
         <p class="step-index">Dagens mätning · L på 3,9%</p>
         <h3>Rösterna fastnar under spärren</h3>
-        <p>Röster har lämnat M men L missar spärren. Tidöpartierna får 157 mandat, fyra färre än från början.</p>
+        <p class="scenario-detail">Röster har lämnat M men L missar spärren. Tidöpartierna får 157 mandat, fyra färre än från början.</p>
+        <p class="scenario-reading">Stödrösterna har försvagat M utan att ge L några mandat.</p>
       </article>
       <article class="seat-step threshold-step" data-step>
         <p class="step-index">Dagens mätning · L på 4,0%</p>
         <h3>Vid fyra procent kommer L in</h3>
-        <p>L får 14 mandat. Tidöpartierna når 164, tolv mandat från egen majoritet.</p>
+        <p class="scenario-detail">L får 14 mandat. Tidöpartierna når 164, tolv mandat från egen majoritet.</p>
+        <p class="scenario-reading">Stödrösterna räddar L, men de ger inte Tidöpartierna egen majoritet.</p>
       </article>
       <article class="seat-step" data-step>
         <p class="step-index">Hypotetiskt jämnt val · L på 3,9%</p>
         <h3>En röstmajoritet blir ingen mandatmajoritet</h3>
-        <p>Tidöpartierna har 50,1 procent av rösterna. När L hamnar utanför stannar de ändå på 172 mandat.</p>
+        <p class="scenario-detail">Tidöpartierna har 50,1 procent av rösterna. När L hamnar utanför stannar de ändå på 172 mandat.</p>
+        <p class="scenario-reading">Sidan får flest röster, men inte flest mandat när L:s röster blir utan representation.</p>
       </article>
       <article class="seat-step conclusion-step" data-step>
         <p class="step-index">Samma val · L på 4,0%</p>
         <h3>Spärren avgör majoriteten</h3>
-        <p>Med samma röstandel men L över spärren får Tidöpartierna 179 mandat. Här är det L:s plats i riksdagen som avgör majoriteten.</p>
+        <p class="scenario-detail">Med samma röstandel men L över spärren får Tidöpartierna 179 mandat.</p>
+        <p class="scenario-reading">När L passerar spärren får sidan sju mandat till. I det här scenariot avgör stödrösterna majoriteten.</p>
       </article>
     </ScrollyShell>
   </section>
