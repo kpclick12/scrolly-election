@@ -264,7 +264,7 @@
     <h2 id="evidence-title">Kan L gå från två till fyra?</h2>
     <div class="body-copy">
       <p>Den som överväger en stödröst måste också bedöma vad som kan hända på valdagen.</p>
-      <p>Två procent är en mätning, inte ett facit. Många L-väljare bestämde sig sent 2022. Men hur mycket går det att dra av det?</p>
+      <p>Två procent är en mätning, inte ett facit. Många L-väljare bestämde sig sent 2022. Men hur mycket säger det om L:s chanser i år?</p>
     </div>
   </section>
 
