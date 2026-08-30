@@ -116,7 +116,7 @@
   <div class="hero-copy">
     <p class="eyebrow">Riksdagsvalet 2026</p>
     <h1>Vad är en taktikröst på Liberalerna värd?</h1>
-    <p class="standfirst">Liberalerna har haft en tydlig trend <span class="trend-down">nedåt<span class="trend-down-arrow" aria-hidden="true">↓</span></span> under lång tid. I den senaste mätningen får partiet <strong class="current-number number-mark">2,0 procent</strong>, klart under riksdagsspärren på <strong class="threshold-number number-mark">4,0 procent</strong>. Från de andra Tidöpartierna kommer två olika råd.</p>
+    <p class="standfirst">Liberalerna har haft en tydlig trend <span class="trend-down">nedåt<span class="trend-down-arrow" aria-hidden="true">↓</span></span> under lång tid. I den senaste mätningen får partiet <strong class="current-number number-mark">2,0 procent</strong>, klart under riksdagsspärren på <strong class="threshold-number number-mark">4,0 procent</strong>. Från Liberalerna och Sverigedemokraterna kommer två olika råd.</p>
     <div class="poll-strip" aria-label="Tre aktuella mätningar av Liberalernas stöd">
       {#each recentLPolls as poll}
         <div class:current={poll.current}>
