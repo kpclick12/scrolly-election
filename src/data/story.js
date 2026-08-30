@@ -164,12 +164,6 @@ export const strategicVoting2022 = {
   potentialStrategicFlowMtoL: 5.5,
 };
 
-export const insuranceExperiment = [
-  { shownPoll: 2.5, liberalVote: 6.78 },
-  { shownPoll: 4.0, liberalVote: 4.80 },
-  { shownPoll: 5.5, liberalVote: 4.93 },
-];
-
 export const supportVoteThresholds = {
   wasteMedian: 3.0,
   dareMedian: 3.5,
@@ -185,14 +179,12 @@ export const sources = {
   indicatorMethod: "https://www.indikator.org/opinion-sr/",
   demoskop: "https://demoskop.se/extra-valjarbarometer-augusti-2026/",
   ipsos: "https://www.svd.se/a/0p33lG/valet-2026-sverige-live-senaste-nytt?pinnedEntry=76534",
-  pollMisses: "https://www.aftonbladet.se/nyheter/a/XMpdEB/partierna-som-opinionsmatningar-brukar-missa",
   svtPoll: "https://www.svt.se/nyheter/inrikes/kristersson-pressas-ny-matning-visar-stort-gap",
   svtHistory: "https://www.svt.se/special/valjarbarometern/",
   akesson: "https://www.svt.se/nyheter/inrikes/akessons-skarpa-grans-for-l-tio-dagar",
   mohamsson: "https://www.aftonbladet.se/nyheter/a/e7yAoQ/mohamssons-vadjan-ber-om-stodroster",
   electionMethod: "https://www.val.se/det-svenska-valsystemet/rostrakning-och-mandatfordelning/sa-fordelas-mandaten",
   election2022: "https://www.val.se/valresultat-och-statistik/riksdags--region--och-kommunval/valresultat-2022",
-  insuranceVoting: "https://research.chalmers.se/publication/542435/file/542435_Fulltext.pdf",
   strategicVoting2022: "https://www.gu.se/sites/default/files/2024-05/VoV_kap26.pdf",
   liberalVoters2022: "https://www.gu.se/sites/default/files/2025-09/R2025_4_Liberalerna.pdf",
   coordinationStudy: "https://journals.sagepub.com/doi/10.1177/1065912913520573",

@@ -31,8 +31,8 @@
       <text class="year" x="4" y={y(index) + 5}>{row.year}</text>
       <text class="days" x="4" y={y(index) + 20}>{row.days} dagar före</text>
       <line class="connector" x1={x(row.poll)} x2={x(row.result)} y1={y(index)} y2={y(index)} />
-      <circle class="poll-point" cx={x(row.poll)} cy={y(index)} r="7" />
-      <circle class="result-point" cx={x(row.result)} cy={y(index)} r="7" />
+      <circle class="poll-point" cx={x(row.poll)} cy={y(index)} r="8" />
+      <circle class="result-point" cx={x(row.result)} cy={y(index)} r="8" />
       <text class="value poll-value" x={x(row.poll)} y={y(index) - 12} text-anchor="middle">{format(row.poll)}</text>
       <text class="value result-value" x={x(row.result)} y={y(index) + 22} text-anchor="middle">{format(row.result)}</text>
     {/each}
@@ -57,18 +57,18 @@
   .connector { stroke:var(--rule-strong); stroke-width:2; }
   .poll-point { fill:var(--paper); stroke:var(--muted); stroke-width:1.5; }
   .result-point { fill:var(--accent); stroke:white; stroke-width:1.5; }
-  .value { fill:var(--muted); font:700 15px var(--sans); font-variant-numeric:tabular-nums; }
+  .value { fill:var(--muted); font:750 18px var(--sans); font-variant-numeric:tabular-nums; paint-order:stroke; stroke:var(--surface); stroke-width:4px; stroke-linejoin:round; }
   .result-value { fill:var(--accent-dark); }
   figcaption { max-width:760px; margin:14px 0 0; color:var(--muted); font-size:14px; line-height:1.5; }
 
   @media (max-width:620px) {
     figure { padding:15px 12px; }
     .legend { justify-content:flex-start; font-size:10px; }
-    .threshold-label { font-size:10px; }
-    .tick { font-size:10px; }
-    .year { font-size:15px; }
-    .days { font-size:9px; }
-    .value { font-size:11px; }
+    .threshold-label { font-size:13px; }
+    .tick { font-size:12px; }
+    .year { font-size:18px; }
+    .days { font-size:11px; }
+    .value { font-size:18px; }
     figcaption { font-size:10px; }
   }
 </style>

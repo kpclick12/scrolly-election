@@ -47,18 +47,19 @@
   figure { margin:0; min-width:0; }
   svg { display:block; width:100%; height:auto; overflow:visible; }
   .threshold { stroke:var(--rule-strong); stroke-width:1.25; stroke-dasharray:5 5; }
-  .threshold-label { fill:var(--muted); font:650 11px var(--sans); letter-spacing:.02em; }
-  .history-line { fill:none; stroke:var(--accent); stroke-width:3.5; stroke-linecap:round; stroke-linejoin:round; }
+  .threshold-label { fill:var(--muted); font:650 13px var(--sans); letter-spacing:.02em; paint-order:stroke; stroke:var(--surface); stroke-width:4px; }
+  .history-line { fill:none; stroke:var(--accent); stroke-width:5; stroke-linecap:round; stroke-linejoin:round; }
   .history-point { fill:var(--paper); stroke:var(--accent); stroke-width:2; }
   .history-point.poll { fill:var(--accent); stroke:white; stroke-width:2.5; }
-  .label text { fill:var(--ink); font:720 14px var(--sans); font-variant-numeric:tabular-nums; }
-  .label .year { fill:var(--muted); font-size:10px; font-weight:600; }
+  .label text { fill:var(--ink); font:720 18px var(--sans); font-variant-numeric:tabular-nums; paint-order:stroke; stroke:var(--surface); stroke-width:4px; stroke-linejoin:round; }
+  .label .year { fill:var(--muted); font-size:12px; font-weight:600; }
   .label.current text { fill:var(--accent-dark); }
   figcaption { margin-top:8px; color:var(--muted); font-size:11px; line-height:1.45; }
 
   @media (max-width:620px) {
-    .threshold-label { font-size:10px; }
-    .label text { font-size:13px; }
+    .threshold-label { font-size:13px; }
+    .label text { font-size:20px; }
+    .label .year { font-size:13px; }
     figcaption { font-size:10px; }
   }
 

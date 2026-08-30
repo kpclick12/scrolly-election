@@ -70,6 +70,7 @@ h1,h2,h3 { font-family:var(--display); }
 .standfirst strong { font-weight:780; white-space:nowrap; }
 .standfirst .current-number { color:var(--accent); }
 .standfirst .threshold-number { color:var(--teal-text); }
+.number-mark,.trend-down { display:inline-block; border-radius:2px; background:linear-gradient(to bottom,transparent 34%,color-mix(in srgb,currentColor 18%,transparent) 34%,color-mix(in srgb,currentColor 18%,transparent) 91%,transparent 91%); }
 .trend-down { color:#a65350; font-weight:700; white-space:nowrap; }
 .trend-down-arrow { display:inline-block; margin-left:.16em; font-weight:800; line-height:0; transform:translateY(-.02em); }
 .poll-strip { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1px; max-width:600px; margin-top:25px; background:var(--rule-strong); border-block:1px solid var(--rule-strong); }

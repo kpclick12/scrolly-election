@@ -39,7 +39,7 @@
   <div class="frame matrix" class:is-active={step === 2 || step === 4} class:free-rider={step === 4} aria-hidden={step !== 2 && step !== 4}>
     <header>
       <p>Ett samordningsspel</p>
-      <strong>Din röst räcker inte ensam</strong>
+      <strong>{step === 4 ? "Om du inte stödröstar" : "Din röst räcker inte ensam"}</strong>
     </header>
     <div class="matrix-grid">
       <div class="empty"></div>
@@ -105,7 +105,8 @@
   .cell span { margin-top:8px; color:var(--muted); font-size:13px; line-height:1.45; }
   .matrix:not(.free-rider) .joint { background:var(--accent-soft); box-shadow:inset 0 0 0 2px var(--accent); }
   .matrix .risk { background:#f6f0f5; }
-  .matrix.free-rider .safe { background:var(--accent-soft); box-shadow:inset 0 0 0 2px var(--accent); }
+  .matrix.free-rider .ride { background:var(--accent-soft); }
+  .matrix.free-rider .safe { background:#f8e8e8; box-shadow:inset 0 0 0 2px #a65350; }
   .matrix-note { margin:auto 0 0; padding-top:20px; color:var(--muted); font-size:15px; line-height:1.55; }
   .signal-axis { position:relative; height:185px; margin:clamp(70px,11vh,110px) 28px 0; }
   .signal-axis > i { position:absolute; left:0; right:0; top:52px; height:3px; background:linear-gradient(90deg,var(--accent),var(--teal)); transform:scaleX(0); transform-origin:left; transition:transform .85s .08s cubic-bezier(.22,.72,.22,1); }

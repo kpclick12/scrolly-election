@@ -123,7 +123,7 @@ for (const viewport of viewports) {
   }
 
   const storyText = (await page.locator("main").textContent()).replace(/\s+/g, " ");
-  for (const required of ["130 000", "32 000", "KD ligger kvar över spärren", "Hypotetiskt jämnt val", "6 477 970", "Sex av tio bestämde sig sista veckan", "L fick högst stöd i 2,5-gruppen", "En sen mätning är inte ett valresultat", "En röstmajoritet blir ingen mandatmajoritet", "lägga kalkylen åt sidan"]) {
+  for (const required of ["130 000", "32 000", "KD ligger kvar över spärren", "Hypotetiskt jämnt val", "6 477 970", "Sex av tio bestämde sig sista veckan", "En sen mätning är inte ett valresultat", "En röstmajoritet blir ingen mandatmajoritet", "lägga kalkylen åt sidan"]) {
     if (!storyText.includes(required)) problems.push(`COPY [${viewport.name}]: missing ${required}`);
   }
 
