@@ -104,11 +104,8 @@
   .cell b { font-size:16px; }
   .cell span { margin-top:8px; color:var(--muted); font-size:13px; line-height:1.45; }
   .matrix:not(.free-rider) .joint { background:var(--accent-soft); box-shadow:inset 0 0 0 2px var(--accent); }
-  .matrix:not(.free-rider) .risk { background:#f6f0f5; }
-  .matrix.free-rider .matrix-grid { transform:scale(1.17); transform-origin:42% 76%; }
-  .matrix.free-rider .matrix-grid > div { background:#f2f4f8; }
-  .matrix.free-rider .matrix-grid .safe,.matrix.free-rider .matrix-grid .too-few,.matrix.free-rider .matrix-grid .row-stay { background:white; }
-  .matrix.free-rider .safe { background:#e3f2f2; box-shadow:inset 0 0 0 2px var(--teal); }
+  .matrix .risk { background:#f6f0f5; }
+  .matrix.free-rider .safe { background:var(--accent-soft); box-shadow:inset 0 0 0 2px var(--accent); }
   .matrix-note { margin:auto 0 0; padding-top:20px; color:var(--muted); font-size:15px; line-height:1.55; }
   .signal-axis { position:relative; height:185px; margin:clamp(70px,11vh,110px) 28px 0; }
   .signal-axis > i { position:absolute; left:0; right:0; top:52px; height:3px; background:linear-gradient(90deg,var(--accent),var(--teal)); transform:scaleX(0); transform-origin:left; transition:transform .85s .08s cubic-bezier(.22,.72,.22,1); }
@@ -151,7 +148,6 @@
     .cell b { font-size:11px; }
     .cell span { margin-top:4px; font-size:8px; line-height:1.35; }
     .matrix-note { padding-top:10px; font-size:9px; }
-    .matrix.free-rider .matrix-grid { transform:scale(1.055); }
     .signal-axis { height:148px; margin:39px 8px 0; }
     .signal-axis > i { top:42px; height:2px; }
     .signal-point { top:34px; width:17px; height:17px; border-width:3px; }
@@ -164,7 +160,6 @@
 
   @media (prefers-reduced-motion:reduce) {
     .frame,.dot-field i,.signal-axis > i,.signal-point,.matrix-grid,.matrix-grid > div { transition:none; }
-    .matrix.free-rider .matrix-grid { transform:none; }
     .signal-axis > i { transform:none; }
     .signal-point,.signal-point.current,.signal-point.threshold { opacity:1; transform:translateX(-50%); }
     .signal-point.current { transform:none; }

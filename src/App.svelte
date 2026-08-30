@@ -298,7 +298,7 @@
       <div class="closing-copy">
         <p>Vi har följt en väljare som vill att Tidöpartierna ska få egen majoritet och är beredd att rösta på L, trots att ett annat Tidöparti är förstahandsvalet.</p>
         <p>I Demoskop ligger L på 2,0 procent. För att stödrösten ska ge mandat måste partiet först få hjälp över spärren. Från 2,0 procent kräver det omkring 130&nbsp;000 ytterligare väljare.</p>
-        <p>Men 2,0 procent är inte ett facit. Många L-väljare bestämde sig sent 2022, och valresultatet kan bli ett annat än en sen opinionsmätning. För den som överväger en stödröst kan den osäkerheten vara ett skäl att inte räkna bort L, utan att veta hur stor chansen faktiskt är.</p>
+        <p>Men 2,0 procent är inte ett facit. Många L-väljare bestämde sig sent 2022, och valresultatet kan bli ett annat än vad den sista opinionsundersökningen visar. För den som överväger en stödröst kan den osäkerheten vara ett skäl att inte räkna bort L, utan att veta hur stor chansen faktiskt är.</p>
         <p>Även om L når fyra får Tidöpartierna bara 164 mandat i vårt första exempel. Det spelar också roll vad andra väljare gör och varifrån stödrösterna kommer. Partiet som väljarna lämnar blir mindre, och maktbalansen mellan Tidöpartierna kan förändras.</p>
         <p>Den här kalkylen utgår dessutom från att väljaren väger spärren, mandaten och andras beteende mot varandra. Så resonerar inte alla. För en del kan det också kännas ideologiskt fel att byta parti även om det skulle öka möjligheten för Tidöpartierna att få egen majoritet. Då handlar rösten också om vilket parti man själv vill göra starkare.</p>
       </div>
