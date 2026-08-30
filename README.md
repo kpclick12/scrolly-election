@@ -21,7 +21,7 @@ pnpm preview
 pnpm check
 ```
 
-`pnpm check` förutsätter att preview-servern kör på port 4173. Testet går igenom berättelsens 16 steg i fyra akter och sju viewports från 1 440 till 320 px. Därefter sveper det varje tiotal pixlar från 300 till 1 000. Det kontrollerar mandatfördelningen, stegens aktivering, konsolfel, fokus, reducerad rörelse och horisontellt spill. Skärmbilder sparas i `/tmp/scrolly-election-shots-tactical`.
+`pnpm check` förutsätter att preview-servern kör på port 4173. Testet går igenom berättelsens 15 steg i fyra akter och sju viewports från 1 440 till 320 px. Därefter sveper det varje tiotal pixlar från 300 till 1 000. Det kontrollerar mandatfördelningen, stegens aktivering, konsolfel, fokus, reducerad rörelse och horisontellt spill. Skärmbilder sparas i `/tmp/scrolly-election-shots-tactical`.
 
 ## Modell och källor
 
