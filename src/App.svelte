@@ -14,6 +14,7 @@
   let evidenceStep = $state(0);
   let progress = $state(0);
   let introEngaged = $state(false);
+  let heroElement;
 
   const partyMarks = {
     L: `${import.meta.env.BASE_URL}parties/liberalerna-mark.png`,
@@ -68,12 +69,26 @@
     }, { threshold: .08, rootMargin: "0px 0px -3%" });
     document.querySelectorAll("[data-reveal]").forEach((element) => revealObserver.observe(element));
 
+    let introTimer;
+    let heroObserver;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      introEngaged = true;
+    } else {
+      heroObserver = new IntersectionObserver(([entry]) => {
+        if (!entry?.isIntersecting || introEngaged) return;
+        heroObserver.disconnect();
+        introTimer = window.setTimeout(() => {
+          introEngaged = true;
+        }, 300);
+      }, { threshold: .15 });
+      if (heroElement) heroObserver.observe(heroElement);
+    }
+
     let ticking = false;
     const update = () => {
       ticking = false;
       const max = document.documentElement.scrollHeight - window.innerHeight;
       progress = max > 0 ? Math.min(1, window.scrollY / max) : 0;
-      if (window.scrollY > 18) introEngaged = true;
     };
     const requestUpdate = () => {
       if (ticking) return;
@@ -85,6 +100,8 @@
     window.addEventListener("resize", requestUpdate);
     return () => {
       revealObserver.disconnect();
+      heroObserver?.disconnect();
+      if (introTimer) window.clearTimeout(introTimer);
       document.documentElement.classList.remove("motion-ready");
       window.removeEventListener("scroll", requestUpdate);
       window.removeEventListener("resize", requestUpdate);
@@ -95,7 +112,7 @@
 <a class="skip-link" href="#story" onclick={skipToStory}>Hoppa till berättelsen</a>
 <div class="progress" aria-hidden="true"><i style={`transform:scaleX(${progress})`}></i></div>
 
-<header class="hero" class:intro-engaged={introEngaged}>
+<header class="hero" class:intro-engaged={introEngaged} bind:this={heroElement}>
   <div class="hero-copy">
     <p class="eyebrow">Riksdagsvalet 2026</p>
     <h1>Vad är en taktikröst på Liberalerna värd?</h1>
