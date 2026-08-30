@@ -10,8 +10,8 @@
     "Liberalerna har 2,0 procent. För att nå spärren saknas omkring 130 000 röster, räknat med valdeltagandet 2022.",
     "Vid 3,5 procent saknas omkring 32 000 röster till spärren.",
     "Utfallet av en strategisk röst beror både på det egna valet och på om tillräckligt många andra väljare hjälper Liberalerna.",
-    "I DN och Ipsos undersökning var medianen 3,0 procent för när en stödröst känns bortkastad och 3,5 procent för när väljaren vågar stödrösta. Det är självrapporterade gränser, inte en prognos.",
-    "Den som stannar kvar förlitar sig på att andra byter. Om många gör samma bedömning misslyckas samordningen.",
+    "I DN och Ipsos undersökning beskrev de svarande sina egna gränser. Medianen var 3,0 procent för när en stödröst känns bortkastad och 3,5 procent för när de vågar stödrösta. Det är inte ett test av hur en mätning ändrar rösten.",
+    "Den som stannar kvar förlitar sig på att andra byter. Om många resonerar så passerar Liberalerna inte fyraprocentsspärren.",
   ][step]);
 </script>
 
@@ -52,13 +52,13 @@
       <div class="cell ride"><b>Andra byter</b><span>L passerar utan din hjälp.</span></div>
       <div class="cell safe"><b>L faller ur</b><span>Din röst ligger kvar hos ditt förstahandsval.</span></div>
     </div>
-    <p class="matrix-note">{step === 4 ? "Det utfallet kräver att tillräckligt många andra byter." : "Din bästa handling beror på vad du tror att de andra väljarna kommer att göra."}</p>
+    <p class="matrix-note">{step === 4 ? "Det utfallet uppstår om för få andra byter." : "Din bästa handling beror på vad du tror att de andra väljarna kommer att göra."}</p>
   </div>
 
   <div class="frame signal" class:is-active={step === 3} aria-hidden={step !== 3}>
     <header>
       <p>DN/Ipsos · 29 augusti</p>
-      <strong>Mätningen ändrar kalkylen</strong>
+      <strong>Var går väljarnas egen gräns?</strong>
     </header>
     <div class="signal-axis" aria-hidden="true">
       <i></i>
@@ -107,8 +107,8 @@
   .matrix:not(.free-rider) .risk { background:#f6f0f5; }
   .matrix.free-rider .matrix-grid { transform:scale(1.17); transform-origin:42% 76%; }
   .matrix.free-rider .matrix-grid > div { background:#f2f4f8; }
-  .matrix.free-rider .matrix-grid .ride,.matrix.free-rider .matrix-grid .helps,.matrix.free-rider .matrix-grid .row-stay { background:white; }
-  .matrix.free-rider .ride { background:#e3f2f2; box-shadow:inset 0 0 0 2px var(--teal); }
+  .matrix.free-rider .matrix-grid .safe,.matrix.free-rider .matrix-grid .too-few,.matrix.free-rider .matrix-grid .row-stay { background:white; }
+  .matrix.free-rider .safe { background:#e3f2f2; box-shadow:inset 0 0 0 2px var(--teal); }
   .matrix-note { margin:auto 0 0; padding-top:20px; color:var(--muted); font-size:15px; line-height:1.55; }
   .signal-axis { position:relative; height:185px; margin:clamp(70px,11vh,110px) 28px 0; }
   .signal-axis > i { position:absolute; left:0; right:0; top:52px; height:3px; background:linear-gradient(90deg,var(--accent),var(--teal)); transform:scaleX(0); transform-origin:left; transition:transform .85s .08s cubic-bezier(.22,.72,.22,1); }

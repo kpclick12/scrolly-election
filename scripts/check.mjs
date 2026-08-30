@@ -70,7 +70,7 @@ for (const viewport of viewports) {
     title: document.querySelector("h1")?.textContent.trim().replace(/\s+/g, " "),
     documentTitle: document.title,
   }));
-  if (semantics.language !== "sv" || semantics.h1 !== 1 || semantics.scrollys !== 4 || semantics.steps !== 18 || semantics.sourceLinks < 10 || semantics.mainTabIndex !== "-1" || semantics.seats !== 349 || semantics.historyPoints < 20 || semantics.gameDots !== 100 || semantics.partyMarks !== 2 || semantics.brokenImages.length || semantics.donorRows !== 4 || semantics.experimentColumns !== 3 || semantics.pollRows !== 4 || semantics.title !== "Vad är en taktikröst på Liberalerna värd?" || semantics.documentTitle !== semantics.title) problems.push(`STRUCTURE [${viewport.name}]: ${JSON.stringify(semantics)}`);
+  if (semantics.language !== "sv" || semantics.h1 !== 1 || semantics.scrollys !== 4 || semantics.steps !== 16 || semantics.sourceLinks < 10 || semantics.mainTabIndex !== "-1" || semantics.seats !== 349 || semantics.historyPoints < 20 || semantics.gameDots !== 100 || semantics.partyMarks !== 2 || semantics.brokenImages.length || semantics.donorRows !== 4 || semantics.experimentColumns !== 3 || semantics.pollRows !== 4 || semantics.title !== "Vad är en taktikröst på Liberalerna värd?" || semantics.documentTitle !== semantics.title) problems.push(`STRUCTURE [${viewport.name}]: ${JSON.stringify(semantics)}`);
 
   const overflow = await page.evaluate(() => {
     const offenders = [];
@@ -123,7 +123,7 @@ for (const viewport of viewports) {
   }
 
   const storyText = (await page.locator("main").textContent()).replace(/\s+/g, " ");
-  for (const required of ["130 000", "32 000", "KD har större marginal", "Hypotetiskt jämnt val", "6 477 970", "Var sjätte valde bort sitt tydliga förstahandsval", "Många kom sent och föredrog ett annat parti", "Det beror också på partiet", "En röstmajoritet blir ingen mandatmajoritet", "lägga kalkylen åt sidan"]) {
+  for (const required of ["130 000", "32 000", "KD ligger kvar över spärren", "Hypotetiskt jämnt val", "6 477 970", "Sex av tio bestämde sig sista veckan", "L fick högst stöd i 2,5-gruppen", "En sen mätning är inte ett valresultat", "En röstmajoritet blir ingen mandatmajoritet", "lägga kalkylen åt sidan"]) {
     if (!storyText.includes(required)) problems.push(`COPY [${viewport.name}]: missing ${required}`);
   }
 
@@ -159,5 +159,5 @@ if (problems.length) {
   console.error(problems.join("\n"));
   process.exitCode = 1;
 } else {
-  console.log(`Checks passed: 18 story steps in four acts, seven viewports, 71-width sweep, 349 seats, no overflow, focus and reduced motion. Screenshots: ${output}`);
+  console.log(`Checks passed: 16 story steps in four acts, seven viewports, 71-width sweep, 349 seats, no overflow, focus and reduced motion. Screenshots: ${output}`);
 }

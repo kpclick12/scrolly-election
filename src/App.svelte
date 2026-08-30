@@ -32,22 +32,20 @@
     "Från 2,0 procent saknas omkring 130 000 väljare till spärren.",
     "Från 3,5 procent saknas omkring 32 000 väljare till spärren.",
     "Utfallet beror på både det egna valet och vad andra väljare gör.",
-    "I DN och Ipsos undersökning var medianen 3,0 procent för när en stödröst känns bortkastad och 3,5 procent för när väljaren vågar stödrösta.",
-    "Den som stannar kvar förlitar sig på att andra byter. Om många gör samma bedömning faller samordningen.",
+    "I DN och Ipsos undersökning beskrev de svarande sina egna gränser. Medianen var 3,0 procent för när en stödröst känns bortkastad och 3,5 procent för när de vågar stödrösta.",
+    "Den som stannar kvar förlitar sig på att andra byter. Om många resonerar så passerar Liberalerna inte fyraprocentsspärren.",
   ][gameStep]);
 
   const donorStatus = $derived([
     "När 2,0 procentenheter flyttas från Moderaterna till Liberalerna har M 15,2 procent, SD 18,3 och L 4,0.",
     "När 2,0 procentenheter flyttas från Sverigedemokraterna till Liberalerna har SD 16,3 procent, M 17,2 och L 4,0.",
-    "När samma stöd flyttas från Kristdemokraterna till Liberalerna har KD 6,5 procent och L 4,0. KD är fortfarande över spärren i detta nuläge.",
+    "När 2,0 procentenheter flyttas från Kristdemokraterna till Liberalerna har KD 6,5 procent och L 4,0. KD ligger då 2,5 procentenheter över spärren.",
   ][donorStep]);
 
   const evidenceStatus = $derived([
-    "Sexton procent röstade 2022 på ett annat parti än sitt tydliga förstahandsval.",
     "Bland Liberalernas väljare bestämde sig 60 procent sista veckan och 32 procent föredrog ett annat parti.",
-    "Det svenska experimentet gav ett svagt och statistiskt osäkert stöd för en försäkringseffekt för Liberalerna.",
-    "I tre av de fyra senaste valen backade Liberalerna från den sena mätningen till valresultatet.",
-    "Annika Fredén har sett stödröster till etablerade koalitionspartier redan vid 2,5 procent. Hon nämner Kristdemokraterna som exempel.",
+    "Paneldeltagarna lottades till fiktiva mätningar och valde sedan parti. Liberalerna fick högst stöd i gruppen som såg 2,5 procent, men skillnaderna var inte statistiskt säkerställda.",
+    "En sen mätning är inte ett facit. Liberalerna ökade något 2010 men fick ett lägre valresultat än mätningen 2014, 2018 och 2022. Fyra val säger inte vad som händer 2026.",
   ][evidenceStep]);
 
   function skipToStory(event) {
@@ -102,7 +100,7 @@
   <div class="hero-copy">
     <p class="eyebrow">Riksdagsvalet 2026</p>
     <h1>Vad är en taktikröst på Liberalerna värd?</h1>
-    <p class="standfirst">Liberalerna har haft en tydlig trend nedåt under lång tid. I den senaste mätningen får partiet <strong class="current-number number-mark">2,0 procent</strong>, klart under riksdagsspärren på <strong class="threshold-number number-mark">4,0 procent</strong>. Från de andra Tidöpartierna kommer två olika råd.</p>
+    <p class="standfirst">Liberalerna har haft en tydlig trend <span class="trend-down">nedåt<span class="trend-down-arrow" aria-hidden="true">↓</span></span> under lång tid. I den senaste mätningen får partiet <strong class="current-number">2,0 procent</strong>, klart under riksdagsspärren på <strong class="threshold-number">4,0 procent</strong>. Från de andra Tidöpartierna kommer två olika råd.</p>
     <div class="poll-strip" aria-label="Tre aktuella mätningar av Liberalernas stöd">
       {#each recentLPolls as poll}
         <div class:current={poll.current}>
@@ -156,19 +154,19 @@
       {#snippet visual()}<SeatCliff step={seatStep} />{/snippet}
 
       <article class="seat-step" data-step>
-        <p class="step-index">Dagens mätning · ingen stödröst</p>
+        <p class="step-index">Utgångsläge · Demoskop 27 augusti</p>
         <h3>L hamnar utanför</h3>
         <p class="scenario-detail">På 2,0 procent får L inga mandat i modellen. Tidöpartierna får 161 platser och oppositionen 188.</p>
         <p class="scenario-reading">L:s röster påverkar inte mandatfördelningen, och Tidöpartierna är långt från egen majoritet.</p>
       </article>
       <article class="seat-step" data-step>
-        <p class="step-index">Dagens mätning · L på 3,9%</p>
-        <h3>Rösterna fastnar under spärren</h3>
+        <p class="step-index">Hypotetiskt valresultat · L på 3,9%</p>
+        <h3>Rösterna tar inte L över spärren</h3>
         <p class="scenario-detail">Röster har lämnat M men L missar spärren. Tidöpartierna får 157 mandat, fyra färre än från början.</p>
         <p class="scenario-reading">Stödrösterna har försvagat M utan att ge L några mandat.</p>
       </article>
       <article class="seat-step threshold-step" data-step>
-        <p class="step-index">Dagens mätning · L på 4,0%</p>
+        <p class="step-index">Hypotetiskt valresultat · L på 4,0%</p>
         <h3>Vid fyra procent kommer L in</h3>
         <p class="scenario-detail">L får 14 mandat. Tidöpartierna når 164, tolv mandat från egen majoritet.</p>
         <p class="scenario-reading">Stödrösterna räddar L, men de ger inte Tidöpartierna egen majoritet.</p>
@@ -180,7 +178,7 @@
         <p class="scenario-reading">Sidan får flest röster, men inte flest mandat när L:s röster blir utan representation.</p>
       </article>
       <article class="seat-step conclusion-step" data-step>
-        <p class="step-index">Samma val · L på 4,0%</p>
+        <p class="step-index">Samma hypotetiska val · L på 4,0%</p>
         <h3>Spärren avgör majoriteten</h3>
         <p class="scenario-detail">Med samma röstandel men L över spärren får Tidöpartierna 179 mandat.</p>
         <p class="scenario-reading">När L passerar spärren får sidan sju mandat till. I det här scenariot avgör stödrösterna majoriteten.</p>
@@ -190,15 +188,15 @@
 
   <section class="game-intro prose-section" data-reveal aria-labelledby="game-title">
     <p class="section-index">Spelteorin</p>
-    <h2 id="game-title">Nu måste du gissa vad andra gör</h2>
+    <h2 id="game-title">En enskild röst räcker inte</h2>
     <div class="body-copy">
       <p>Den som funderar på en stödröst vet inte hur nära L är spärren, hur många andra som tänker likadant eller om Tidöpartierna ens är nära 176 mandat.</p>
-      <p>Det är här spelteorin blir användbar. Din röst räcker inte. För att stödrösten ska fungera måste många fatta samma beslut.</p>
+      <p>För att stödrösten ska fungera måste många fatta samma beslut. Det är ett samordningsproblem.</p>
     </div>
   </section>
 
   <section class="game-act scrolly-act" aria-label="Scrollstyrd förklaring av taktikröstning som samordningsspel">
-    <ScrollyShell onStepChange={(index) => gameStep = index} label="Taktikröstning som samordningsspel" status={gameStatus}>
+    <ScrollyShell onStepChange={(index) => gameStep = index} label="Taktikröstning som samordningsspel" status={gameStatus} mobileTargetRatio={0.68}>
       {#snippet visual()}<CoordinationGame step={gameStep} />{/snippet}
 
       <article class="story-step" data-step>
@@ -218,13 +216,13 @@
       </article>
       <article class="story-step" data-step>
         <p class="step-index">Den gemensamma signalen</p>
-        <h3>Mätningen hjälper väljarna att hitta varandra</h3>
-        <p>I DN/Ipsos nya undersökning var medianen 3,0 procent för när en stödröst känns bortkastad och 3,5 för när väljaren vågar stödrösta. När L närmar sig spärren kan fler alltså bli beredda att hjälpa partiet.</p>
+        <h3>Var går väljarnas egen gräns?</h3>
+        <p>DN/Ipsos frågade var de svarandes egen gräns går. Medianen var 3,0 procent för när en stödröst känns bortkastad och 3,5 för när de vågar stödrösta. Det visar hur de resonerar, inte hur en mätning ändrar deras röst.</p>
       </article>
       <article class="story-step" data-step>
         <p class="step-index">Samordningsproblemet</p>
         <h3>Om alla väntar på de andra</h3>
-        <p>En M-väljare kan tro att andras byten räcker och själv stanna kvar. Om många gör samma kalkyl når L aldrig fram.</p>
+        <p>En M-väljare kan tro att andras byten räcker och själv stanna kvar. Om många resonerar så passerar L inte fyraprocentsspärren.</p>
       </article>
     </ScrollyShell>
   </section>
@@ -235,87 +233,74 @@
       <h2 id="preference-title">Rösten flyttar också makt mellan Tidöpartierna</h2>
     </div>
     <div class="body-copy" data-reveal>
-      <p>Den vi följer vill att Tidöpartierna ska få egen majoritet. Men partiet som förlorar rösten blir mindre, och balansen mellan partierna kan förändras på vägen.</p>
-      <p>En M-röst på L ökar SD:s försprång över M. En SD-röst på L kan i stället göra M störst på den sidan. Röster från ett mindre parti blir känsligare först när även det partiet närmar sig spärren.</p>
+      <p>De väljare vi räknar på är beredda att stödrösta på L för att Tidöpartierna ska få egen majoritet. Men partiet de lämnar blir mindre, och balansen mellan Tidöpartierna kan förändras.</p>
+      <p>En M-röst på L ökar SD:s försprång över M. En SD-röst på L kan i stället göra M störst av Tidöpartierna. Röster från ett mindre parti blir känsligare först när även det partiet närmar sig spärren.</p>
     </div>
   </section>
 
   <section class="donor-act scrolly-act" aria-label="Scrollstyrd jämförelse av stödröster från Moderaterna, Sverigedemokraterna och Kristdemokraterna">
-    <ScrollyShell onStepChange={(index) => donorStep = index} label="Varifrån stödrösten till Liberalerna kommer" status={donorStatus}>
+    <ScrollyShell onStepChange={(index) => donorStep = index} label="Varifrån stödrösten till Liberalerna kommer" status={donorStatus} mobileTargetRatio={0.68}>
       {#snippet visual()}<DonorJourney step={donorStep} />{/snippet}
 
       <article class="story-step" data-step>
-        <p class="step-index">Från M till L</p>
+        <p class="step-index">Stödröster från M till L</p>
         <h3>SD:s försprång växer</h3>
         <p>När L når fyra sjunker M från 17,2 till 15,2 procent. SD ligger kvar på 18,3. Avståndet mellan partierna ökar från 1,1 till 3,1 procentenheter.</p>
       </article>
       <article class="story-step" data-step>
-        <p class="step-index">Från SD till L</p>
-        <h3>M blir störst på sidan</h3>
+        <p class="step-index">Stödröster från SD till L</p>
+        <h3>M blir störst av Tidöpartierna</h3>
         <p>Om samma stöd kommer från SD sjunker partiet till 16,3 procent. M ligger kvar på 17,2 och passerar SD.</p>
       </article>
       <article class="story-step" data-step>
-        <p class="step-index">Från KD till L</p>
-        <h3>KD har större marginal i den här mätningen</h3>
-        <p>KD går från 8,5 till 6,5 när L når fyra. Med den här mätningen är KD fortfarande klart över spärren. Om KD hade legat närmare fyra hade kalkylen sett annorlunda ut.</p>
+        <p class="step-index">Stödröster från KD till L</p>
+        <h3>KD ligger kvar över spärren</h3>
+        <p>Om 2,0 procentenheter flyttas från KD till L sjunker KD från 8,5 till 6,5 procent. KD ligger då fortfarande 2,5 procentenheter över spärren.</p>
       </article>
     </ScrollyShell>
   </section>
 
   <section class="evidence-intro prose-section" data-reveal aria-labelledby="evidence-title">
-    <p class="section-index">Vad väljarna faktiskt gör</p>
-    <h2 id="evidence-title">Förra valet innehåller några ledtrådar</h2>
+    <p class="section-index">Efter sista mätningen</p>
+    <h2 id="evidence-title">Kan L gå från två till fyra?</h2>
     <div class="body-copy">
-      <p>Räkneexemplen har utgått från väljare som föredrar ett annat parti än L. Sådana partibyten fanns också 2022.</p>
-      <p>Vi vet inte varför var och en bytte. Men vi vet hur många som valde bort sitt tydliga förstahandsval och hur sent många L-väljare bestämde sig.</p>
+      <p>Den som överväger en stödröst måste också bedöma vad som kan hända före valdagen.</p>
+      <p>Två procent är en mätning, inte ett facit. Många L-väljare bestämde sig sent 2022. Men hur mycket går det att dra av det?</p>
     </div>
   </section>
 
-  <section class="evidence-act scrolly-act" aria-label="Scrollstyrd genomgång av svensk forskning om strategisk röstning">
-    <ScrollyShell onStepChange={(index) => evidenceStep = index} label="Svensk forskning och Liberalernas chanser" status={evidenceStatus}>
+  <section class="evidence-act scrolly-act" aria-label="Scrollstyrd genomgång av sena L-röster, experiment och valresultat">
+    <ScrollyShell onStepChange={(index) => evidenceStep = index} label="Vad som kan hända efter en sen mätning" status={evidenceStatus} mobileTargetRatio={0.68}>
       {#snippet visual()}<EvidenceJourney step={evidenceStep} />{/snippet}
 
       <article class="story-step" data-step>
-        <p class="step-index">Alla väljare · 2022</p>
-        <h3>Var sjätte valde bort sitt tydliga förstahandsval</h3>
-        <p>Valforskningsprogrammet räknar 16 procent som möjliga taktikröster. En bredare definition ger 20 procent. Siffrorna visar att väljaren bytte parti, men inte varför.</p>
-      </article>
-      <article class="story-step" data-step>
         <p class="step-index">L-väljarna · 2022</p>
-        <h3>Många kom sent och föredrog ett annat parti</h3>
-        <p>Sex av tio bestämde sig sista veckan och 32 procent hade ett annat förstahandsval. M till L stod för 5,5 procent av de potentiellt strategiska rösterna.</p>
+        <h3>Sex av tio bestämde sig sista veckan</h3>
+        <p>Dessutom hade 32 procent ett annat förstahandsval. M till L stod för 5,5 procent av de potentiellt strategiska rösterna. Det lämnar utrymme för sena förflyttningar, men säger inte hur stora de blir.</p>
       </article>
       <article class="story-step" data-step>
         <p class="step-index">Ett svenskt experiment</p>
-        <h3>L fick mer stöd när mätningen visade 2,5</h3>
-        <p>Deltagarna såg L på 2,5, 4,0 eller 5,5 procent. Mönstret liknar försäkringsröstning, men L-grupperna var för små för att skillnaderna skulle bli statistiskt säkerställda. För KD var effekten tydligare.</p>
+        <h3>L fick högst stöd i 2,5-gruppen</h3>
+        <p>Det här mäter något annat än DN/Ipsos-frågan: experimentet prövade om L:s nivå i en mätning påverkade partivalet. Deltagarna var inte utvalda L-väljare, utan lottades till fiktiva mätningar och valde sedan parti. L fick högst stöd i 2,5-gruppen, men skillnaderna var inte statistiskt säkerställda.</p>
       </article>
       <article class="story-step" data-step>
         <p class="step-index">Fyra sena mätningar</p>
-        <h3>Tre av fyra slutspurter gick bakåt</h3>
-        <p>L ökade lite 2010. I valen 2014, 2018 och 2022 blev valresultatet lägre än den sena mätningen. De fyra observationerna ger orientering, men räcker inte för att räkna fram en sannolikhet.</p>
-      </article>
-      <article class="story-step" data-step>
-        <p class="step-index">2,5, 3,0 eller 3,5?</p>
-        <h3>Gränsen beror på vad vi mäter</h3>
-        <p>Statsvetaren Annika Fredén har sett stödröster till etablerade koalitionspartier redan vid 2,5 procent och nämner KD. DN/Ipsos mäter i stället vad väljare säger nu: medianen blev 3,0 för ”bortkastad” och 3,5 för att våga stödrösta. Inget av måtten ger en säker gräns för L.</p>
+        <h3>En sen mätning är inte ett valresultat</h3>
+        <p>L ökade något 2010 men backade från den sena mätningen 2014, 2018 och 2022. Det visar att mätningen inte är ett facit. Fyra val säger inget säkert om 2026 och ger heller inget stöd för att räkna med ett lyft från 2,0 till 4,0.</p>
       </article>
     </ScrollyShell>
   </section>
 
   <section class="closing" aria-labelledby="closing-title">
     <div class="closing-inner" data-reveal>
-      <p class="section-index">Slutsatsen</p>
+      <p class="section-index">Avslutning</p>
       <h2 id="closing-title">Så vad är stödrösten värd?</h2>
       <div class="closing-copy">
-        <p>Vi har räknat på en väljare som helst röstar på ett annat parti än L, men vill att Tidöpartierna ska få egen majoritet.</p>
-        <p>I Demoskop ligger L på 2,0 procent. Även om partiet når fyra får Tidöpartierna bara 164 mandat i vårt första exempel. Slutspurten återstår.</p>
-        <p>Först måste L klara spärren. Sedan återstår vad andra väljare gör, varifrån rösterna kommer och om Tidöpartierna når 176 mandat.</p>
-      </div>
-      <div class="closing-grid">
-        <article><span>1</span><h3>Når L fyra?</h3><p>Avståndet avgör hur många väljare som måste samordna sig.</p></article>
-        <article><span>2</span><h3>Varifrån kommer rösterna?</h3><p>Partiet som lämnas blir mindre och maktbalansen på sidan kan förändras.</p></article>
-        <article><span>3</span><h3>Räcker det till 176?</h3><p>Ett räddat L räcker inte alltid till en majoritet för Tidöpartierna.</p></article>
+        <p>Vi har följt en väljare som vill att Tidöpartierna ska få egen majoritet och är beredd att rösta på L, trots att ett annat Tidöparti är förstahandsvalet.</p>
+        <p>I Demoskop ligger L på 2,0 procent. För att stödrösten ska ge mandat måste partiet först få hjälp över spärren. Från 2,0 procent kräver det omkring 130&nbsp;000 ytterligare väljare.</p>
+        <p>Men 2,0 procent är inte ett facit. Många L-väljare bestämde sig sent 2022, och valresultatet kan bli ett annat än en sen opinionsmätning. För den som överväger en stödröst kan den osäkerheten vara ett skäl att inte räkna bort L, utan att veta hur stor chansen faktiskt är.</p>
+        <p>Även om L når fyra får Tidöpartierna bara 164 mandat i vårt första exempel. Det spelar också roll vad andra väljare gör och varifrån stödrösterna kommer. Partiet som väljarna lämnar blir mindre, och maktbalansen mellan Tidöpartierna kan förändras.</p>
+        <p>Den här kalkylen utgår dessutom från att väljaren väger spärren, mandaten och andras beteende mot varandra. Så resonerar inte alla. För en del kan det också kännas ideologiskt fel att byta parti även om det skulle öka möjligheten för Tidöpartierna att få egen majoritet. Då handlar rösten också om vilket parti man själv vill göra starkare.</p>
       </div>
       <p class="final-line">Det går att räkna länge på spärren, mandaten och vad andra tänker göra. Till slut kan man också lägga kalkylen åt sidan och rösta på det parti man helst vill se starkare.</p>
     </div>
@@ -330,9 +315,9 @@
         <li><strong>Mandatsimuleringen.</strong> Mandaten fördelas nationellt med riksdagsspärren på 4 procent och den jämkade uddatalsmetoden, först 1,2 och sedan 3, 5, 7 och vidare. Modellen återskapar den officiella totalfördelningen 2022. Tolvprocentsspärren för fasta mandat i en valkrets modelleras inte eftersom scenarierna gäller nationellt L-stöd. De två sista lägena är ett hypotetiskt jämnt val: 4,1 procentenheter flyttas först från S till M så att Tidöpartierna får 50,1 procent. Sedan jämförs L på 3,9 och 4,0. <a href={sources.electionMethod}>Valmyndighetens regler</a> och <a href={sources.election2022}>valresultatet 2022</a>.</li>
         <li><strong>Stödrösterna.</strong> I huvudscenariot flyttas röster från M till L medan Tidöpartiernas totala stöd ligger kvar. Donatorexemplen visar vad som händer om rösterna i stället kommer från SD eller KD. Det är tankeexperiment där alla andra partier står still.</li>
         <li><strong>Antalet röster.</strong> 32&nbsp;000 och 130&nbsp;000 är avrundade storleksordningar baserade på 6&nbsp;477&nbsp;970 giltiga röster i riksdagsvalet 2022. Antalet giltiga röster 2026 blir ett annat.</li>
-        <li><strong>Strategisk röstning.</strong> Uppgifterna om 16 och 20 procent, L-väljarnas andra förstahandsval och väljarflödet M till L kommer från kapitel 26 i <a href={sources.strategicVoting2022}>Väljarna och valet 2022</a>. Forskarna får fram 16 procent med sin snävare definition. Därför beskriver vi dem som möjliga taktikröster.</li>
+        <li><strong>Strategisk röstning.</strong> Uppgifterna om L-väljarnas andra förstahandsval och väljarflödet M till L kommer från kapitel 26 i <a href={sources.strategicVoting2022}>Väljarna och valet 2022</a>.</li>
         <li><strong>L-väljarnas beslut.</strong> Uppgiften att 60 procent bestämde sig sista veckan kommer från Valforskningsprogrammets partirapport. Skattningen bygger på 364–367 svar och är viktad mot partival och validerat valdeltagande. <a href={sources.liberalVoters2022}>Valet 2022: Liberalerna</a>.</li>
-        <li><strong>Surveyexperimentet.</strong> 3&nbsp;259 deltagare lottades till mätningar där L, KD eller MP visades på 2,5, 4,0 eller 5,5 procent. För L var skillnaderna mellan nivåerna inte statistiskt säkerställda. Den tydligaste försäkringseffekten gällde KD. <a href={sources.insuranceVoting}>Insurance Voting in the Centre</a>.</li>
+        <li><strong>Surveyexperimentet.</strong> 3&nbsp;259 paneldeltagare lottades till nio fiktiva mätningar där L, KD eller MP visades på 2,5, 4,0 eller 5,5 procent. Därefter angav de vilket parti de skulle rösta på och varför. Urvalet bestod alltså inte bara av personer som redan övervägde L. För L var skillnaderna mellan nivåerna inte statistiskt säkerställda. Den tydligaste försäkringseffekten gällde KD. <a href={sources.insuranceVoting}>Insurance Voting in the Centre</a>.</li>
         <li><strong>2,5-procentsexemplet.</strong> Statsvetaren Annika Fredén beskriver hur ett etablerat koalitionsparti kan få stödröster även från 2,5 procent och nämner KD som exempel. Observationen gäller inte specifikt L. <a href={sources.pollMisses}>Aftonbladet/TT</a>.</li>
         <li><strong>Väljarnas upplevda gränser.</strong> I DN/Ipsos undersökning var medianen 3,0 procent för när en stödröst känns bortkastad och 3,5 procent för när väljaren vågar stödrösta. Medelvärdena var 2,9 respektive 3,6. Ipsos intervjuade 1&nbsp;461 röstberättigade den 11–23 augusti. Svaren gäller hypotetiska frågor och är ingen prognos för L:s valresultat. <a href={sources.dnSupportVoting}>DN/Ipsos</a>.</li>
         <li><strong>Spelteorin.</strong> Samordningsförklaringen bygger på forskning om strategisk röstning i proportionella valsystem med koalitioner, spärrar och opinionsmätningar. <a href={sources.coordinationStudy}>Blais, Erisen och Rheault</a> samt <a href={sources.pollsAndCoalitions}>Herrmann</a>.</li>

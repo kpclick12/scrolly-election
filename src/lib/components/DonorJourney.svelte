@@ -14,7 +14,7 @@
     },
     {
       eyebrow: "SD ger 2,0 procentenheter",
-      headline: "M blir störst på sidan",
+      headline: "M blir störst av Tidöpartierna",
       scenario: scenarioForL(4.0, "SD"),
       focus: new Set(["M", "SD", "L"]),
       takeaway: "M 0,9 före SD",
@@ -22,7 +22,7 @@
     },
     {
       eyebrow: "KD ger 2,0 procentenheter",
-      headline: "KD har marginal kvar",
+      headline: "KD ligger kvar över spärren",
       scenario: scenarioForL(4.0, "KD"),
       focus: new Set(["KD", "L"]),
       takeaway: "KD 2,5 över spärren",
